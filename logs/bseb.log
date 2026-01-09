@@ -1,0 +1,184 @@
+2026-01-02 11:53:36,759 [8] ERROR FlureeCS - Database error occurred while checking login.
+System.Data.SqlClient.SqlException (0x80131904): Login failed for user ''.
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at FlureeCS.CheckLogin(String un, String pass) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 446
+ClientConnectionId:6c525ce6-1791-44ed-94f7-5fa7d50ea502
+Error Number:18456,State:1,Class:14
+2026-01-02 11:54:49,494 [8] ERROR FlureeCS - Database error occurred while checking login.
+System.Data.SqlClient.SqlException (0x80131904): Login failed for user ''.
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at FlureeCS.CheckLogin(String un, String pass) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 446
+ClientConnectionId:ca352751-2ec8-4fdf-9cb0-02f7e4fbf038
+Error Number:18456,State:1,Class:14
+2026-01-02 11:56:51,936 [8] ERROR FlureeCS - Database error occurred while checking login.
+System.Data.SqlClient.SqlException (0x80131904): Login failed for user ''.
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at FlureeCS.CheckLogin(String un, String pass) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 446
+ClientConnectionId:8ec883d3-dbaa-4378-b824-fabb1aec2824
+Error Number:18456,State:1,Class:14
+2026-01-02 11:57:25,499 [10] ERROR FlureeCS - Database error occurred while checking login.
+System.Data.SqlClient.SqlException (0x80131904): Login failed for user ''.
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at FlureeCS.CheckLogin(String un, String pass) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 446
+ClientConnectionId:aaf8291f-1d20-4289-bf17-209450f9d5f0
+Error Number:18456,State:1,Class:14
+2026-01-02 11:58:43,408 [24] ERROR FlureeCS - Database error occurred while checking login.
+System.Data.SqlClient.SqlException (0x80131904): Login failed for user ''.
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at FlureeCS.CheckLogin(String un, String pass) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 446
+ClientConnectionId:9f13bfc5-4368-4d07-a0c0-0015f9746b98
+Error Number:18456,State:1,Class:14
+2026-01-02 12:15:53,489 [8] INFO FlureeCS - Login successful for user: BSEB-admin
+2026-01-02 12:24:14,406 [16] INFO FlureeCS - Login successful for user: DS-4742
+2026-01-02 12:41:07,622 [14] INFO FlureeCS - Login successful for user: AT-6154
+2026-01-02 12:46:34,633 [25] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-02 12:46:34,672 [25] INFO fileupload - Allowed IPs: 115.243.18.60, 117.203.160.250, 192.168.1.103, 152.58.130.209, 152.58.154.108, 182.77.60.224, 115.245.255.131, 192.168.1.103, 192.168.1.103, 192.168.1.103
+2026-01-02 12:46:40,802 [25] INFO FlureeCS - Web request called
+2026-01-02 12:46:40,802 [25] INFO FlureeCS - query :[{"_id":"filedetails","fileid":"f36e05ee-c91b-46f3-b0c2-582dba4a6630","filename":"Antier_Inter_Practical_Wanting_OMRSheet_20260102124634.xlsx","filehash":"b27f2b214fb4c414b46bec93b1b3c67f5ccae554e6d9034e4d4f01406887d9cc","agencyname":"Antier","subdoctype":"Wanting_OMRSheet","actualfilename":"BSEB - TestCases.xlsx","status":"Active","createddate":1767358000784}]
+2026-01-02 12:46:40,959 [25] INFO FlureeCS - GetRequestStream function called
+2026-01-02 12:47:02,206 [25] ERROR FlureeCS - ************** Error : Unable to connect to the remote server
+System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 192.168.27.12:8090
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at FlureeCS.sendTransaction(String DatatoPost, String url) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 200
+2026-01-02 12:47:02,477 [25] INFO FlureeCS - File details inserted successfully. Filename: Antier_Inter_Practical_Wanting_OMRSheet_20260102124634.xlsx, UploadedBy: AT-6154
+2026-01-02 12:47:02,588 [25] INFO FlureeCS - Download file details inserted successfully. Filename: Antier_Inter_Practical_Wanting_OMRSheet_20260102124634.xlsx, Agency: Antier
+2026-01-02 12:47:02,637 [25] INFO FlureeCS - Activity log inserted successfully. UserID: AT-6154, IP: 127.0.0.1, Type: upload
+2026-01-02 12:53:22,909 [5] INFO FlureeCS - Login successful for user: AT-6154
+2026-01-02 12:59:15,898 [5] INFO FlureeCS - Login successful for user: AT-6154
+2026-01-09 10:32:41,283 [5] INFO FlureeCS - Login successful for user: AT-6154
+2026-01-09 10:35:45,714 [5] INFO FlureeCS - Login successful for user: BSEB-admin
+2026-01-09 10:37:12,396 [7] INFO FlureeCS - FindUser executed successfully. Filters - AgencyName: Mappel, UserStatus: Active, Rows Returned: 0
+2026-01-09 10:37:59,596 [7] INFO FlureeCS - FindUser executed successfully. Filters - AgencyName: Mappel, UserStatus: Pending For Approval, Rows Returned: 0
+2026-01-09 10:38:07,691 [7] INFO FlureeCS - FindUser executed successfully. Filters - AgencyName: Datacone, UserStatus: Pending For Approval, Rows Returned: 0
+2026-01-09 10:38:11,453 [8] INFO FlureeCS - FindUser executed successfully. Filters - AgencyName: Keltron, UserStatus: Pending For Approval, Rows Returned: 0
+2026-01-09 10:38:14,400 [7] INFO FlureeCS - FindUser executed successfully. Filters - AgencyName: Keltron, UserStatus: Active, Rows Returned: 1
+2026-01-09 12:47:18,011 [7] INFO FlureeCS - Login successful for user: AT-6154
+2026-01-09 12:54:23,009 [23] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-09 12:54:29,314 [23] INFO fileupload - Is upload allowed: False
+2026-01-09 12:54:37,913 [23] INFO FlureeCS - Web request called
+2026-01-09 12:54:37,913 [23] INFO FlureeCS - query :[{"_id":"filedetails","fileid":"ed6e8a68-f49f-47e2-a903-8a18027fadaa","filename":"Antier_Inter_Practical_Wanting_OMRSheet_20260109125437.xlsx","filehash":"b27f2b214fb4c414b46bec93b1b3c67f5ccae554e6d9034e4d4f01406887d9cc","agencyname":"Antier","subdoctype":"Wanting_OMRSheet","actualfilename":"BSEB - TestCases.xlsx","status":"Active","createddate":1767963277913}]
+2026-01-09 12:54:37,996 [23] INFO FlureeCS - GetRequestStream function called
+2026-01-09 12:54:59,204 [23] ERROR FlureeCS - ************** Error : Unable to connect to the remote server
+System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 192.168.27.12:8090
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at FlureeCS.sendTransaction(String DatatoPost, String url) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 200
+2026-01-09 12:54:59,438 [23] INFO FlureeCS - File details inserted successfully. Filename: Antier_Inter_Practical_Wanting_OMRSheet_20260109125437.xlsx, UploadedBy: AT-6154
+2026-01-09 12:54:59,487 [23] INFO FlureeCS - Download file details inserted successfully. Filename: Antier_Inter_Practical_Wanting_OMRSheet_20260109125437.xlsx, Agency: Antier
+2026-01-09 12:54:59,506 [23] INFO FlureeCS - Activity log inserted successfully. UserID: AT-6154, IP: 127.0.0.1, Type: upload
+2026-01-09 12:55:39,265 [23] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-09 12:55:39,303 [23] INFO fileupload - Is upload allowed: False
+2026-01-09 12:55:39,303 [23] INFO fileupload - Unauthorized upload attempt from IP: 127.0.0.1
+2026-01-09 12:56:55,134 [21] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-09 12:57:00,267 [21] INFO fileupload - Is upload allowed: False
+2026-01-09 12:57:00,912 [21] INFO fileupload - Unauthorized upload attempt from IP: 127.0.0.1
+2026-01-09 12:58:16,447 [21] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-09 12:58:18,343 [21] INFO fileupload - Is upload allowed: False
+2026-01-09 12:58:18,970 [21] INFO fileupload - Unauthorized upload attempt from IP: 127.0.0.1
+2026-01-09 12:59:21,114 [23] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-09 12:59:36,357 [23] INFO fileupload - Is upload allowed: False
+2026-01-09 12:59:44,000 [23] INFO fileupload - Unauthorized upload attempt from IP: 127.0.0.1
+2026-01-09 13:00:21,944 [23] INFO fileupload - Client IP detected: 127.0.0.1
+2026-01-09 13:00:45,744 [23] INFO fileupload - Is upload allowed: False
+2026-01-09 13:00:46,672 [23] INFO fileupload - Unauthorized upload attempt from IP: 127.0.0.1
+2026-01-09 13:02:17,375 [21] INFO fileupload - Client IP detected: 115.243.18.60
+2026-01-09 13:02:19,281 [21] INFO fileupload - Is upload allowed: True
+2026-01-09 13:02:19,281 [21] INFO fileupload - Unauthorized upload attempt from IP: 115.243.18.60
+2026-01-09 13:02:51,783 [23] INFO fileupload - Client IP detected: 115.243.18.60
+2026-01-09 13:03:16,034 [23] INFO fileupload - Is upload allowed: True
+2026-01-09 13:03:16,934 [23] INFO fileupload - Unauthorized upload attempt from IP: 115.243.18.60
+2026-01-09 13:05:03,412 [23] INFO fileupload - Client IP detected: 115.243.18.60
+2026-01-09 13:05:04,089 [23] INFO fileupload - Is upload allowed: True
+2026-01-09 13:05:04,132 [23] INFO FlureeCS - Web request called
+2026-01-09 13:05:04,132 [23] INFO FlureeCS - query :[{"_id":"filedetails","fileid":"c044678d-42fc-4643-87da-8e5ae950efa6","filename":"Antier_Inter_Practical_Wanting_OMRSheet_20260109130504.csv","filehash":"f86ad5e4cc33a40105e4c5a9d1e70637f0692f863466dde532e2510590779315","agencyname":"Antier","subdoctype":"Wanting_OMRSheet","actualfilename":"travel+insurence (1).csv","status":"Active","createddate":1767963904132}]
+2026-01-09 13:05:04,132 [23] INFO FlureeCS - GetRequestStream function called
+2026-01-09 13:05:25,332 [23] ERROR FlureeCS - ************** Error : Unable to connect to the remote server
+System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 192.168.27.12:8090
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at FlureeCS.sendTransaction(String DatatoPost, String url) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 200
+2026-01-09 13:05:25,453 [23] INFO FlureeCS - File details inserted successfully. Filename: Antier_Inter_Practical_Wanting_OMRSheet_20260109130504.csv, UploadedBy: AT-6154
+2026-01-09 13:05:25,491 [23] INFO FlureeCS - Download file details inserted successfully. Filename: Antier_Inter_Practical_Wanting_OMRSheet_20260109130504.csv, Agency: Antier
+2026-01-09 13:05:25,507 [23] INFO FlureeCS - Activity log inserted successfully. UserID: AT-6154, IP: 115.243.18.60, Type: upload
+2026-01-09 13:06:05,874 [23] INFO fileupload - Client IP detected: 115.243.18.60
+2026-01-09 13:06:20,683 [23] INFO fileupload - Is upload allowed: True
+2026-01-09 13:06:24,233 [23] INFO FlureeCS - Web request called
+2026-01-09 13:06:24,233 [23] INFO FlureeCS - query :[{"_id":"filedetails","fileid":"26239f3e-1703-41ad-8d41-4f59a4b48ddd","filename":"Antier_Inter_Practical_Final_OMRSheet_20260109130624.csv","filehash":"f86ad5e4cc33a40105e4c5a9d1e70637f0692f863466dde532e2510590779315","agencyname":"Antier","subdoctype":"Final_OMRSheet","actualfilename":"travel+insurence (1).csv","status":"Active","createddate":1767963984233}]
+2026-01-09 13:06:24,233 [23] INFO FlureeCS - GetRequestStream function called
+2026-01-09 13:06:45,394 [23] ERROR FlureeCS - ************** Error : Unable to connect to the remote server
+System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 192.168.27.12:8090
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at FlureeCS.sendTransaction(String DatatoPost, String url) in d:\Anuja\Projects\.Net\BSEB\bseb-v3\App_Code\FlureeCS.cs:line 200
+2026-01-09 13:06:45,429 [23] INFO FlureeCS - File details inserted successfully. Filename: Antier_Inter_Practical_Final_OMRSheet_20260109130624.csv, UploadedBy: AT-6154
+2026-01-09 13:06:45,444 [23] INFO FlureeCS - Download file details inserted successfully. Filename: Antier_Inter_Practical_Final_OMRSheet_20260109130624.csv, Agency: Antier
+2026-01-09 13:06:45,456 [23] INFO FlureeCS - Activity log inserted successfully. UserID: AT-6154, IP: 115.243.18.60, Type: upload
+2026-01-09 16:15:54,709 [68] INFO FlureeCS - Login successful for user: BSEB-admin

@@ -1,0 +1,270 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>BSEB - Admin Dashboard</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" href="../assets/css/app.min.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+
+    <link rel="stylesheet" href="../assets/bundles/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon_v1.png' />
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div class="loader"></div>
+        <div id="app">
+            <div class="main-wrapper main-wrapper-1">
+                <div class="navbar-bg"></div>
+                <nav class="navbar navbar-expand-lg main-navbar sticky">
+                    <div class="form-inline mr-auto">
+                        <ul class="navbar-nav mr-3">
+                            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"><i data-feather="align-justify"></i></a></li>
+
+                        </ul>
+                    </div>
+                    <ul class="navbar-nav navbar-right">
+                        <li class="menu-header">
+                            <div class="border-danger p-2 mb-2 text-white"
+                                style="background: linear-gradient(135deg, #4c8bf5, #6777ef); border-radius: 10px; font-size: 16px; color: white;">
+                                <strong>Welcome: 
+            <%: Session["agencyname"] != null ? Session["agencyname"].ToString() : "No Company" %> |
+            <%: Session["username"] != null ? Session["username"].ToString() : "Guest" %>
+                                </strong>
+                            </div>
+                        </li>
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+                            class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+                        </a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                                <div class="dropdown-header">
+                                    Notifications
+                <div class="float-right">
+                    <a href="#">Mark All As Read</a>
+                </div>
+                                </div>
+                                <%--  <div class="dropdown-list-content dropdown-list-icons">
+                                    <a href="#" class="dropdown-item dropdown-item-unread"><span
+                                        class="dropdown-item-icon bg-primary text-white"><i class="fas
+												fa-code"></i>
+                                    </span><span class="dropdown-item-desc">Template update is
+                    available now! <span class="time">2 Min
+                      Ago</span>
+                                    </span>
+                                    </a><a href="#" class="dropdown-item"><span class="dropdown-item-icon bg-info text-white"><i class="far
+												fa-user"></i>
+                                    </span><span class="dropdown-item-desc"><b>You</b> and <b>Dedik
+                      Sugiharto</b> are now friends <span class="time">10 Hours
+                      Ago</span>
+                                    </span>
+                                    </a><a href="#" class="dropdown-item"><span class="dropdown-item-icon bg-success text-white"><i
+                                        class="fas
+												fa-check"></i>
+                                    </span><span class="dropdown-item-desc"><b>Kusnaedi</b> has
+                    moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">12
+                      Hours
+                      Ago</span>
+                                    </span>
+                                    </a><a href="#" class="dropdown-item"><span class="dropdown-item-icon bg-danger text-white"><i
+                                        class="fas fa-exclamation-triangle"></i>
+                                    </span><span class="dropdown-item-desc">Low disk space. Let's
+                    clean it! <span class="time">17 Hours Ago</span>
+                                    </span>
+                                    </a><a href="#" class="dropdown-item"><span class="dropdown-item-icon bg-info text-white"><i class="fas
+												fa-bell"></i>
+                                    </span><span class="dropdown-item-desc">Welcome to Otika
+                    template! <span class="time">Yesterday</span>
+                                    </span>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                                </div>--%>
+                            </div>
+                        </li>
+                        <li class="dropdown"><a href="#" data-toggle="dropdown"
+                            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="../assets/img/users/1577909.png"
+                                class="user-img-radious-style">
+                            <span class="d-sm-none d-lg-inline-block"></span></a>
+                            <div class="dropdown-menu dropdown-menu-right pullDown">
+
+                                <div class="dropdown-title">
+                                    Hello <%: Session["username"] != null ? Session["username"].ToString() : "Guest" %>
+                                    <br />
+                                    Agency Name:-<%: Session["agencyname"] != null ? Session["agencyname"].ToString() : "No Company" %>
+                                </div>
+
+                                <a href="profile.html" class="dropdown-item has-icon"><i class="far
+										fa-user"></i>Profile
+                               <%-- </a><a href="timeline.html" class="dropdown-item has-icon"><i class="fas fa-bolt"></i>
+                                    Activities--%>
+                                </a><a href="#" class="dropdown-item has-icon"><i class="fas fa-cog"></i>
+                                    Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="logout.aspx" class="dropdown-item has-icon text-danger">
+                                    <i class="fas fa-sign-out-alt"></i>Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-sidebar sidebar-style-2">
+                    <aside id="sidebar-wrapper">
+                        <div class="sidebar-brand">
+                            <a href="Dashboard.aspx">
+                                <img alt="image" src="../assets/img/bsebimage.jpg" class="header-logo " />
+                                <span class="logo-name">BSEB</span></a>
+                            <%-- <span class="logo-name"><asp:Label runat="server" ID="lbl_agencyname"></asp:Label></span>--%>
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li class="menu-header"></li>
+                            <li class="dropdown" runat="server" id="li_dashboard">
+                                <a href="dashboard.aspx" class="nav-link "><i data-feather="monitor"></i><span>Dashboard</span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_template">
+                                <a href="template.aspx" class="nav-link"><i data-feather="file-text"></i><span>Templates</span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_fileupload">
+                                <a href="fileupload.aspx" class="nav-link"><i data-feather="upload"></i><span>Upload File</span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_approveprofile">
+                                <a href="approveprofile.aspx" class="nav-link"><i data-feather="upload"></i><span>Approve Profile</span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_processfilecsvfiles">
+                                <a href="ProcessedCSVFiles.aspx" class="nav-link"><i data-feather="activity"></i><span>Other Agency File</span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_duplicatediscrepency">
+                                <a href="duplicateordiscrepancy.aspx" class="nav-link"><i data-feather="copy"></i><span>Duplicate/Discrepency Files</span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_fileDownload" visible="false">
+                                <a href="filedownload.aspx" class="nav-link"><i data-feather="download"></i><span>Master Data</span></a>
+                            </li>
+
+                              <li class="dropdown" runat="server" id="li_dcmntaccess" visible="false">
+                                <a href="AgencyAccess.aspx" class="nav-link"><i data-feather="file"></i><span><strong>Document Access Setup</strong></span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_accesslist" visible="false">
+                                <a href="owneragencydetails.aspx" class="nav-link"><i data-feather="lock"></i><span><strong>Access File List</strong></span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_keygenaration" visible="false">
+                                <a href="AccessKeyManagement.aspx" class="nav-link"><i data-feather="key"></i><span><strong>Private Key Management</strong></span></a>
+                            </li>
+                            <li class="dropdown" runat="server" id="li_doccategory" visible="false">
+                                <a href="DocumentCategoryMaster.aspx" class="nav-link"><i data-feather="layers"></i><span><strong>Doc Category</strong></span></a>
+                            </li>
+
+
+
+                            <li class="dropdown" runat="server" id="li_Documenttypemaster" visible="false">
+                                <a href="Documenttypemaster.aspx" class="nav-link"><i data-feather="file-text"></i><span><strong>Doc Type</strong></span></a>
+                            </li>
+                            <!-- New Parent Menu Item -->
+                           
+                            <li class="dropdown" runat="server" id="li_Ipmaster" visible="false">
+                                <a href="Ip.aspx" class="nav-link"><i data-feather="server"></i><span><strong>IP Master</strong></span></a>
+                            </li>
+
+
+                            <%-- <li class="dropdown">
+                                <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                                    data-feather="briefcase"></i><span>Widgets</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link" href="widget-chart.html">Chart Widgets</a></li>
+                                    <li><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
+                                </ul>
+                            </li>--%>
+                        </ul>
+                    </aside>
+                </div>
+                <!-- Main Content -->
+                <div class="main-content">
+                    <section class="section">
+                        <div class="section-body">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </section>
+                </div>
+                <footer class="main-footer">
+                    <div class="footer-left">
+                        <a href="">BSEB. All rights reserved.</a>
+                    </div>
+                    <div class="footer-right">
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <div id="keyModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Enter Key</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="file-key">Enter Key for Upload</label>
+                        <asp:TextBox runat="server" ID="txt_pvtkey" CssClass="form-control"></asp:TextBox>
+                        <%-- <input id="file-key" type="text" runat="server" class="form-control" name="file_key" required>--%>
+                        <div class="invalid-feedback">Please enter a key</div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button runat="server" ID="btn_submit" CssClass="btn btn-primary" Text="Submit" OnClick="btn_submit_Click" />
+                        <%-- <button type="button" class="btn btn-primary" onclick="submitKey()">Submit</button>--%>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(window).on('load', function () {
+                var currentURL = window.location.pathname;
+
+                $('.sidebar-menu li.dropdown').not(':first').each(function () {
+                    var linkURL = $(this).find('a.nav-link').attr('href');
+                    if (currentURL.endsWith(linkURL)) {
+                        $(this).addClass('active');
+                        // $(this).find('.profile-name').css('color', '#6777ef');
+                    }
+                });
+            });
+
+
+        </script>
+        <script src="../assets/bundles/sweetalert/sweetalert.min.js"></script>
+        <!-- Page Specific JS File -->
+        <script src="../assets/js/page/sweetalert.js"></script>
+    </form>
+    <script src="../assets/bundles/datatables/datatables.min.js"></script>
+    <script src="../assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../assets/bundles/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../assets/js/page/datatables.js"></script>
+
+    <script src="../assets/js/app.min.js"></script>
+    <!-- JS Libraies -->
+    <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="../assets/js/page/index.js"></script>
+    <!-- Template JS File -->
+    <script src="../assets/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="../assets/js/custom.js"></script>
+</body>
+</html>
