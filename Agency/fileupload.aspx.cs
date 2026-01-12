@@ -46,8 +46,7 @@ public partial class fileupload : System.Web.UI.Page
 
     private void BindDocCategory()
     {
-        try   
-        {
+       
             FlureeCS fl = new FlureeCS();
             DataTable dt = fl.DocumentCategoryMaster();
 
@@ -60,17 +59,12 @@ public partial class fileupload : System.Web.UI.Page
             }
 
             ddl_doctype.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
-        }
-        catch (Exception ex)
-        {
-            
-        }
+      
     }
 
     private void BindDocumentType()
     {
-        try
-        {
+       
             FlureeCS fl = new FlureeCS();
             DataTable dt = fl.Documenttypemaster();
 
@@ -83,19 +77,14 @@ public partial class fileupload : System.Web.UI.Page
             }
 
             ddl_sub_doc_type.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
-        }
-        catch (Exception ex)
-        {
-           
-        }
+       
     }
 
 
 
     private void BindExamSessionType()
     {
-        try
-        {
+      
             FlureeCS fl = new FlureeCS();
             DataTable dt = fl.ExamSessionmaster();
 
@@ -110,17 +99,13 @@ public partial class fileupload : System.Web.UI.Page
             }
 
           
-            System.Web.UI.WebControls.ListItem exam26 = ddl_Examsession.Items.FindByValue("Exam-26");
-            if (exam26 != null)
-            {
-                ddl_Examsession.ClearSelection();
-                exam26.Selected = true;
-            }
-        }
-        catch (Exception ex)
-        {
-          
-        }
+           // System.Web.UI.WebControls.ListItem exam26 = ddl_Examsession.Items.FindByValue("Exam-26");
+           // if (exam26 != null)
+            //{
+            //    ddl_Examsession.ClearSelection();
+            //    exam26.Selected = true;
+            //}
+        
     }
 
     //   
