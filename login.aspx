@@ -19,10 +19,23 @@
     <link rel="stylesheet" href="assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon_v1.png' />
     <link rel="stylesheet" href="assets/bundles/izitoast/css/iziToast.min.css">
+    <style>
+        .is-invalid {
+            border-color: #dc3545 !important;
+            background-image: none !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+            .is-invalid:focus {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+            }
+    </style>
 </head>
 
 <body onload="generate()" style="background-image: url('assets/img/bg1.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
-    <form method="POST" class="needs-validation" novalidate="" runat="server" onsubmit="return check();">
+    <form method="POST" class="needs-validation" novalidate runat="server"
+        onsubmit="return validateForm();">
         <!-- <div class="square" style="--i:0;"></div>
     <div class="square" style="--i:1;"></div>
     <div class="square" style="--i:2;"></div>
@@ -37,9 +50,9 @@
                             <div class="card card-primary">
                                 <div class="header-logo text-center mt-2">
                                     <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
-                                    <img alt="image" src="assets/img/bsebimage.jpg" class="width-per-17" >
+                                    <img alt="image" src="assets/img/bsebimage.jpg" class="width-per-17">
                                 </div>
-                               
+
                                 <div class="card-body">
 
                                     <div class="form-group">
@@ -63,7 +76,7 @@
                                         <input type="text" id="entered-captcha" placeholder="Enter the captcha.." class="form-control">
                                     </div>
                                     <div class="input-group form-group">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" style="cursor: pointer;">
                                             <div class="input-group-text" onclick="generate()">
                                                 <i class="material-icons" id="iconuser">refresh</i>
                                             </div>
@@ -161,6 +174,80 @@
                 event.preventDefault();
             });
         </script>
+        <script>
+            function validateForm() {
+                const userInput = document.getElementById("entered-captcha").value.trim();
+                const username = document.getElementById("<%= txt_UN.ClientID %>").value.trim();
+                const password = document.getElementById("<%= txt_password.ClientID %>").value.trim();
+
+                let isValid = true;
+                let errorMessage = "";
+
+                // Username validation
+                if (!username) {
+                    errorMessage += "Please enter UserID\n";
+                    isValid = false;
+                    highlightError("<%= txt_UN.ClientID %>");
+                }
+
+                // Password validation
+                if (!password) {
+                    errorMessage += "Please enter Password\n";
+                    isValid = false;
+                    highlightError("<%= txt_password.ClientID %>");
+                }
+                // Optional: You can add more password rules here
+                // else if (password.length < 6) {
+                //     errorMessage += "Password must be at least 6 characters\n";
+                //     isValid = false;
+                // }
+
+                // Captcha validation
+                if (!userInput) {
+                    errorMessage += "Please enter Captcha\n";
+                    isValid = false;
+                    highlightError("entered-captcha");
+                }
+                else if (userInput !== captcha) {
+                    errorMessage += "Invalid Captcha!\n";
+                    isValid = false;
+                    highlightError("entered-captcha");
+                    generate(); // refresh captcha on wrong input
+                }
+
+                if (!isValid) {
+                    iziToast.error({
+                        title: 'Validation Error',
+                        message: errorMessage,
+                        position: 'bottomRight',
+                        timeout: 5000
+                    });
+                    return false;
+                }
+
+                // If everything is okay → show success toast (optional)
+                iziToast.success({
+                    title: 'Success',
+                    message: 'Validations passed... Logging in',
+                    position: 'bottomRight'
+                });
+
+                return true; // allow form submission
+            }
+
+            // Helper function to highlight invalid fields
+            function highlightError(elementId) {
+                const field = document.getElementById(elementId);
+                if (field) {
+                    field.classList.add("is-invalid");
+                    // Remove after 4 seconds (optional)
+                    setTimeout(() => {
+                        field.classList.remove("is-invalid");
+                    }, 4000);
+                }
+            }
+        </script>
+
     </form>
 </body>
 

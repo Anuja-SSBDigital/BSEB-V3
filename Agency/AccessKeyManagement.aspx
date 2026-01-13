@@ -75,30 +75,36 @@
 
                 <div class="card-body">
 
-
+                    
                     <div class="row mb-3">
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <label class="fw-bold">Select Agency</label>
-                            <asp:DropDownList ID="ddl_agency" runat="server" CssClass="form-control">
-                                <asp:ListItem Value="">-- Select Agency --</asp:ListItem>
-                                <asp:ListItem Value="Antier">Antier</asp:ListItem>
-                                <asp:ListItem Value="Charu Mindworks">Charu Mindworks</asp:ListItem>
-                                <asp:ListItem Value="Datacon">Datacon</asp:ListItem>
-                                <asp:ListItem Value="Hitech">Hitech</asp:ListItem>
-                                <asp:ListItem Value="Kids">Kids</asp:ListItem>
-                                <asp:ListItem Value="Mapple">Mapple</asp:ListItem>
-                                <asp:ListItem Value="MCRK">MCRK</asp:ListItem>
-                                <asp:ListItem Value="Shree Jagannath Udyog">Shree Jagannath Udyog</asp:ListItem>
-                                <asp:ListItem Value="SSB Digital">SSB Digital</asp:ListItem>
-                                <asp:ListItem Value="DatacenterBSEB">DatacenterBSEB</asp:ListItem>
-                            </asp:DropDownList>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <asp:DropDownList ID="ddl_agency" runat="server" CssClass="custom-select">
+                                        <asp:ListItem Value="">-- Select Agency --</asp:ListItem>
+                                        <asp:ListItem Value="Antier">Antier</asp:ListItem>
+                                        <asp:ListItem Value="Charu Mindworks">Charu Mindworks</asp:ListItem>
+                                        <asp:ListItem Value="Datacon">Datacon</asp:ListItem>
+                                        <asp:ListItem Value="Hitech">Hitech</asp:ListItem>
+                                        <asp:ListItem Value="Kids">Kids</asp:ListItem>
+                                        <asp:ListItem Value="Mapple">Mapple</asp:ListItem>
+                                        <asp:ListItem Value="MCRK">MCRK</asp:ListItem>
+                                        <asp:ListItem Value="Shree Jagannath Udyog">Shree Jagannath Udyog</asp:ListItem>
+                                        <asp:ListItem Value="SSB Digital">SSB Digital</asp:ListItem>
+                                        <asp:ListItem Value="DatacenterBSEB">DatacenterBSEB</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <div class="input-group-append">
+                                        <asp:Button ID="btnsearch" runat="server"
+                                            Text="Search"
+                                            CssClass="btn btn-primary"
+                                            OnClick="btnsearch_Click" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-lg-2 text-end">
-                            <asp:Button ID="btnsearch" runat="server"
-                                Text="Search"
-                                CssClass="btn btn-primary mt-4"
-                                OnClick="btnsearch_Click" />
                         </div>
 
                         <div class="col-12 mt-2">
@@ -117,7 +123,7 @@
                                         <tr>
                                             <th>Sr.No.</th>
                                             <th>User Name</th>
-                                           <%-- <th>Email</th>
+                                            <%-- <th>Email</th>
                                             <th>Mobile</th>--%>
                                             <th>Agency</th>
                                             <th>Token</th>
@@ -131,11 +137,11 @@
                             <tr>
                                 <td><%# Container.ItemIndex + 1 %></td>
                                 <td><%# Eval("username") %></td>
-<%--                                <td><%# Eval("email") %></td>
+                                <%--                                <td><%# Eval("email") %></td>
                                 <td><%# Eval("mobileno") %></td>--%>
                                 <td><%# Eval("agencyname") %></td>
 
-                               
+
                                 <td>
                                     <asp:TextBox runat="server"
                                         Text='<%# Eval("PrivateKey") %>'
@@ -143,7 +149,7 @@
                                         ReadOnly="true" />
                                 </td>
 
-                              
+
                                 <td>
                                     <%# Eval("Key_Expiry") == DBNull.Value 
                                     ? "-" 

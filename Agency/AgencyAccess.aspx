@@ -68,9 +68,10 @@
                         </div>
                     </div>
 
+                    <label class="text-dark">Tick the agencies that should be able to see the selected document type uploaded by the chosen Owner Agency.</label>
+
                     <!-- STEP 3 -->
                     <div class="mb-4">
-                        <label class="text-dark">Tick the agencies that should be able to see the selected document type uploaded by the chosen Owner Agency.</label>
                         <div class="border p-2 rounded">
                             <asp:CheckBoxList ID="chkViewerAgencies" runat="server"
                                 RepeatDirection="Vertical" CssClass="chk-list" RepeatLayout="Flow" />
