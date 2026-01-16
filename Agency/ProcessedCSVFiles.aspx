@@ -1,6 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master" AutoEventWireup="true" CodeFile="ProcessedCSVFiles.aspx.cs" Inherits="ProcessedCSVFiles" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style>
+        .nav-pills .nav-link {
+            color: #cbd5e1;
+            border-radius: 0.5rem;
+        }
+
+            .nav-pills .nav-link.active {
+                background-color: #135c99; /* teal */
+                color: white;
+            }
+
+            .nav-pills .nav-link:hover {
+                background-color: rgba(14, 165, 233, 0.15);
+            }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -13,7 +28,7 @@
                 <div class="card-body">
 
                     <!-- Bootstrap Tabs -->
-                    <ul class="nav nav-tabs" id="crossFileTabs" role="tablist">
+                    <ul class="nav nav-pills" id="crossFileTabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="Mapple-tab" data-toggle="tab" href="#mapple" role="tab">Mapple</a>
                         </li>
@@ -53,7 +68,7 @@
                     <div class="tab-content mt-3" id="crossFileTabsContent">
                         <div class="tab-pane fade show active" id="mapple" role="tabpanel">
                             <asp:Repeater ID="rptMapple" runat="server" OnItemDataBound="rptMapple_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -62,8 +77,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -73,18 +88,18 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
 
                         <!-- Datacon Tab -->
                         <div class="tab-pane fade" id="datacon" role="tabpanel">
                             <asp:Repeater ID="rptDatacon" runat="server" OnItemDataBound="rptDatacon_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -93,8 +108,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -104,18 +119,18 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
 
                         <!-- Kids Tab -->
                         <div class="tab-pane fade" id="kids" role="tabpanel">
                             <asp:Repeater ID="rptKids" runat="server" OnItemDataBound="rptKids_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -124,8 +139,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -135,18 +150,18 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
-                    
+
                         <!-- MCRK Tab -->
                         <div class="tab-pane fade" id="mcrk" role="tabpanel">
                             <asp:Repeater ID="rptMCRK" runat="server" OnItemDataBound="rptMCRK_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -155,8 +170,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -166,17 +181,17 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
                         <!-- Charu Mindworks Tab -->
                         <div class="tab-pane fade" id="Charu_Mindworks" role="tabpanel">
                             <asp:Repeater ID="RepeaterCharu_Mindworks" runat="server" OnItemDataBound="RepeaterCharu_Mindworks_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -185,8 +200,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -196,17 +211,17 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
-                           <!-- Shree_Jagannath_Udyogag Tab -->
+                        <!-- Shree_Jagannath_Udyogag Tab -->
                         <div class="tab-pane fade" id="Shree_Jagannath_UdyogagAG" role="tabpanel">
                             <asp:Repeater ID="RepeaterShree_Jagannath_Udyog" runat="server" OnItemDataBound="RepeaterShree_Jagannath_Udyog_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -215,8 +230,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -226,16 +241,16 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
                         <div class="tab-pane fade" id="Hitech_ag" role="tabpanel">
                             <asp:Repeater ID="RepeaterHitech" runat="server" OnItemDataBound="RepeaterHitech_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -244,8 +259,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -255,16 +270,16 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
                         <div class="tab-pane fade" id="KeltronAG" role="tabpanel">
                             <asp:Repeater ID="RepeaterKeltronAG" runat="server" OnItemDataBound="RepeaterKeltronAG_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -273,8 +288,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -284,17 +299,17 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
 
                         <div class="tab-pane fade" id="Datasoft_ag" role="tabpanel">
                             <asp:Repeater ID="RepeaterDatasoft_ag" runat="server" OnItemDataBound="RepeaterDatasoft_ag_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -303,8 +318,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -314,16 +329,16 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
                         </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
                         <div class="tab-pane fade" id="Antier_ag" role="tabpanel">
                             <asp:Repeater ID="RepeaterAntier_ag" runat="server" OnItemDataBound="RepeaterAntier_ag_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -332,8 +347,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -343,17 +358,17 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
  </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
 
                         <div class="tab-pane fade" id="SSBDigital_ag" role="tabpanel">
                             <asp:Repeater ID="RepeaterSSBDigital_ag" runat="server" OnItemDataBound="RepeaterSSBDigital_ag_ItemDataBound">
-                                <HeaderTemplate>
+                                <headertemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -362,8 +377,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                </HeaderTemplate>       
-                                <ItemTemplate>
+                                </headertemplate>
+                                <itemtemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
                                         <td>
@@ -373,11 +388,11 @@
                                                 OnClick="btnDownload_Click" />
                                         </td>
                                     </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>     
+                                </itemtemplate>
+                                <footertemplate>
                                     </tbody>
 </table>
-                                </FooterTemplate>
+                                </footertemplate>
                             </asp:Repeater>
                         </div>
                     </div>

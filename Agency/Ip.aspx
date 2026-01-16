@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="IP Master" Language="C#" MasterPageFile="~/Agency/MasterPage.master" AutoEventWireup="true"
     CodeFile="Ip.aspx.cs" Inherits="Agency_Ip" %>
-    
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         function handleCheckboxChange(checkbox, type) {
@@ -13,7 +13,7 @@
                 case "FileUpload":
                     document.getElementById('<%= hdnFileUpload.ClientID %>').value = value;
                     break;
-             
+
             }
         }
     </script>
@@ -37,14 +37,16 @@
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 px-2">
                             <h5 class="font-15">IP Address</h5>
                             <asp:TextBox runat="server" ID="txtIPNumber" CssClass="form-control"
-                                Placeholder="Enter IP Address"></asp:TextBox>
+                                Placeholder="Enter IP Address">
+                            </asp:TextBox>
                         </div>
 
 
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 px-2">
                             <h5 class="font-15">Agency Name</h5>
                             <asp:TextBox runat="server" ID="txtAgencyName" CssClass="form-control"
-                                Placeholder="Agency Name (optional)"></asp:TextBox>
+                                Placeholder="Agency Name (optional)">
+                            </asp:TextBox>
                         </div>
 
 
@@ -54,7 +56,7 @@
 
                             <asp:HiddenField ID="hdnProcessCSV" runat="server" />
                             <asp:HiddenField ID="hdnFileUpload" runat="server" />
-                       
+
 
                             <div class="form-check">
                                 <input type="checkbox" id="chkProcessCSV" class="form-check-input"
@@ -68,7 +70,7 @@
                                 <label class="form-check-label" for="chkFileUpload">File Upload</label>
                             </div>
 
-                        
+
                         </div>
 
                         <div class="col-lg-2 col-md-2 col-sm-12 px-2">
@@ -98,19 +100,25 @@
                 <div class="card-body">
 
                     <div class="row mb-3">
+
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 px-2">
                             <h5 class="font-15">Select Status</h5>
-                            <asp:DropDownList runat="server" ID="ddl_Status" CssClass="form-control">
-                                <asp:ListItem Value="" Text="All" Selected="True"></asp:ListItem>
-                                <asp:ListItem Value="1" Text="Active"></asp:ListItem>
-                                <asp:ListItem Value="0" Text="Inactive"></asp:ListItem>
-                            </asp:DropDownList>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <asp:DropDownList runat="server" ID="ddl_Status" CssClass="form-control">
+                                        <asp:ListItem Value="" Text="All" Selected="True"></asp:ListItem>
+                                        <asp:ListItem Value="1" Text="Active"></asp:ListItem>
+                                        <asp:ListItem Value="0" Text="Inactive"></asp:ListItem>
+                                    </asp:DropDownList>
+                                       <div class="input-group-append">
+                                            <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click"
+                                CssClass="btn btn-primary " Text="Search" />
+                                           </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12 px-2 text-end">
-                            <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click"
-                                CssClass="btn btn-primary mt-4" Text="Search" />
-                        </div>
+                        
 
                         <div class="col-12 mt-2">
                             <asp:Label ID="lblMessage" runat="server" CssClass="text-info d-block mb-2"></asp:Label>
@@ -119,7 +127,7 @@
 
 
                     <asp:Repeater runat="server" ID="rpt_IPData" OnItemCommand="rpt_IPData_ItemCommand">
-                        <HeaderTemplate>
+                        <headertemplate>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-1">
                                     <thead>
@@ -132,16 +140,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                        </HeaderTemplate>
+                        </headertemplate>
 
-                        <ItemTemplate>
+                        <itemtemplate>
                             <tr>
                                 <td><%# Container.ItemIndex + 1 %></td>
                                 <td><%# Eval("IPNumber") %></td>
 
                                 <td><%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %></td>
                                 <td>
-                                     <asp:Button runat="server" ID="btnEdit" Text="Edit" CommandName="EditIP" CommandArgument='<%# Eval("Id") %>'
+                                    <asp:Button runat="server" ID="btnEdit" Text="Edit" CommandName="EditIP" CommandArgument='<%# Eval("Id") %>'
                                         CssClass="btn btn-primary btn-sm" />
 
                                     <asp:Button runat="server" ID="btnDeactivate" Text="Deactivate"
@@ -155,17 +163,17 @@
                                         Visible='<%# !Convert.ToBoolean(Eval("IsActive")) %>' />
                                 </td>
                             </tr>
-                        </ItemTemplate>
+                        </itemtemplate>
 
-                        <FooterTemplate>
-                            </tbody>
+                        <footertemplate>
+                    </tbody>
                                 </table>
-                            </div>
-                        </FooterTemplate>
-                    </asp:Repeater>
                 </div>
+                </FooterTemplate>
+                    </asp:Repeater>
             </div>
         </div>
+    </div>
     </div>
 
 </asp:Content>
