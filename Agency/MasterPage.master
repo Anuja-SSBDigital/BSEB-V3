@@ -20,6 +20,11 @@
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="../assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon_v1.png' />
+    <style>
+        .card{
+            padding-bottom:0px !important;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -46,16 +51,16 @@
                                 </strong>
                             </div>
                         </li>
-                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+                       <%-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                             class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
-                        </a>
-                            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                        </a>--%>
+                           <%-- <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
                                 <div class="dropdown-header">
                                     Notifications
                 <div class="float-right">
                     <a href="#">Mark All As Read</a>
                 </div>
-                                </div>
+                                </div>--%>
                                 <%--  <div class="dropdown-list-content dropdown-list-icons">
                                     <a href="#" class="dropdown-item dropdown-item-unread"><span
                                         class="dropdown-item-icon bg-primary text-white"><i class="fas
@@ -93,8 +98,8 @@
                                 <div class="dropdown-footer text-center">
                                     <a href="#">View All <i class="fas fa-chevron-right"></i></a>
                                 </div>--%>
-                            </div>
-                        </li>
+                        <%--    </div>
+                        </li>--%>
                         <li class="dropdown"><a href="#" data-toggle="dropdown"
                             class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="../assets/img/users/1577909.png"
@@ -108,13 +113,12 @@
                                     Agency Name:-<%: Session["agencyname"] != null ? Session["agencyname"].ToString() : "No Company" %>
                                 </div>
 
-                                <a href="profile.html" class="dropdown-item has-icon"><i class="far
+                              <%--  <a href="profile.html" class="dropdown-item has-icon"><i class="far
 										fa-user"></i>Profile
-                               <%-- </a><a href="timeline.html" class="dropdown-item has-icon"><i class="fas fa-bolt"></i>
-                                    Activities--%>
+                          
                                 </a><a href="#" class="dropdown-item has-icon"><i class="fas fa-cog"></i>
                                     Settings
-                                </a>
+                                </a--%>
                                 <div class="dropdown-divider"></div>
                                 <a href="logout.aspx" class="dropdown-item has-icon text-danger">
                                     <i class="fas fa-sign-out-alt"></i>Logout
@@ -127,7 +131,7 @@
                     <aside id="sidebar-wrapper">
                         <div class="sidebar-brand">
                             <a href="Dashboard.aspx">
-                                <img alt="image" src="../assets/img/bsebimage.jpg" class="header-logo " />
+                                <img alt="image" src="../assets/img/bsebimg.png" class="header-logo " />
                                 <span class="logo-name">BSEB</span></a>
                             <%-- <span class="logo-name"><asp:Label runat="server" ID="lbl_agencyname"></asp:Label></span>--%>
                         </div>
@@ -155,7 +159,7 @@
                                 <a href="filedownload.aspx" class="nav-link"><i data-feather="download"></i><span>Master Data</span></a>
                             </li>
 
-                              <li class="dropdown" runat="server" id="li_dcmntaccess" visible="false">
+                            <li class="dropdown" runat="server" id="li_dcmntaccess" visible="false">
                                 <a href="AgencyAccess.aspx" class="nav-link"><i data-feather="file"></i><span><strong>Document Access Setup</strong></span></a>
                             </li>
                             <li class="dropdown" runat="server" id="li_accesslist" visible="false">
@@ -174,7 +178,7 @@
                                 <a href="Documenttypemaster.aspx" class="nav-link"><i data-feather="file-text"></i><span><strong>Doc Type</strong></span></a>
                             </li>
                             <!-- New Parent Menu Item -->
-                           
+
                             <li class="dropdown" runat="server" id="li_Ipmaster" visible="false">
                                 <a href="Ip.aspx" class="nav-link"><i data-feather="server"></i><span><strong>IP Master</strong></span></a>
                             </li>

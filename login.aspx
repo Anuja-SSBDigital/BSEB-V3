@@ -43,7 +43,7 @@
     </style>
 </head>
 
-<body onload="generate()" style="background-image: url('assets/img/bg1.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
+<body onload="generate()" style="background-image: url('assets/img/image.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
     <form method="POST" class="needs-validation" novalidate runat="server"
         onsubmit="return validateForm();">
         <!-- <div class="square" style="--i:0;"></div>
