@@ -6293,7 +6293,7 @@ pre {
     height: 100%;
     width: 250px;
     /*background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);*/
-    background: #1768ac;
+    background: #135c99;
     z-index: 880;
     left: 0
 }
@@ -10592,7 +10592,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 }
 
 .theme-white .btn-primary {
-    background-color: #6777ef;
+    background-color: #135c99;
     border-color: transparent !important;
     color: #fff
 }

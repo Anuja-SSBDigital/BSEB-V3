@@ -9,6 +9,7 @@
                 <div class="card-header">
                     <h4>User Detailes </h4>
                 </div>
+
                 <div class="card-body">
                     <div class="row">
 
@@ -40,12 +41,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <asp:Button runat="server" ID="btn_submit" Text="Submit" CssClass="btn btn-primary btn-lg btn-block" OnClick="btn_submit_Click" />
-                        </div>
+
                     </div>
                 </div>
+                <div class="card-footer">
+                    <asp:Button runat="server" ID="btn_submit" Text="Submit" CssClass="btn btn-primary btn-lg " OnClick="btn_submit_Click" />
 
+                </div>
             </div>
         </div>
 
@@ -71,7 +73,7 @@
                             <tbody>
 
                                 <asp:Repeater runat="server" ID="rpt_userData" OnItemCommand="rpt_userData_ItemCommand" OnItemDataBound="rpt_userData_ItemDataBound">
-                                    <ItemTemplate>
+                                    <itemtemplate>
                                         <tr>
                                             <td>
                                                 <asp:HiddenField runat="server" ID="hf_emailid" Value='<%#Eval("email") %>' />
@@ -115,7 +117,7 @@
 
 
                                         </tr>
-                                    </ItemTemplate>
+                                    </itemtemplate>
                                 </asp:Repeater>
                             </tbody>
                         </table>

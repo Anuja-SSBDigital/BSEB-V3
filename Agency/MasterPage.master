@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="../assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon_v1.png' />
     <style>
-        .card{
-            padding-bottom:0px !important;
+        .card {
+            padding-bottom: 0px !important;
         }
     </style>
 </head>
@@ -44,24 +44,24 @@
                     <ul class="navbar-nav navbar-right">
                         <li class="menu-header">
                             <div class="border-danger p-2 mb-2 text-white"
-                                style="background: linear-gradient(135deg, #4c8bf5, #6777ef); border-radius: 10px; font-size: 16px; color: white;">
+                                style="background: #135c99; border-radius: 10px; font-size: 16px; color: white;">
                                 <strong>Welcome: 
             <%: Session["agencyname"] != null ? Session["agencyname"].ToString() : "No Company" %> |
             <%: Session["username"] != null ? Session["username"].ToString() : "Guest" %>
                                 </strong>
                             </div>
                         </li>
-                       <%-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+                        <%-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
                             class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
                         </a>--%>
-                           <%-- <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+                        <%-- <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
                                 <div class="dropdown-header">
                                     Notifications
                 <div class="float-right">
                     <a href="#">Mark All As Read</a>
                 </div>
                                 </div>--%>
-                                <%--  <div class="dropdown-list-content dropdown-list-icons">
+                        <%--  <div class="dropdown-list-content dropdown-list-icons">
                                     <a href="#" class="dropdown-item dropdown-item-unread"><span
                                         class="dropdown-item-icon bg-primary text-white"><i class="fas
 												fa-code"></i>
@@ -113,7 +113,7 @@
                                     Agency Name:-<%: Session["agencyname"] != null ? Session["agencyname"].ToString() : "No Company" %>
                                 </div>
 
-                              <%--  <a href="profile.html" class="dropdown-item has-icon"><i class="far
+                                <%--  <a href="profile.html" class="dropdown-item has-icon"><i class="far
 										fa-user"></i>Profile
                           
                                 </a><a href="#" class="dropdown-item has-icon"><i class="fas fa-cog"></i>
@@ -236,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <%--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(window).on('load', function () {
                 var currentURL = window.location.pathname;
@@ -251,7 +251,31 @@
             });
 
 
+        </script>--%>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(window).on('load', function () {
+                var currentURL = window.location.pathname.toLowerCase();
+
+                // remove previous active classes
+                $('.sidebar-menu li.dropdown').removeClass('active');
+
+                $('.sidebar-menu li.dropdown').each(function () {
+                    var link = $(this).find('a.nav-link').attr('href');
+
+                    if (link) {
+                        link = link.toLowerCase();
+
+                        // exact match
+                        if (currentURL.endsWith(link)) {
+                            $(this).addClass('active');
+                        }
+                    }
+                });
+            });
         </script>
+
         <script src="../assets/bundles/sweetalert/sweetalert.min.js"></script>
         <!-- Page Specific JS File -->
         <script src="../assets/js/page/sweetalert.js"></script>

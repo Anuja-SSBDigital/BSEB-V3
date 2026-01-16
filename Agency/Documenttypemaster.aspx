@@ -18,12 +18,13 @@
                     <div class="row">
 
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 px-2" runat="server" id="Div_admin">
-                            <h5 class="font-15"> Document Type</h5>
+                            <h5 class="font-15">Document Type</h5>
                             <asp:TextBox runat="server" ID="txtCategoryName" CssClass="form-control"
-                                Placeholder="Document Type Name"></asp:TextBox>
+                                Placeholder="Document Type Name">
+                            </asp:TextBox>
                         </div>
 
-                        <div class="col-lg-2 col-md-2 col-sm-12 px-2">
+                        <div class="col-lg-2 col-md-2 col-sm-12 px-2 form-inline">
                             <asp:Button runat="server" ID="btnAddCategory" OnClick="btnAddCategory_Click"
                                 CssClass="btn btn-primary mt-4" Text="Submit" />
                         </div>
@@ -54,17 +55,22 @@
                     <div class="row mb-3">
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 px-2">
                             <h5 class="font-15">Select Status</h5>
-                            <asp:DropDownList runat="server" ID="ddl_Status" CssClass="form-control">
-                                <asp:ListItem Value="" Text="All" Selected="True"></asp:ListItem>
-                                <asp:ListItem Value="1" Text="Active"></asp:ListItem>
-                                <asp:ListItem Value="0" Text="Inactive"></asp:ListItem>
-                            </asp:DropDownList>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <asp:DropDownList runat="server" ID="ddl_Status" CssClass="form-control">
+                                        <asp:ListItem Value="" Text="All" Selected="True"></asp:ListItem>
+                                        <asp:ListItem Value="1" Text="Active"></asp:ListItem>
+                                        <asp:ListItem Value="0" Text="Inactive"></asp:ListItem>
+                                    </asp:DropDownList>
+                                    <div class="input-group-append">
+                                        <asp:Button runat="server" ID="btnsearch" OnClick="btnsearch_Click"
+                                            CssClass="btn btn-primary" Text="Search" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-lg-2 col-md-6 col-sm-6 col-12 px-2 text-end">
-                            <asp:Button runat="server" ID="btnsearch" OnClick="btnsearch_Click"
-                                CssClass="btn btn-primary mt-4" Text="Search" />
-                        </div>
+
 
                         <div class="col-12 mt-2">
                             <asp:Label ID="lblMessage" runat="server" CssClass="text-info d-block mb-2"></asp:Label>
@@ -73,7 +79,7 @@
 
 
                     <asp:Repeater runat="server" ID="rpt_DocumentTypeData" OnItemCommand="rpt_DocumentTypeData_ItemCommand">
-                        <HeaderTemplate>
+                        <headertemplate>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-1">
                                     <thead>
@@ -85,16 +91,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                        </HeaderTemplate>
+                        </headertemplate>
 
-                        <ItemTemplate>
+                        <itemtemplate>
                             <tr>
                                 <td><%# Container.ItemIndex + 1 %></td>
                                 <td><%# Eval("DocTypeName") %></td>
                                 <td><%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %></td>
                                 <td>
 
-                                  <%--  <asp:Button runat="server" ID="btnEdit" Text="Edit"
+                                    <%--  <asp:Button runat="server" ID="btnEdit" Text="Edit"
                                         CommandName="EditDoc"
                                         CommandArgument='<%# Eval("Id") %>'
                                         CssClass="btn btn-primary btn-sm" />--%>
@@ -114,18 +120,18 @@
                                         Visible='<%# !Convert.ToBoolean(Eval("IsActive")) %>' />
                                 </td>
                             </tr>
-                        </ItemTemplate>
+                        </itemtemplate>
 
-                        <FooterTemplate>
-                            </tbody>
+                        <footertemplate>
+                    </tbody>
                                 </table>
-                            </div>
-                        </FooterTemplate>
+                </div>
+                </FooterTemplate>
                     </asp:Repeater>
 
-                </div>
             </div>
         </div>
+    </div>
     </div>
 
 </asp:Content>

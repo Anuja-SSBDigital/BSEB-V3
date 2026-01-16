@@ -24,7 +24,7 @@
                             </asp:TextBox>
                         </div>
 
-                        <div class="col-lg-2 col-md-2 col-sm-12 px-2">
+                        <div class="col-lg-2 col-md-2 col-sm-12 px-2 form-inline">
                             <asp:Button runat="server" ID="btnAddCategory" OnClick="btnAddCategory_Click"
                                 CssClass="btn btn-primary mt-4 " Text="Submit" />
                         </div>
