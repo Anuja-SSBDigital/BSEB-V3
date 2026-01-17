@@ -40,10 +40,53 @@
                 display: block;
             }
         }
+
+        /* Full background layer */
+        .network-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.15), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0, 150, 255, 0.15), transparent 40%), linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            overflow: hidden;
+        }
+
+            /* Connecting lines */
+            .network-bg::before,
+            .network-bg::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+                background-size: 80px 80px;
+                animation: moveGrid 40s linear infinite;
+            }
+
+            .network-bg::after {
+                opacity: 0.4;
+                animation-duration: 70s;
+            }
+
+        /* Animation */
+        @keyframes moveGrid {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(80px, 80px);
+            }
+        }
+
+        /* Login card stays clean */
+        .login-wrapper {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 
-<body onload="generate()" style="background-image: url('assets/img/image.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
+<body onload="generate()">
+    <div class="network-bg"></div>
     <form method="POST" class="needs-validation" novalidate runat="server"
         onsubmit="return validateForm();">
         <!-- <div class="square" style="--i:0;"></div>
@@ -52,89 +95,89 @@
     <div class="square" style="--i:3;"></div>
     <div class="square" style="--i:4;"></div>
     <div class="square" style="--i:5;"></div> -->
-        <div id="app">
-            <section class="section">
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-8 offset-lg-3 offset-md-3 offset-sm-2">
-                            <div class="card card-primary">
-                                <div class="header-logo text-center mt-2">
-                                    <div class="row">
-                                        <div class="align-right col-md-3 mt-2">
-                                            <img alt="image" src="assets/img/bsebimage.jpg" class="w-75">
-                                        </div>
-                                        <div class="align-content-around align-self-lg-end col-md-9 text-body">
+        <div class="login-wrapper">
+            <div id="app">
+                <section class="section">
+                    <div class="container mt-5">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-8 offset-lg-3 offset-md-3 offset-sm-2">
+                                <div class="card card-primary">
+                                    <div class="header-logo text-center mt-2">
+                                        <div class="row">
+                                            <div class="align-right col-md-3 mt-2">
+                                                <img alt="image" src="assets/img/bsebimage.jpg" class="w-75">
+                                            </div>
+                                            <div class="align-content-around align-self-lg-end col-md-9 text-body">
 
-                                            <h5>बिहार विद्यालय परीक्षा समिति
-                                            </h5>
-                                            <h6>BIHAR SCHOOL EXAMINATION BOARD
-                                            </h6>
-                                        </div>
-                                    </div>
-                                    <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
-                                </div>
-
-                                <div class="card-body">
-
-                                    <div class="form-group">
-                                        <label for="Username">UserID</label>
-                                        <asp:TextBox runat="server" ID="txt_UN" CssClass="form-control"></asp:TextBox>
-                                        <%-- <asp:Textbox id="txt_UN" type="text" class="form-control" name="txt_UN" tabindex="1" required autofocus>--%>
-                                        <div class="invalid-feedback">
-                                            Please fill in your UserName
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="d-block">
-                                            <label for="password" class="control-label">Password</label>
-                                        </div>
-                                        <asp:TextBox ID="txt_password" CssClass="form-control form-control" placeholder="Password" runat="server" Type="password"></asp:TextBox>
-                                        <div class="invalid-feedback">
-                                            please fill in your password
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" id="entered-captcha" placeholder="Enter the captcha.." class="form-control">
-                                    </div>
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend" style="cursor: pointer;">
-                                            <div class="input-group-text" onclick="generate()">
-                                                <i class="material-icons" id="iconuser">refresh</i>
+                                                <h5>बिहार विद्यालय परीक्षा समिति
+                                                </h5>
+                                                <h6>BIHAR SCHOOL EXAMINATION BOARD
+                                                </h6>
                                             </div>
                                         </div>
-                                        <input type="text" id="generated-captcha" class="form-control currency" readonly oncopy="return false;">
+                                        <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
                                     </div>
-                                    <%--  <div class="float-right">
+
+                                    <div class="card-body">
+
+                                        <div class="form-group">
+                                            <label for="Username">UserID</label>
+                                            <asp:TextBox runat="server" ID="txt_UN" CssClass="form-control"></asp:TextBox>
+                                            <%-- <asp:Textbox id="txt_UN" type="text" class="form-control" name="txt_UN" tabindex="1" required autofocus>--%>
+                                            <div class="invalid-feedback">
+                                                Please fill in your UserName
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="d-block">
+                                                <label for="password" class="control-label">Password</label>
+                                            </div>
+                                            <asp:TextBox ID="txt_password" CssClass="form-control form-control" placeholder="Password" runat="server" Type="password"></asp:TextBox>
+                                            <div class="invalid-feedback">
+                                                please fill in your password
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="entered-captcha" placeholder="Enter the captcha.." class="form-control">
+                                        </div>
+                                        <div class="input-group form-group">
+                                            <div class="input-group-prepend" style="cursor: pointer;">
+                                                <div class="input-group-text" onclick="generate()">
+                                                    <i class="material-icons" id="iconuser">refresh</i>
+                                                </div>
+                                            </div>
+                                            <input type="text" id="generated-captcha" class="form-control currency" readonly oncopy="return false;">
+                                        </div>
+                                        <%--  <div class="float-right">
                                         <a href="forgotpassword.php" class="float-right p-b-10">
                                             Forgot Password?
                                         </a>
                                     </div>--%>
 
-                                    <div class="form-group">
-                                        <%-- <asp:Button ID="btn_LoginUser" OnClick="btn_LoginUser_Click"
+                                        <div class="form-group">
+                                            <%-- <asp:Button ID="btn_LoginUser" OnClick="btn_LoginUser_Click"
                                     CssClass="btn btn-primary btn-lg btn-block" Type="submit" tabindex="4"
                                     runat="server" Text="Login" />--%>
-                                        <%-- <button type="submit" id="btn_Login" name="btn_Login" class="btn btn-primary btn-lg btn-block" tabindex="4" runat="server" onclick="btn_LoginUser_Click">
+                                            <%-- <button type="submit" id="btn_Login" name="btn_Login" class="btn btn-primary btn-lg btn-block" tabindex="4" runat="server" onclick="btn_LoginUser_Click">
                                             Login
                                         </button>--%>
-                                        <asp:Button runat="server" ID="btn_submit" Text="Submit" class="btn btn-primary btn-lg btn-block" OnClick="btn_submit_Click" />
-                                    </div>
+                                            <asp:Button runat="server" ID="btn_submit" Text="Submit" class="btn btn-primary btn-lg btn-block" OnClick="btn_submit_Click" />
+                                        </div>
 
-                                    <div class="text-center mt-4 mb-3">
-                                        <div class="text-job text-muted">
-                                            <a href="registerAgs.aspx" class="float-right p-b-10">Don't Have Account Register Here                                        </a>
+                                        <div class="text-center mt-4 mb-3">
+                                            <div class="text-job text-muted">
+                                                <a href="registerAgs.aspx" class="float-right p-b-10">Don't Have Account Register Here                                        </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
+
         </div>
-
-
-
         <script src="assets/bundles/izitoast/js/iziToast.min.js"></script>
         <!-- Page Specific JS File -->
         <%--<script src="../assets/js/page/toastr.js"></script>--%>

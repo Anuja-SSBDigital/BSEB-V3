@@ -20,6 +20,28 @@
     <link rel="stylesheet" href="assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='../assets/img/favicon_v1.png' />
     <link rel="stylesheet" href="assets/bundles/izitoast/css/iziToast.min.css">
+    <style>
+        .is-invalid {
+            border-color: #dc3545 !important;
+            background-image: none !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+            .is-invalid:focus {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+            }
+
+        @media (max-width: 576px) { /* mobile view */
+            .header-logo img {
+                width: 100% !important; /* or max 140-160px */
+                max-width: 100px;
+                height: auto;
+                margin: 0 auto 10px auto;
+                display: block;
+            }
+        }
+    </style>
 </head>
 
 <body onload="generate()" style="background-image: url('../assets/img/bg1.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
@@ -29,10 +51,21 @@
                 <div class="row">
                     <div class="col-12 col-lg-6 col-md-6 col-sm-8 offset-lg-3 offset-md-3 offset-sm-2">
                         <div class="card card-primary">
-                            <div class="header-logo text-center mt-2">
-                                <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
-                                <img alt="image" src="assets/img/bsebimage.jpg" class="width-per-17">
-                            </div>
+                             <div class="header-logo text-center mt-2">
+                                    <div class="row">
+                                        <div class="align-right col-md-3 mt-2">
+                                            <img alt="image" src="assets/img/bsebimage.jpg" class="w-75">
+                                        </div>
+                                        <div class="align-content-around align-self-lg-end col-md-9 text-body">
+
+                                            <h5>बिहार विद्यालय परीक्षा समिति
+                                            </h5>
+                                            <h6>BIHAR SCHOOL EXAMINATION BOARD
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
+                                </div>
 
                             <div class="card-body">
                                 <form runat="server" class="needs-validation" novalidate >
