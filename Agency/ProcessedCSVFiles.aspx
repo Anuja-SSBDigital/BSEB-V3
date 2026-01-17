@@ -83,17 +83,17 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                                                                        <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
+                                                                                        <%--<asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
                                                 Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
-                                            <%--<asp:LinkButton
+                                                OnClick="btnDownload_Click" />--%>
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
-                                                CssClass="btn btn-icon icon-left btn-primary"
+                                                CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> Download
-                                            </asp:LinkButton>--%>
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
 
                                         </td>
 
@@ -125,9 +125,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                             <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -156,9 +161,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                             <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -187,9 +197,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                              <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -217,9 +232,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                              <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -247,9 +267,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                              <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -276,9 +301,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                              <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -305,9 +335,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                             <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -335,9 +370,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                             <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -364,9 +404,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                              <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
@@ -394,9 +439,14 @@
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />
+                                             <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+    <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>

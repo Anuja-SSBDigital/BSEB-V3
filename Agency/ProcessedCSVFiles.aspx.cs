@@ -210,7 +210,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
                 return;
             }
 
-            Button btn = (Button)sender;
+            //Button btn = (Button)sender;
+            LinkButton btn = (LinkButton)sender;
             RepeaterItem item = (RepeaterItem)btn.NamingContainer;
 
           
@@ -309,7 +310,7 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
          
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
            
             if (btnDownload != null)
@@ -329,10 +330,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
          
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-           
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-           
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -350,10 +351,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-          
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-          
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -371,10 +372,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-          
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-         
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -392,10 +393,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-           
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-          
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -413,10 +414,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-         
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-            
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -434,10 +435,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-            
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-          
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -455,10 +456,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
         
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-            
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-           
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -476,10 +477,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
           
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-          
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-           
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -497,10 +498,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-          
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
 
-          
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
             if (btnDownload != null)
             {
                 btnDownload.Visible = loggedInAgency != fileAgency;
@@ -519,7 +520,7 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
             // Find the download button in the row
-            Button btnDownload = (Button)e.Item.FindControl("btnDownload");
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
             // Hide button if the logged-in agency is the same as the file agency
             if (btnDownload != null)
