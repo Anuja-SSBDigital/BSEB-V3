@@ -41,119 +41,86 @@
                 display: block;
             }
         }
-
-        .network-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.15), transparent 40%), radial-gradient(circle at 80% 70%, rgba(0, 150, 255, 0.15), transparent 40%), linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-            overflow: hidden;
-        }
-
-            /* Connecting lines */
-            .network-bg::before,
-            .network-bg::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background-image: linear-gradient(rgb(255 255 255 / 15%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 13%) 1px, #00000000 1px);
-                background-size: 80px 80px;
-                animation: moveGrid 40s linear infinite;
-            }
-
-            .network-bg::after {
-                opacity: 0.4;
-                animation-duration: 70s;
-            }
-
-       
-
-        /* Login card stays clean */
-        .login-wrapper {
-            position: relative;
-            z-index: 2;
-        }
     </style>
 </head>
 
-<body onload="generate()">
-    <div class="network-bg"></div>
-    <div class="login-wrapper">
+<body onload="generate()" style="background-image: url('assets/img/bg1.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
 
-        <div id="app">
-            <section class="section">
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-12 col-lg-6 col-md-6 col-sm-8 offset-lg-3 offset-md-3 offset-sm-2">
-                            <div class="card card-primary">
-                                <div class="header-logo text-center mt-2">
-                                    <div class="row">
-                                        <div class="align-right col-md-3 mt-2">
-                                            <img alt="image" src="assets/img/bsebimage.jpg" class="w-75">
-                                        </div>
-                                        <div class="align-content-around align-self-lg-end col-md-9 text-body">
 
-                                            <h5>बिहार विद्यालय परीक्षा समिति
-                                            </h5>
-                                            <h6>BIHAR SCHOOL EXAMINATION BOARD
-                                            </h6>
-                                        </div>
+    <div id="app">
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-8 offset-lg-3 offset-md-3 offset-sm-2">
+                        <div class="card card-primary">
+                            <div class="header-logo text-center mt-2">
+                                <div class="row">
+                                    <div class="align-right col-md-3 mt-2">
+                                        <img alt="image" src="assets/img/bsebimage.jpg" class="w-75">
                                     </div>
-                                    <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
-                                </div>
+                                    <div class="align-content-around align-self-lg-end col-md-9 text-body">
 
-                                <div class="card-body">
-                                    <form runat="server" class="needs-validation" novalidate>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="agency-name">Agency Name</label>
-                                                    <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" Required="true">
-                                                        <asp:ListItem Value="" Text="Select Agency Name" Selected="True"></asp:ListItem>
-                                                        <asp:ListItem Value="Mapple" Text="Mapple"></asp:ListItem>
-                                                        <asp:ListItem Value="Datacon" Text="Datacon"></asp:ListItem>
-                                                        <asp:ListItem Value="Kids" Text="Kids"></asp:ListItem>
-                                                        <asp:ListItem Value="MCRK" Text="MCRK"></asp:ListItem>
-                                                        <asp:ListItem Value="Keltron" Text="Keltron"></asp:ListItem>
-                                                        <asp:ListItem Value="Charu Mindworks" Text="Charu Mindworks"></asp:ListItem>
-                                                        <asp:ListItem Value="Hitech" Text="Hitech"></asp:ListItem>
-                                                        <asp:ListItem Value="Shree Jagannath Udyog" Text="Shree Jagannath Udyog"></asp:ListItem>
-                                                        <asp:ListItem Value="Datasoft" Text="Datasoft"></asp:ListItem>
-                                                        <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
-                                                        <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
-                                                    </asp:DropDownList>
-                                                    <div class="invalid-feedback">Please select agency name</div>
-                                                </div>
+                                        <h5>बिहार विद्यालय परीक्षा समिति
+                                        </h5>
+                                        <h6>BIHAR SCHOOL EXAMINATION BOARD
+                                        </h6>
+                                    </div>
+                                </div>
+                                <%--<img alt="image" src="assets/img/bsebimage.jpg" class="header-logo" />--%>
+                            </div>
+
+                            <div class="card-body">
+                                <form runat="server" class="needs-validation" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="agency-name">Agency Name</label>
+                                                <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" Required="true">
+                                                    <asp:ListItem Value="" Text="Select Agency Name" Selected="True"></asp:ListItem>
+                                                    <asp:ListItem Value="Mapple" Text="Mapple"></asp:ListItem>
+                                                    <asp:ListItem Value="Datacon" Text="Datacon"></asp:ListItem>
+                                                    <asp:ListItem Value="Kids" Text="Kids"></asp:ListItem>
+                                                    <asp:ListItem Value="MCRK" Text="MCRK"></asp:ListItem>
+                                                    <asp:ListItem Value="Keltron" Text="Keltron"></asp:ListItem>
+                                                    <asp:ListItem Value="Charu Mindworks" Text="Charu Mindworks"></asp:ListItem>
+                                                    <asp:ListItem Value="Hitech" Text="Hitech"></asp:ListItem>
+                                                    <asp:ListItem Value="Shree Jagannath Udyog" Text="Shree Jagannath Udyog"></asp:ListItem>
+                                                    <asp:ListItem Value="Datasoft" Text="Datasoft"></asp:ListItem>
+                                                    <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
+                                                    <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
+                                                </asp:DropDownList>
+                                                <div class="invalid-feedback">Please select agency name</div>
                                             </div>
                                         </div>
+                                    </div>
 
 
-                                        <%-- <div class="form-group">
+                                    <%-- <div class="form-group">
                                         <label for="Username">UserName</label>
                                         <asp:TextBox runat="server" ID="txt_UN" CssClass="form-control" Required="true"></asp:TextBox>
                                         <div class="invalid-feedback">Please fill in your UserName</div>
                                     </div>--%>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="email">Email</label>
-                                                    <asp:TextBox runat="server" ID="txt_Email" CssClass="form-control" TextMode="Email" Required="true"></asp:TextBox>
-                                                    <div class="invalid-feedback">Please enter a valid email</div>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <asp:TextBox runat="server" ID="txt_Email" CssClass="form-control" TextMode="Email" Required="true"></asp:TextBox>
+                                                <div class="invalid-feedback">Please enter a valid email</div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="phone">Phone</label>
-                                                    <asp:TextBox runat="server" ID="txt_Phone" CssClass="form-control" Required="true"></asp:TextBox>
-                                                    <div class="invalid-feedback">Please enter a valid phone number</div>
-                                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="phone">Phone</label>
+                                                <asp:TextBox runat="server" ID="txt_Phone" CssClass="form-control" Required="true"></asp:TextBox>
+                                                <div class="invalid-feedback">Please enter a valid phone number</div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <%--<div class="form-group">
+                                    <%--<div class="form-group">
                                         <label for="password">Password</label>
                                         <asp:TextBox runat="server" ID="txt_Password" CssClass="form-control" TextMode="Password" Required="true"></asp:TextBox>
                                         <div class="invalid-feedback">Please fill in your password</div>
@@ -165,38 +132,38 @@
                                         <div class="invalid-feedback">Please confirm your password</div>
                                     </div>--%>
 
-                                        <div class="form-group">
-                                            <asp:TextBox runat="server" ID="entered_captcha" CssClass="form-control" Placeholder="Enter the captcha.."></asp:TextBox>
-                                        </div>
+                                    <div class="form-group">
+                                        <asp:TextBox runat="server" ID="entered_captcha" CssClass="form-control" Placeholder="Enter the captcha.."></asp:TextBox>
+                                    </div>
 
-                                        <div class="input-group form-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text" onclick="generate()">
-                                                    <i class="material-icons" id="iconuser">refresh</i>
-                                                </div>
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text" onclick="generate()">
+                                                <i class="material-icons" id="iconuser">refresh</i>
                                             </div>
-                                            <asp:TextBox runat="server" ID="generated_captcha" CssClass="form-control currency" ReadOnly="true" OnCopy="return false;"></asp:TextBox>
                                         </div>
+                                        <asp:TextBox runat="server" ID="generated_captcha" CssClass="form-control currency" ReadOnly="true" OnCopy="return false;"></asp:TextBox>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <asp:Button runat="server" ID="btn_submit" Text="Register" CssClass="btn btn-primary btn-lg btn-block" OnClick="btn_submit_Click" />
-                                        </div>
-                                    </form>
-                                    <div class="text-center mt-4 mb-3">
-                                        <div class="text-job text-muted">
-                                            <a href="login.aspx" class="float-right p-b-10">Already have an account? Login here</a>
-                                        </div>
+                                    <div class="form-group">
+                                        <asp:Button runat="server" ID="btn_submit" Text="Register" CssClass="btn btn-primary btn-lg btn-block" OnClick="btn_submit_Click" />
+                                    </div>
+                                </form>
+                                <div class="text-center mt-4 mb-3">
+                                    <div class="text-job text-muted">
+                                        <a href="login.aspx" class="float-right p-b-10">Already have an account? Login here</a>
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
-
                 </div>
-            </section>
-        </div>
+
+            </div>
+        </section>
     </div>
+
     <script src="assets/bundles/izitoast/js/iziToast.min.js"></script>
     <script>
         let captcha;
