@@ -56,7 +56,7 @@
                 content: "";
                 position: absolute;
                 inset: 0;
-                background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+                background-image: linear-gradient(rgb(255 255 255 / 15%) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 13%) 1px, #00000000 1px);
                 background-size: 80px 80px;
                 animation: moveGrid 40s linear infinite;
             }
@@ -66,16 +66,7 @@
                 animation-duration: 70s;
             }
 
-        /* Animation */
-        @keyframes moveGrid {
-            from {
-                transform: translate(0, 0);
-            }
 
-            to {
-                transform: translate(80px, 80px);
-            }
-        }
 
         /* Login card stays clean */
         .login-wrapper {
