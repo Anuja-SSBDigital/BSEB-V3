@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <div class="col-md-6">
+                        <%--  <div class="col-md-6">
                             <div class="form-group">
                                 <label for="agency-name">Agency Name</label>
                                 <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" Required="true">
@@ -27,7 +27,24 @@
                                 </asp:DropDownList>
                                 <div class="invalid-feedback">Please select User name</div>
                             </div>
+                        </div>--%>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="agency-name">Agency Name</label>
+
+                                <asp:DropDownList
+                                    runat="server"
+                                    ID="ddl_AgencyName"
+                                    CssClass="form-control"
+                                    AppendDataBoundItems="true">
+                                    <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
+                                </asp:DropDownList>
+
+                                <div class="invalid-feedback">Please select Agency Name</div>
+                            </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="agency-name">User Status</label>
@@ -73,7 +90,7 @@
                             <tbody>
 
                                 <asp:Repeater runat="server" ID="rpt_userData" OnItemCommand="rpt_userData_ItemCommand" OnItemDataBound="rpt_userData_ItemDataBound">
-                                    <itemtemplate>
+                                    <ItemTemplate>
                                         <tr>
                                             <td>
                                                 <asp:HiddenField runat="server" ID="hf_emailid" Value='<%#Eval("email") %>' />
@@ -117,7 +134,7 @@
 
 
                                         </tr>
-                                    </itemtemplate>
+                                    </ItemTemplate>
                                 </asp:Repeater>
                             </tbody>
                         </table>
@@ -129,4 +146,3 @@
         </div>
     </div>
 </asp:Content>
-

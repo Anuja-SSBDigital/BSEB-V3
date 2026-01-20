@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data.SqlClient;
 
 public partial class Agency_approveprofile : System.Web.UI.Page
 {
@@ -15,12 +17,14 @@ public partial class Agency_approveprofile : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+        BindAgencyDropdown();
         if (!IsPostBack)
         {
             if (Session["userid"] != null)
             {
 
-
+             
 
             }
             else
@@ -38,12 +42,36 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         if (resforuser.Rows.Count > 0)
         {
             rpt_userData.DataSource = resforuser;
-            rpt_userData.DataBind();
+            rpt_userData.DataBind();    
         }
         else
         {
             rpt_userData.DataSource = null;
             rpt_userData.DataBind();
+        }
+    }
+
+    private void BindAgencyDropdown()
+    {
+        string conStr = ConfigurationManager
+                        .ConnectionStrings["dbcon"]
+                        .ConnectionString;
+
+        using (SqlConnection con = new SqlConnection(conStr))
+        {
+            using (SqlCommand cmd = new SqlCommand(
+                @"SELECT DISTINCT agencyname 
+                  FROM agencyuser 
+                  WHERE agencyname IS NOT NULL 
+                  ORDER BY agencyname", con))
+            {
+                con.Open();
+
+                ddl_AgencyName.DataSource = cmd.ExecuteReader();
+                ddl_AgencyName.DataTextField = "agencyname";
+                ddl_AgencyName.DataValueField = "agencyname";
+                ddl_AgencyName.DataBind();
+            }
         }
     }
 
