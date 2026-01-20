@@ -46,6 +46,7 @@ public partial class Agency_owneragencydetails : System.Web.UI.Page
 
         if (dt != null && dt.Rows.Count > 0)
         {
+            Agency_detailes.Visible = true;
             rpt_Agencywisedata.DataSource = dt;
             rpt_Agencywisedata.DataBind();
          
