@@ -41,10 +41,11 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         DataTable resforuser = fl.FindUser(ddl_AgencyName.SelectedValue, UserStatus);
         if (resforuser.Rows.Count > 0)
         {
+            User_detailes.Visible = true;
             rpt_userData.DataSource = resforuser;
             rpt_userData.DataBind();    
         }
-        else
+        else 
         {
             rpt_userData.DataSource = null;
             rpt_userData.DataBind();

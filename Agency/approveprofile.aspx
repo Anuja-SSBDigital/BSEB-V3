@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="col-12">
+        <div class="col-12" runat="server" id="User_detailes" visible="false">
             <div class="card">
                 <div class="card-header">
                     <h4>User Detailes</h4>
