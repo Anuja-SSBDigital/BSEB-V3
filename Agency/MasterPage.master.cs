@@ -43,7 +43,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 menurights();
                 if (Session["agencyname"].ToString() == "Datasoft" || Session["agencyname"].ToString() == "Antier" || Session["agencyname"].ToString() == "SSB Digital")
                 {
-                    li_fileDownload.Visible = true;
+                    li_fileDownload.Visible = false;
                 }
                 else
                 {

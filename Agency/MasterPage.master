@@ -146,13 +146,13 @@
                             <li class="dropdown" runat="server" id="li_fileupload">
                                 <a href="fileupload.aspx" class="nav-link"><i data-feather="upload"></i><span>Upload File</span></a>
                             </li>
-                            <li class="dropdown" runat="server" id="li_approveprofile">
+                            <li class="dropdown" runat="server" id="li_approveprofile" >
                                 <a href="approveprofile.aspx" class="nav-link"><i data-feather="upload"></i><span>Approve Profile</span></a>
                             </li>
                             <li class="dropdown" runat="server" id="li_processfilecsvfiles">
                                 <a href="ProcessedCSVFiles.aspx" class="nav-link"><i data-feather="activity"></i><span>Other Agency File</span></a>
                             </li>
-                            <li class="dropdown" runat="server" id="li_duplicatediscrepency">
+                            <li class="dropdown" runat="server" id="li_duplicatediscrepency" visible="false">
                                 <a href="duplicateordiscrepancy.aspx" class="nav-link"><i data-feather="copy"></i><span>Duplicate/Discrepency Files</span></a>
                             </li>
                             <li class="dropdown" runat="server" id="li_fileDownload" visible="false">
