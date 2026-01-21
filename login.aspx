@@ -41,6 +41,33 @@
             }
         }
 
+        .version-badge {
+            position: fixed;
+            bottom: 15px; /* adjust distance from bottom */
+            right: 20px; /* adjust distance from right */
+            z-index: 9999; /* stays on top */
+
+            padding: 6px 14px; /* pill-like padding */
+            font-size: 12px; /* small & readable */
+            font-weight: 600;
+            color: #ffffff; /* white text for contrast */
+            background-color: rgba(0, 123, 255, 0.85); /* light blue base – change color as needed */
+            border-radius: 50px; /* fully rounded pill shape */
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), /* soft drop shadow */
+            0 0 12px rgba(0, 123, 255, 0.6); /* subtle blue glow/light effect */
+
+            pointer-events: none; /* won't interfere with clicks */
+            opacity: 0.92; /* slightly transparent for elegance */
+            transition: all 0.3s ease;
+        }
+
+            .version-badge:hover {
+                opacity: 1;
+                transform: scale(1.08); /* gentle enlarge on hover */
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 123, 255, 0.9); /* stronger glow on hover */
+            }
+
         /* Full background layer */
     </style>
 </head>
@@ -136,7 +163,7 @@
                 </div>
             </section>
         </div>
-
+        <div class="version-badge">Version 3</div>
 
         <script src="assets/bundles/izitoast/js/iziToast.min.js"></script>
         <!-- Page Specific JS File -->
