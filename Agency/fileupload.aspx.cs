@@ -1,21 +1,20 @@
-﻿using CsvHelper;       
-using CsvHelper.Configuration;
-using ExcelDataReader;
-using iTextSharp.text;
-using log4net;
+﻿using ExcelDataReader;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;      
 using System.Data.SqlClient;
-using System.Globalization;
+using System.Data;      
 using System.IO;             
 using System.Linq;        
-using System.Text;
 using System.Web;   
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text;
+using CsvHelper.Configuration;
+using CsvHelper;       
+using System.Globalization;
+using log4net;
+using System.Configuration;
 
 
 public partial class fileupload : System.Web.UI.Page
@@ -46,7 +45,8 @@ public partial class fileupload : System.Web.UI.Page
 
     private void BindDocCategory()
     {
-       
+        try   
+        {
             FlureeCS fl = new FlureeCS();
             DataTable dt = fl.DocumentCategoryMaster();
 
@@ -58,13 +58,17 @@ public partial class fileupload : System.Web.UI.Page
                 ddl_doctype.DataBind();
             }
 
-            ddl_doctype.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
-      
+            ddl_doctype.Items.Insert(0, new ListItem("Select Doc Category", "0"));
+        }
+        catch (Exception ex)
+        {
+            
+        }
     }
-
     private void BindDocumentType()
     {
-       
+        try
+        {
             FlureeCS fl = new FlureeCS();
             DataTable dt = fl.Documenttypemaster();
 
@@ -76,15 +80,18 @@ public partial class fileupload : System.Web.UI.Page
                 ddl_sub_doc_type.DataBind();
             }
 
-            ddl_sub_doc_type.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
-       
+            ddl_sub_doc_type.Items.Insert(0, new ListItem("Select File Type", "0"));
+        }
+        catch (Exception ex)
+        {
+           
+        }
     }
-
-
 
     private void BindExamSessionType()
     {
-      
+        try
+        {
             FlureeCS fl = new FlureeCS();
             DataTable dt = fl.ExamSessionmaster();
 
@@ -99,16 +106,19 @@ public partial class fileupload : System.Web.UI.Page
             }
 
           
-           // System.Web.UI.WebControls.ListItem exam26 = ddl_Examsession.Items.FindByValue("Exam-26");
-           // if (exam26 != null)
-            //{
-            //    ddl_Examsession.ClearSelection();
-            //    exam26.Selected = true;
-            //}
-        
+            ListItem exam26 = ddl_Examsession.Items.FindByValue("Exam-26");
+            if (exam26 != null)
+            {
+                ddl_Examsession.ClearSelection();
+                exam26.Selected = true;
+            }
+        }
+        catch (Exception ex)      
+        {
+          
+        }
     }
 
-    //   
     public string GetClientIp()
     {
         string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -135,16 +145,18 @@ public partial class fileupload : System.Web.UI.Page
             ip = "127.0.0.1";
         }
 
-      
+                           
         if (ip.StartsWith("::ffff:"))
-        {
+        {                                 
             ip = ip.Replace("::ffff:", "");
         }
 
         ip = ip.Trim(); 
 
-        return ip;
+        return ip;    
     }
+
+      
 
     protected void btn_submit_Click(object sender, EventArgs e)
     {      
@@ -153,59 +165,32 @@ public partial class fileupload : System.Web.UI.Page
             try       
             {
                 string clientIp = GetClientIp();
-                
+                List<string> allowedIps =fl. GetAllowedIPsFromDB().Select(ip => ip.Trim()).ToList();
 
-                // Normalize IPv6-mapped IPv4
+              
                 if (clientIp.StartsWith("::ffff:"))
                 {
                     clientIp = clientIp.Replace("::ffff:", "");
                 }
 
                 log.Info("Client IP detected: " + clientIp);
+                log.Info("Allowed IPs: " + string.Join(", ", allowedIps));
 
-                // Check permission
-                bool isAllowed = fl.IsActionAllowed(clientIp, "UPLOAD");
-
-                log.Info("Is upload allowed: " + isAllowed);
-
-                // Allow localhost for testing
-                if (!isAllowed && clientIp != "127.0.0.1")
-               
+             
+                if (!allowedIps.Contains(clientIp) && clientIp != "127.0.0.1")
                 {
                     log.Info("Unauthorized upload attempt from IP: " + clientIp);
-
-                    ScriptManager.RegisterStartupScript(
-                        this,
-                        GetType(),
-                        "alert",
-                        @"swal({ 
-            title: 'Access Denied!', 
-            text: 'You are not authorized to upload files.', 
-            icon: 'error', 
-            button: 'OK' 
-        });",
-                        true
-                    );
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", @"swal({ title: 'Access Denied!', text: 'You are not authorized to Upload files.', icon: 'error', button: 'OK' });", true);
                     return;
                 }
 
+              
                 string examSession = ddl_Examsession.SelectedValue;
                 if (string.IsNullOrEmpty(examSession))
                 {
-                    ScriptManager.RegisterStartupScript(
-    this,
-    GetType(),
-    "alert",
-    "swal({ " +
-    "title: 'Required!', " +
-    "text: 'Please select Exam Session.', " +
-    "icon: 'warning', " +
-    "button: 'OK' " +
-    "});",
-    true
-);
+                    ScriptManager.RegisterStartupScript(this, GetType(),
+                        "alert", "alert('Please select Exam Session');", true);
                     return;
-
                 }
 
                 string baseUploadFolder = Server.MapPath("~/Uploads/");
@@ -253,22 +238,20 @@ public partial class fileupload : System.Web.UI.Page
                 {
                     cleanedSubdoctype = words[0];
                 }
-                else
+                else      
                 {
-                    cleanedSubdoctype = subdoctype.Replace(" ", "");
+                    cleanedSubdoctype = subdoctype.Replace(" ", "");      
                 }
 
-
-                
                 string filename = string.Concat(agency, "_Inter_", doctype, "_", cleanedSubdoctype, "_", timestamp, fileExtension);
 
-                string uploadRootPath = Path.Combine(baseUploadFolder, filename);
-                fl_file.SaveAs(uploadRootPath);
+                //string uploadRootPath = Path.Combine(baseUploadFolder, filename);
+                //fl_file.SaveAs(uploadRootPath);
 
-                FileStream fs = File.OpenRead(uploadRootPath);
-                string hash = fl.SHA256CheckSum(fs);
+                //FileStream fs = File.OpenRead(uploadRootPath);
+                //string hash = fl.SHA256CheckSum(fs);
 
-                string res = fl.Insertfilehash(actualfilename, filename, hash, agency, cleanedSubdoctype);
+                //string res = fl.Insertfilehash(actualfilename, filename, hash, agency, cleanedSubdoctype);
 
                 string savedFilePath = Path.Combine(subdoctypeFolder, filename);
                 fl_file.SaveAs(savedFilePath);
@@ -278,71 +261,41 @@ public partial class fileupload : System.Web.UI.Page
 
                 string dbFilePath = "Uploads/" + examSession + "/" + doctype + "/" + subdoctype + "/" + filename;
 
+          
+                using (FileStream fs = File.OpenRead(savedFilePath))
+                {
+                    string hash = fl.SHA256CheckSum(fs);
+                    string res = fl.Insertfilehash(actualfilename, filename, hash, agency, cleanedSubdoctype);
+                }
+
                 string resfile = fl.InsertProcessFileDetails(filename, dbFilePath, agency, username);
 
-                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, subdoctype, agency, "");
-
+                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, subdoctype, agency, "Process");
+                   
                 string userId = Session["username"].ToString();
                 string agencyName = Session["agencyname"].ToString();
                 string deviceUsed = Request.Browser.Type;
                    
                 string reslog = fl.Insertactivitylog(userId, clientIp, deviceUsed, "upload", filename, agencyName);
 
-                ClientScript.RegisterStartupScript(
-     this.GetType(),
-     "alert",
-     "swal({ " +
-     "title: 'Success!', " +
-     "text: 'Your file " + filename + " has been uploaded successfully!', " +
-     "icon: 'success', " +
-     "button: 'OK' " +
-     "});",
-     true
- );
-                return;
-
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Your file " + filename + " has been uploaded successfully!');", true);
             }
             catch (Exception ex)
-            {
-                string errorMessage = ex.Message.Replace("'", "\\'");
-
-                string script =
-                    "swal({ " +
-                    "title: 'Error!', " +
-                    "text: 'Error: " + errorMessage + "', " +
-                    "icon: 'error', " +
-                    "button: 'OK' " +
-                    "});";
-
-                ScriptManager.RegisterStartupScript(
-                    this,
-                    GetType(),
-                    "errorAlert",
-                    script,
-                    true
-                );
-                return;
-
+            {      
+                string script = "alert('Error: " + ex.Message.Replace("'", "\\'") + "');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "errorAlert", script, true);
             }
-        }
+        }                                               
         else
-        {
-            ScriptManager.RegisterStartupScript(
-    this,
-    GetType(),
-    "fileAlert",
-    "swal({ title: 'Warning!', text: 'Please select a file to upload.', icon: 'warning', button: 'OK' });",
-    true
-);
-            return;
-
+        {           
+            Response.Write("<script>alert('Please select a file to upload.')</script>");
         }
-
-    }
-         
+             
+    }       
+                                                                                              
     private DataTable ReadExcelFile(string filePath)
     {
-        DataTable dt = new DataTable();
+        DataTable dt = new DataTable();  
         using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
         {
             using (var reader = ExcelReaderFactory.CreateReader(stream))
@@ -405,8 +358,9 @@ public partial class fileupload : System.Web.UI.Page
         }
 
         return dt;
-    }
-
+    }  
+   
+                                                                                                                                                                    
     private void SaveDataTableToCSV(DataTable dt, string filePath)
     {
         using (StreamWriter writer = new StreamWriter(filePath))
@@ -421,7 +375,7 @@ public partial class fileupload : System.Web.UI.Page
             }
         }
     }         
-
+    //    
     protected void btn_submittoken_Click(object sender, EventArgs e)
     {
     
@@ -440,10 +394,9 @@ public partial class fileupload : System.Web.UI.Page
         {
             lbl_validate.Text = "Key is Invalid or Expired";
             lbl_validate.ForeColor = System.Drawing.Color.Red;
-            btn_submit.Visible = false;
+            btn_submit.Visible = false;    
             div_fileupload.Visible = false;
         }
     }
 
-  
 }
