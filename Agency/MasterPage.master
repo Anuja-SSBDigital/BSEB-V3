@@ -137,7 +137,7 @@
                         </div>
                         <ul class="sidebar-menu">
                             <li class="menu-header"></li>
-                            <li class="dropdown" runat="server" id="li_dashboard">
+                            <li class="dropdown" runat="server" id="li_dashboard" visible="false">
                                 <a href="dashboard.aspx" class="nav-link "><i data-feather="monitor"></i><span>Dashboard</span></a>
                             </li>
                             <li class="dropdown" runat="server" id="li_template">

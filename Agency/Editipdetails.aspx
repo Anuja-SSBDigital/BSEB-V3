@@ -33,7 +33,7 @@
                         <h5 class="mb-3">Access Type</h5>
 
                         <div class="col-lg-4 col-md-4 col-sm-12 mb-2">
-                            <asp:CheckBox ID="chkProcessCSV" runat="server" Text="Process CSV" CssClass="me-2" />
+                            <asp:CheckBox ID="chkProcessCSV" runat="server" Text="File Download" CssClass="me-2" />
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-12 mb-2">

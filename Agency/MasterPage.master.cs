@@ -13,7 +13,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         if(Session["role"].ToString() == "Admin")
         {
             li_approveprofile.Visible = true;
-            li_dashboard.Visible = true;
+            li_dashboard.Visible = false;
             li_template.Visible = false;
             li_fileupload.Visible = false;
             li_processfilecsvfiles.Visible = false;
@@ -29,7 +29,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         else
         {
             li_template.Visible = true;
-            li_dashboard.Visible = true;
+            li_dashboard.Visible = false;
             li_approveprofile.Visible = false;
             li_fileupload.Visible = true;
         }
