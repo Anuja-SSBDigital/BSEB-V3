@@ -24,25 +24,28 @@ public partial class login : System.Web.UI.Page
             Session["userid"] = null;
         }
     }
-       
+    
+                                                      
     protected void btn_submit_Click(object sender, EventArgs e)
     {
-        // List<string> allowedIps = new List<string> { "115.243.18.60", "117.203.160.250", "103.90.159.37", "125.16.33.1", "152.58.187.74","152.58.189.90" };
-         // string userIp = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-         // if (string.IsNullOrEmpty(userIp))
-         // {
-             // userIp = Request.ServerVariables["REMOTE_ADDR"];
-         // }
 
-         // if (!allowedIps.Contains(userIp))
-         // {
-             // Response.Write("<script>alert('Access denied');</script>");
-             // return;
-         // }
+
+        // List<string> allowedIps = new List<string> { "115.243.18.60", "117.203.160.250", "103.90.159.37", "125.16.33.1", "152.58.187.74","152.58.189.90" };
+        // string userIp = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+        // if (string.IsNullOrEmpty(userIp))
+        // {
+        // userIp = Request.ServerVariables["REMOTE_ADDR"];
+        // }
+
+        // if (!allowedIps.Contains(userIp))
+        // {
+        // Response.Write("<script>alert('Access denied');</script>");
+        // return;
+        // }
+
         try
         {
-              
-               //           
+               
             DataTable res = fl.CheckLogin(txt_UN.Text, txt_password.Text);
             if (res.Rows.Count > 0)
             {
@@ -51,7 +54,18 @@ public partial class login : System.Web.UI.Page
                 Session["role"] = res.Rows[0]["role"].ToString();
                 Session["mobileno"] = res.Rows[0]["mobileno"].ToString();
                 Session["agencyname"] = res.Rows[0]["agencyname"].ToString();
-                Response.Redirect("~/Agency/Dashboard.aspx");
+
+                if (Session["role"].ToString() == "Admin")
+                {
+
+                    Response.Redirect("~/Agency/AgencyAccess.aspx");
+                }
+                else
+                {
+                    Response.Redirect("~/Agency/fileupload.aspx");
+
+                }
+
             }     
             else
             {       
@@ -63,7 +77,7 @@ public partial class login : System.Web.UI.Page
         catch (WebException ex)
         {
 
-            //fl.log.Error("Unable to connect to the remote server");
+          
             Response.Write("<script>alert('Error: " + ex + "');</script>");
 
         }
