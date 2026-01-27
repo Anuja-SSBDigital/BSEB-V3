@@ -110,15 +110,15 @@
                                         <asp:ListItem Value="1" Text="Active"></asp:ListItem>
                                         <asp:ListItem Value="0" Text="Inactive"></asp:ListItem>
                                     </asp:DropDownList>
-                                       <div class="input-group-append">
-                                            <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click"
-                                CssClass="btn btn-primary " Text="Search" />
-                                           </div>
+                                    <div class="input-group-append">
+                                        <asp:Button runat="server" ID="btnSearch" OnClick="btnSearch_Click"
+                                            CssClass="btn btn-primary " Text="Search" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        
+
 
                         <div class="col-12 mt-2">
                             <asp:Label ID="lblMessage" runat="server" CssClass="text-info d-block mb-2"></asp:Label>
@@ -127,7 +127,7 @@
 
 
                     <asp:Repeater runat="server" ID="rpt_IPData" OnItemCommand="rpt_IPData_ItemCommand">
-                        <headertemplate>
+                        <HeaderTemplate>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-1">
                                     <thead>
@@ -135,45 +135,74 @@
                                             <th>Sr.No.</th>
                                             <th>IP Address</th>
 
+                                            <th>Agency Name</th>
+
+                                            <th>Access Type </th>
+
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                        </headertemplate>
+                        </HeaderTemplate>
 
-                        <itemtemplate>
+                        <ItemTemplate>
                             <tr>
                                 <td><%# Container.ItemIndex + 1 %></td>
+
                                 <td><%# Eval("IPNumber") %></td>
 
-                                <td><%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %></td>
                                 <td>
-                                    <asp:Button runat="server" ID="btnEdit" Text="Edit" CommandName="EditIP" CommandArgument='<%# Eval("Id") %>'
+                                    <%# string.IsNullOrEmpty(Eval("AgencyName").ToString()) 
+                ? " " 
+                : Eval("AgencyName") %>
+                                </td>
+
+                                <td>
+                                    <%#
+        (Convert.ToBoolean(Eval("CanUpload")) ? "File Upload<br/>" : "") +
+        (Convert.ToBoolean(Eval("CanProcessCSV")) ? "File Download" : "")
+                                    %>
+                                </td>
+
+                                <td>
+                                    <span class='<%# Convert.ToBoolean(Eval("IsActive")) %>'>
+                                        <%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %>
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <asp:Button runat="server" ID="btnEdit" Text="Edit"
+                                        CommandName="EditIP"
+                                        CommandArgument='<%# Eval("Id") %>'
                                         CssClass="btn btn-primary btn-sm" />
 
                                     <asp:Button runat="server" ID="btnDeactivate" Text="Deactivate"
-                                        CommandName="ToggleStatus" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-danger btn-sm"
-                                        OnClientClick="return confirm('Are you sure you want to deactivate this Id?');"
+                                        CommandName="ToggleStatus"
+                                        CommandArgument='<%# Eval("Id") %>'
+                                        CssClass="btn btn-danger btn-sm"
+                                        OnClientClick="return confirm('Are you sure you want to deactivate this IP?');"
                                         Visible='<%# Convert.ToBoolean(Eval("IsActive")) %>' />
 
-                                    <asp:Button runat="server" ID="btnActivate" Text="Activate" CommandName="ToggleStatus"
-                                        CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-success btn-sm"
-                                        OnClientClick="return confirm('Are you sure you want to activate this Id?');"
+                                    <asp:Button runat="server" ID="btnActivate" Text="Activate"
+                                        CommandName="ToggleStatus"
+                                        CommandArgument='<%# Eval("Id") %>'
+                                        CssClass="btn btn-success btn-sm"
+                                        OnClientClick="return confirm('Are you sure you want to activate this IP?');"
                                         Visible='<%# !Convert.ToBoolean(Eval("IsActive")) %>' />
                                 </td>
                             </tr>
-                        </itemtemplate>
+                        </ItemTemplate>
 
-                        <footertemplate>
-                    </tbody>
+                        <FooterTemplate>
+                            </tbody>
                                 </table>
                 </div>
-                </FooterTemplate>
+                        </FooterTemplate>
                     </asp:Repeater>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
 </asp:Content>
