@@ -50,12 +50,12 @@
                         <li class="nav-item">
                             <a class="nav-link" id="Hitech-tab" data-toggle="tab" href="#Hitech_ag" role="tab">Hitech</a>
                         </li>
-                        <li class="nav-item">
+                      <%--  <li class="nav-item">
                             <a class="nav-link" id="Keltron-tab" data-toggle="tab" href="#KeltronAG" role="tab">Keltron</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="Datasoft-tab" data-toggle="tab" href="#Datasoft_ag" role="tab">Datasoft</a>
-                        </li>
+                        </li>--%>
                         <li class="nav-item">
                             <a class="nav-link" id="Antier-tab" data-toggle="tab" href="#Antier_ag" role="tab">Antier</a>
                         </li>
@@ -318,7 +318,7 @@
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>
-                        <div class="tab-pane fade" id="KeltronAG" role="tabpanel">
+                    <%--    <div class="tab-pane fade" id="KeltronAG" role="tabpanel">
                             <asp:Repeater ID="RepeaterKeltronAG" runat="server" OnItemDataBound="RepeaterKeltronAG_ItemDataBound">
                                 <HeaderTemplate>
                                     <table class="table table-bordered">
@@ -386,7 +386,7 @@
                         </table>
                                 </FooterTemplate>
                             </asp:Repeater>
-                        </div>
+                        </div>--%>
                         <div class="tab-pane fade" id="Antier_ag" role="tabpanel">
                             <asp:Repeater ID="RepeaterAntier_ag" runat="server" OnItemDataBound="RepeaterAntier_ag_ItemDataBound">
                                 <HeaderTemplate>

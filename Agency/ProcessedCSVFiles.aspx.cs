@@ -92,8 +92,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
                             { "Charu_Mindworks", res.Clone() },
                             { "Shree_Jagannath_Udyog", res.Clone() },
                             { "Hitech", res.Clone() },
-                            { "Keltron", res.Clone() },
-                            { "Datasoft", res.Clone() },
+                            //{ "Keltron", res.Clone() },
+                            //{ "Datasoft", res.Clone() },
                             { "Antier", res.Clone() },
                             { "SSBDigital", res.Clone() }
                         };
@@ -124,8 +124,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
             BindRepeater(RepeaterCharu_Mindworks, tabData["Charu_Mindworks"]);
             BindRepeater(RepeaterShree_Jagannath_Udyog, tabData["Shree_Jagannath_Udyog"]);
             BindRepeater(RepeaterHitech, tabData["Hitech"]);
-            BindRepeater(RepeaterKeltronAG, tabData["Keltron"]);
-            BindRepeater(RepeaterDatasoft_ag, tabData["Datasoft"]);
+            //BindRepeater(RepeaterKeltronAG, tabData["Keltron"]);
+            //BindRepeater(RepeaterDatasoft_ag, tabData["Datasoft"]);
             BindRepeater(RepeaterAntier_ag, tabData["Antier"]);
             BindRepeater(RepeaterSSBDigital_ag, tabData["SSBDigital"]);
         }
@@ -446,47 +446,47 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
         }
     }
                
-    protected void RepeaterKeltronAG_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-        {
+    //protected void RepeaterKeltronAG_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    //{
+    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+    //    {
               
-            string loggedInAgency = Session["agencyname"].ToString();
+    //        string loggedInAgency = Session["agencyname"].ToString();
 
         
-            string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+    //        string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
 
-            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+    //        LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
 
-            if (btnDownload != null)
-            {
-                btnDownload.Visible = loggedInAgency != fileAgency;
-            }
-        }
-    }        
+    //        if (btnDownload != null)
+    //        {
+    //            btnDownload.Visible = loggedInAgency != fileAgency;
+    //        }
+    //    }
+    //}        
 
-    protected void RepeaterDatasoft_ag_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-        {
+    //protected void RepeaterDatasoft_ag_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    //{
+    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+    //    {
             
-            string loggedInAgency = Session["agencyname"].ToString();
+    //        string loggedInAgency = Session["agencyname"].ToString();
 
           
-            string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+    //        string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
 
-            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+    //        LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
 
-            if (btnDownload != null)
-            {
-                btnDownload.Visible = loggedInAgency != fileAgency;
-            }
-        }
-    }
+    //        if (btnDownload != null)
+    //        {
+    //            btnDownload.Visible = loggedInAgency != fileAgency;
+    //        }
+    //    }
+    //}
 
     protected void RepeaterAntier_ag_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
