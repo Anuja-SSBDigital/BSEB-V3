@@ -61,7 +61,7 @@
                             <div class="form-check">
                                 <input type="checkbox" id="chkProcessCSV" class="form-check-input"
                                     onclick="handleCheckboxChange(this, 'ProcessCSV')" />
-                                <label class="form-check-label" for="chkProcessCSV">Process CSV</label>
+                                <label class="form-check-label" for="chkProcessCSV">File Download</label>
                             </div>
 
                             <div class="form-check">
