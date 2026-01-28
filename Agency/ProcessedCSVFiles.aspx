@@ -21,7 +21,7 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card" runat="server" id="CrossFiles_All" visible="true">
+            <div class="card card-primary " runat="server" id="CrossFiles_All" visible="true">
                 <div class="card-header text-center">
                     <h5>Files Available for Download</h5>
                 </div>
