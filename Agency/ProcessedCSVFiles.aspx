@@ -50,7 +50,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="Hitech-tab" data-toggle="tab" href="#Hitech_ag" role="tab">Hitech</a>
                         </li>
-                      <%--  <li class="nav-item">
+                        <%--  <li class="nav-item">
                             <a class="nav-link" id="Keltron-tab" data-toggle="tab" href="#KeltronAG" role="tab">Keltron</a>
                         </li>
                         <li class="nav-item">
@@ -73,6 +73,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -81,18 +82,24 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                   ? " " 
+                                            : Eval("Remarks") %>
+                                        </td>
+
+
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                                                                        <%--<asp:Button ID="btnDownload" runat="server" CssClass="btn btn-primary btn-sm"
-                                                Text="Download" CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click" />--%>
+
                                             <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                               <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
 
                                         </td>
@@ -115,6 +122,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -123,22 +131,30 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                  ? " " 
+                                             : Eval("Remarks") %>
+                                        </td>
+
+
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                             <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                                <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     </tbody>
-                        </table>
+                                      </table>
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>
@@ -151,6 +167,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -159,15 +176,22 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                      ? " " 
+                                                   : Eval("Remarks") %>
+                                        </td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                             <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                      <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
@@ -187,6 +211,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -195,15 +220,22 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                     ? " " 
+                                               : Eval("Remarks") %>
+                                        </td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                              <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                           <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
@@ -222,6 +254,8 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -230,15 +264,21 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                      ? " " 
+                                                  : Eval("Remarks") %>
+                                        </td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                              <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                        <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
@@ -257,6 +297,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -265,23 +306,31 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                   ? " " 
+                                               : Eval("Remarks") %>
+                                        </td>
+
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                              <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                          <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    </tbody>
-                        </table>
-                                </FooterTemplate>
+                                     </tbody>
+                                    </table>
+                                  </FooterTemplate>
                             </asp:Repeater>
                         </div>
                         <div class="tab-pane fade" id="Hitech_ag" role="tabpanel">
@@ -291,6 +340,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -299,15 +349,23 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                        ? " " 
+                                              : Eval("Remarks") %>
+                                        </td>
+
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                              <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                              <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
@@ -318,7 +376,7 @@
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>
-                    <%--    <div class="tab-pane fade" id="KeltronAG" role="tabpanel">
+                        <%--    <div class="tab-pane fade" id="KeltronAG" role="tabpanel">
                             <asp:Repeater ID="RepeaterKeltronAG" runat="server" OnItemDataBound="RepeaterKeltronAG_ItemDataBound">
                                 <HeaderTemplate>
                                     <table class="table table-bordered">
@@ -394,6 +452,9 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+
+                                                <th>Remarks</th>
+
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -402,22 +463,31 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                          ? " " 
+                                           : Eval("Remarks") %>
+                                        </td>
+
+
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                              <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                         <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     </tbody>
- </table>
+                                    </table>
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>
@@ -429,6 +499,8 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>File Name</th>
+
+                                                <th>Remarks</th>
                                                 <th>Download</th>
                                             </tr>
                                         </thead>
@@ -437,22 +509,29 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                    ? " " 
+                                           : Eval("Remarks") %>
+                                        </td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                             <asp:LinkButton
+                                            <asp:LinkButton
                                                 ID="btnDownload"
                                                 runat="server"
                                                 CssClass="btn btn-icon icon-left btn-success"
                                                 CommandArgument='<%# Eval("filePath") %>'
                                                 OnClick="btnDownload_Click">
-    <i class="fa fa-download"></i> 
+                                    <i class="fa fa-download"></i> 
                                             </asp:LinkButton>
                                         </td>
                                     </tr>
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     </tbody>
-</table>
+                                      </table>
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>

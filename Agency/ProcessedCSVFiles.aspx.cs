@@ -75,6 +75,7 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
 
         return ip;
     }
+   
     private void LoadFilteredData()
     {
 
@@ -175,7 +176,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
             //}
 
             string clientIp = GetClientIp();
-
+                 
+         //      
 
             // Normalize IPv6-mapped IPv4
             if (clientIp.StartsWith("::ffff:"))
@@ -309,7 +311,11 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
           
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
-         
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
+
+
+
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
            
@@ -329,6 +335,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
 
          
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
 
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
@@ -351,6 +359,9 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
+
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
@@ -371,6 +382,9 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
 
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
 
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
@@ -393,6 +407,9 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
+
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
@@ -413,6 +430,9 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
 
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
 
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
@@ -435,6 +455,9 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
            
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
+
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
 
@@ -445,15 +468,15 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
             }
         }
     }
-               
+
     //protected void RepeaterKeltronAG_ItemDataBound(object sender, RepeaterItemEventArgs e)
     //{
     //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
     //    {
-              
+
     //        string loggedInAgency = Session["agencyname"].ToString();
 
-        
+
     //        string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
 
@@ -471,10 +494,10 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
     //{
     //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
     //    {
-            
+
     //        string loggedInAgency = Session["agencyname"].ToString();
 
-          
+
     //        string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
 
 
@@ -492,11 +515,13 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
-          
+
             string loggedInAgency = Session["agencyname"].ToString();
 
-           
+
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
 
 
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
@@ -509,6 +534,48 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
         }
     }
 
+
+    //protected void RepeaterAntier_ag_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    //{
+    //    if (e.Item.ItemType == ListItemType.Item ||
+    //        e.Item.ItemType == ListItemType.AlternatingItem)
+    //    {
+    //        // Logged-in agency
+    //        string loggedInAgency = Convert.ToString(Session["agencyname"]);  
+
+    //        // File agency
+    //        string fileAgency = Convert.ToString(
+    //            DataBinder.Eval(e.Item.DataItem, "agency")
+    //        );
+
+    //        // Remark
+    //        string remark = Convert.ToString(
+    //            DataBinder.Eval(e.Item.DataItem, "Remark")
+    //        );
+
+    //        // Download button
+    //        LinkButton btnDownload = e.Item.FindControl("btnDownload") as LinkButton;
+    //        if (btnDownload != null)
+    //        {
+    //            btnDownload.Visible = !string.Equals(
+    //                loggedInAgency,
+    //                fileAgency,
+    //                StringComparison.OrdinalIgnoreCase
+    //            );
+    //        }
+
+    //        // Remark label
+    //        Label lblRemark = e.Item.FindControl("lblRemark") as Label;
+    //        if (lblRemark != null)
+    //        {
+    //            lblRemark.Text = string.IsNullOrWhiteSpace(remark)
+    //                ? "<span class='text-muted'>—</span>"
+    //                : Server.HtmlEncode(remark);
+    //        }
+    //    }
+    //}
+
+
     protected void RepeaterSSBDigital_ag_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -518,6 +585,12 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
 
             // Get the file agency from the current row
             string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+
+
+
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
+
 
             // Find the download button in the row
             LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
