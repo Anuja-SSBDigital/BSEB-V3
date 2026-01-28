@@ -25,7 +25,7 @@
 
     <div class="row" runat="server" id="div_search">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h4>IP Master</h4>
                 </div>
@@ -92,7 +92,7 @@
 
     <div class="row mt-3">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h4>IP Master Data</h4>
                 </div>
