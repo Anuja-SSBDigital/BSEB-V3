@@ -80,8 +80,6 @@ public partial class fileupload : System.Web.UI.Page
        
     }
 
-
-
     private void BindExamSessionType()
     {
       
@@ -139,7 +137,7 @@ public partial class fileupload : System.Web.UI.Page
         if (ip.StartsWith("::ffff:"))
         {
             ip = ip.Replace("::ffff:", "");
-        }
+        }                                
 
         ip = ip.Trim(); 
 
@@ -218,6 +216,27 @@ public partial class fileupload : System.Web.UI.Page
                 string doctype = ddl_doctype.SelectedValue;
                 string subdoctype = ddl_sub_doc_type.SelectedValue;
 
+                string remark = txtRemark.Text.Trim();
+
+
+                if (string.IsNullOrWhiteSpace(remark))
+                {
+                    ScriptManager.RegisterStartupScript(
+                        this,
+                        GetType(),
+                        "remarkAlert",
+                        "swal({ " +
+                        "title: 'Required!', " +
+                        "text: 'Remark is mandatory for file upload.', " +
+                        "icon: 'warning', " +
+                        "button: 'OK' " +
+                        "});",
+                        true
+                    );
+                    return;
+                }
+
+
                 string agency = Session["agencyname"].ToString();
                 string username = Session["username"].ToString();
 
@@ -236,6 +255,8 @@ public partial class fileupload : System.Web.UI.Page
                  
                 string[] words = subdoctype.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 string cleanedSubdoctype = "";
+               
+                    
 
                 if (words.Length > 3)
                 {
@@ -248,23 +269,22 @@ public partial class fileupload : System.Web.UI.Page
                 else if (words.Length > 1)
                 {
                     cleanedSubdoctype = words[0] + "_" + words[1];
-                }
+                }          
+                                
                 else if (words.Length == 1)
                 {
-                    cleanedSubdoctype = words[0];
+                    cleanedSubdoctype = words[0];                
                 }
+
                 else
                 {
                     cleanedSubdoctype = subdoctype.Replace(" ", "");
                 }
-
-
-                
                 string filename = string.Concat(agency, "_Inter_", doctype, "_", cleanedSubdoctype, "_", timestamp, fileExtension);
 
                 //string uploadRootPath = Path.Combine(baseUploadFolder, filename);
                 //fl_file.SaveAs(uploadRootPath);
-
+                 
                 
 
                 string savedFilePath = Path.Combine(subdoctypeFolder, filename);
@@ -281,7 +301,7 @@ public partial class fileupload : System.Web.UI.Page
 
                 string resfile = fl.InsertProcessFileDetails(filename, dbFilePath, agency, username);
 
-                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, subdoctype, agency, "");
+                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, subdoctype, agency, "",remark);
 
                 string userId = Session["username"].ToString();
                 string agencyName = Session["agencyname"].ToString();
@@ -404,7 +424,7 @@ public partial class fileupload : System.Web.UI.Page
                 dt.Rows.Add(row);
             }
         }
-
+               
         return dt;
     }
 
@@ -436,6 +456,8 @@ public partial class fileupload : System.Web.UI.Page
             lbl_validate.ForeColor = System.Drawing.Color.Green;
             btn_submit.Visible = true;
             div_fileupload.Visible = true;
+
+            div_remarks.Visible = true;
         }
         else
         {
@@ -443,6 +465,7 @@ public partial class fileupload : System.Web.UI.Page
             lbl_validate.ForeColor = System.Drawing.Color.Red;
             btn_submit.Visible = false;
             div_fileupload.Visible = false;
+            div_remarks.Visible = false;
         }
     }
 

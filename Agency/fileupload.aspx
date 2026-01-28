@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card card-primary">
-                <div class="card-header">     
+                <div class="card-header">
                     File Upload
                 </div>
                 <div class="card-body">
@@ -28,7 +28,7 @@
                                 </div>
                             </div>
 
-                           <div class="col-md-3">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Exam Session">Exam Session</label>
                                     <asp:DropDownList ID="ddl_Examsession" runat="server" CssClass="form-control">
@@ -56,7 +56,7 @@
                             </div>
 
                         </div>
-                              
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -74,6 +74,9 @@
 
                             </div>
                         </div>
+
+
+
                         <div class="row" runat="server" id="div_fileupload">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -81,6 +84,21 @@
                                     <asp:FileUpload runat="server" ID="fl_file" class="form-control" onchange="checkFile()" />
                                     <div class="invalid-feedback">Please upload a valid file</div>
                                 </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12" runat="server" id="div_remarks" visible="false">
+                            <div class="form-group">
+                                <label for="txtRemark">Remark</label>
+                                <asp:TextBox
+                                    ID="txtRemark"
+                                    runat="server"
+                                    CssClass="form-control"
+                                    TextMode="MultiLine"
+                                    Rows="4"
+                                    Placeholder="Enter remark ">
+                                </asp:TextBox>
                             </div>
                         </div>
 
@@ -95,12 +113,12 @@
     <script>     
 
 
-        function validateForm() {   
+        function validateForm() {
             var ddlDoctype = document.getElementById('<%= ddl_doctype.ClientID %>').value;
             var ddlSubDocType = document.getElementById('<%= ddl_sub_doc_type.ClientID %>').value;
 
             var ddlExamSessionType = document.getElementById('<%= ddl_Examsession.ClientID %>').value;
-               
+
             if (ddlDoctype === "ALL") {
                 alert("Please select a valid Document Category.");
                 return false;
@@ -124,7 +142,7 @@
             if (ddl_Examsession === "") {
                 alert("Please select a Exam Session.");
                 return false;
-            }     
+            }
             return true;
         }
 
