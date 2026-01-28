@@ -5,8 +5,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
         <div class="col-12">
-            <div class="card shadow-sm border-0 rounded-3">
-                <div class="card-header bg-white border-bottom">
+            <div class="card card-primary">
+                <div class="card-header">
                     <h5 class="mb-0 text-dark">Private Key Management</h5>
                 </div>
                 <div class="card-body">
@@ -67,7 +67,7 @@
 
     <div class="row mt-4">
         <div class="col-12">
-            <div class="card">
+            <div class="card card-primary">
 
                 <div class="card-header">
                     <h4>Agency User Key Data</h4>
