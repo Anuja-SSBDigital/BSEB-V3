@@ -95,6 +95,7 @@
                                                         <th>Actual File Name</th>
                                                         <th>File Name</th>
                                                         <th>Remarks</th>
+                                                        <th>Upload Date</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -106,6 +107,7 @@
                                                                 <td><%# Eval("actualfilename") %></td>
                                                                 <td><%# Eval("filename") %></td>
                                                                 <td><%# Eval("Remarks") %></td>
+                                                                <td><%# Eval("createddate") %></td>
                                                             </tr>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
