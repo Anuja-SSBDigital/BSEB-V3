@@ -14,8 +14,18 @@
                     <h4>Document Type Master</h4>
                 </div>
 
+
                 <div class="card-body">
-                    <div class="row">
+
+                  
+                    <div class="row mb-3">
+
+                        <div class="col-md-4">
+                            <label>Document Category</label>
+                            <asp:DropDownList ID="ddlDocType" runat="server"
+                                CssClass="form-control">
+                            </asp:DropDownList>
+                        </div>
 
                         <div class="col-lg-4 col-md-6 col-sm-6 col-12 px-2" runat="server" id="Div_admin">
                             <h5 class="font-15">Document Type</h5>
@@ -96,25 +106,22 @@
                         <itemtemplate>
                             <tr>
                                 <td><%# Container.ItemIndex + 1 %></td>
-                                <td><%# Eval("DocTypeName") %></td>
+                                <td><%# Eval("subdoctypename") %></td>
                                 <td><%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %></td>
                                 <td>
 
-                                    <%--  <asp:Button runat="server" ID="btnEdit" Text="Edit"
-                                        CommandName="EditDoc"
-                                        CommandArgument='<%# Eval("Id") %>'
-                                        CssClass="btn btn-primary btn-sm" />--%>
+                                  
 
                                     <asp:Button runat="server" ID="btnDeactivate" Text="Deactivate"
                                         CommandName="ToggleStatus"
-                                        CommandArgument='<%# Eval("Id") %>'
+                                        CommandArgument='<%# Eval("subdocId") %>'
                                         CssClass="btn btn-danger btn-sm"
                                         OnClientClick="return confirm('Are you sure you want to deactivate this record?');"
                                         Visible='<%# Convert.ToBoolean(Eval("IsActive")) %>' />
 
                                     <asp:Button runat="server" ID="btnActivate" Text="Activate"
                                         CommandName="ToggleStatus"
-                                        CommandArgument='<%# Eval("Id") %>'
+                                        CommandArgument='<%# Eval("subdocId") %>'
                                         CssClass="btn btn-success btn-sm"
                                         OnClientClick="return confirm('Are you sure you want to activate this record?');"
                                         Visible='<%# !Convert.ToBoolean(Eval("IsActive")) %>' />
