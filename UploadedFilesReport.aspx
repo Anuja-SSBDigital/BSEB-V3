@@ -21,9 +21,7 @@
     <link rel="stylesheet" href="../assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
     <style>
         body {
-            background: radial-gradient(circle at top left, #263c82 0%, #0d214f 70%);
-      
-            
+            background: radial-gradient(circle at top left, #2c4a9c 0%, #142b5e 70%);
         }
     </style>
 </head>
@@ -62,8 +60,10 @@
                                                 <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
                                                 <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
                                             </asp:DropDownList>
+                                            <small id="passwordHelpBlock" class="form-text text-muted">Fileformats : Agency_Board_doctype_Subdoctype_timestamp 
+                                        </small>
                                         </div>
-
+                                        
                                     </div>
 
 
