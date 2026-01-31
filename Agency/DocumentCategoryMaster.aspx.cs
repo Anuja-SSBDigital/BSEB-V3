@@ -14,10 +14,10 @@ public partial class DocumentCategoryMaster : System.Web.UI.Page
          
         try
         {
-            // Always map safely from app root, even if page is in /Agency/
+         
             string logDirectory = Server.MapPath("~/Logs");
 
-            // If Logs folder doesn’t exist, create it
+           
             if (!Directory.Exists(logDirectory))
             {
                 Directory.CreateDirectory(logDirectory);
@@ -25,7 +25,7 @@ public partial class DocumentCategoryMaster : System.Web.UI.Page
 
             string logFilePath = Path.Combine(logDirectory, "DocumentCategoryMaster.txt");
 
-            // Write message with timestamp
+            
             using (StreamWriter writer = new StreamWriter(logFilePath, true))
             {
                 writer.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " - " + message);
@@ -33,7 +33,7 @@ public partial class DocumentCategoryMaster : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            // In case logging itself fails, fallback to Event Viewer
+          
             try
             {
                 System.Diagnostics.EventLog.WriteEntry("Application",
@@ -42,13 +42,13 @@ public partial class DocumentCategoryMaster : System.Web.UI.Page
             }
             catch
             {
-                // ignore silently
+               
             }
         }
     }
 
   
- //                                                                                                                                                                      
+                                                                                                                                                                  
     protected void Page_Load(object sender, EventArgs e)
     {
         LogMessage("=== Page_Load triggered on " + DateTime.Now + " ===");

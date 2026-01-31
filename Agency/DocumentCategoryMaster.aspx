@@ -100,21 +100,16 @@
                                 <td><%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %></td>
                                 <td>
 
-                                    <%-- <asp:Button runat="server" ID="btnEdit" Text="Edit"
-                                        CommandName="EditDoc"
-                                        CommandArgument='<%# Eval("Id") %>'
-                                        CssClass="btn btn-primary btn-sm" />--%>
-
                                     <asp:Button runat="server" ID="btnDeactivate" Text="Deactivate"
                                         CommandName="ToggleStatus"
-                                        CommandArgument='<%# Eval("Id") %>'
+                                        CommandArgument='<%# Eval("doctypeId") %>'
                                         CssClass="btn btn-danger btn-sm"
                                         OnClientClick="return confirm('Are you sure you want to deactivate this record?');"
                                         Visible='<%# Convert.ToBoolean(Eval("IsActive")) %>' />
 
                                     <asp:Button runat="server" ID="btnActivate" Text="Activate"
                                         CommandName="ToggleStatus"
-                                        CommandArgument='<%# Eval("Id") %>'
+                                        CommandArgument='<%# Eval("doctypeId") %>'
                                         CssClass="btn btn-success btn-sm"
                                         OnClientClick="return confirm('Are you sure you want to activate this record?');"
                                         Visible='<%# !Convert.ToBoolean(Eval("IsActive")) %>' />
