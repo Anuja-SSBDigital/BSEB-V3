@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Otika - Admin Dashboard Template</title>
+    <title>BSEB - Admin Dashboard</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="assets/css/app.min.css">
     <!-- Template CSS -->
@@ -19,9 +19,16 @@
     <link rel='shortcut icon' type='image/x-icon' href='assets/img/favicon.ico' />
     <link rel="stylesheet" href="../assets/bundles/datatables/datatables.min.css">
     <link rel="stylesheet" href="../assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top left, #263c82 0%, #0d214f 70%);
+      
+            
+        }
+    </style>
 </head>
 
-<body style="background-image: url('assets/img/bg1.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
+<body>
     <div class="loader"></div>
     <form id="form1" runat="server">
 
@@ -44,7 +51,7 @@
                                             <h2 class="mb-3 font-18">
                                                 <asp:Label runat="server" ID="Label1"></asp:Label>
                                             </h2>
-                                            <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" >
+                                            <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control">
                                                 <asp:ListItem Value="" Text="Select Agency Name" Selected="True"></asp:ListItem>
                                                 <asp:ListItem Value="Hitech" Text="Hitech"></asp:ListItem>
                                                 <asp:ListItem Value="Datacon" Text="Datacon"></asp:ListItem>
