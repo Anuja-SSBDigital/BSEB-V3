@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spire.Doc.Interface;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,42 +9,57 @@ using System.Web.UI.WebControls;
 
 public partial class UploadedFilesReport : System.Web.UI.Page
 {
+    
     FlureeCS fl = new FlureeCS();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            lblMessage.Text = "";
 
+        }
     }
 
-    
     protected void btn_Search_Click(object sender, EventArgs e)
     {
-        string ownerAgency = ddl_AgencyName.SelectedValue.Trim();
+        lblMessage.Text = "";
+        Agency_detailes.Visible = false;
+        rpt_Agencywisedata.DataSource = null;
+        rpt_Agencywisedata.DataBind();
 
-        if (string.IsNullOrEmpty(ownerAgency))
+        if (string.IsNullOrEmpty(ddl_AgencyName.SelectedValue))
         {
-            lblMessage.Text = "Please select Owner Agency.";
-            lblMessage.CssClass = "text-danger";
-            rpt_Agencywisedata.DataSource = null;
-            rpt_Agencywisedata.DataBind();
+            lblMessage.Text = "Please select an agency.";
             return;
         }
 
-        DataTable dt = fl.GetProcessFileList(ownerAgency);
+        DataTable dt = fl.ShowFilesdetails(ddl_AgencyName.SelectedValue);
 
-        if (dt != null && dt.Rows.Count > 0)
+        if (dt.Rows.Count > 0)
         {
-            Agency_detailes.Visible = true;
             rpt_Agencywisedata.DataSource = dt;
             rpt_Agencywisedata.DataBind();
-
-            lblMessage.CssClass = "text-success";
+            Agency_detailes.Visible = true;
         }
         else
         {
-            rpt_Agencywisedata.DataSource = null;
-            rpt_Agencywisedata.DataBind();
-
+            lblMessage.Text = "No files available for selected agency.";
         }
     }
+
+    protected void ddl_AgencyName_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        Agency_detailes.Visible = false;
+
+
+        rpt_Agencywisedata.DataSource = null;
+        rpt_Agencywisedata.DataBind();
+
+
+        lblMessage.Text = "";
+    }
+
+
 }
