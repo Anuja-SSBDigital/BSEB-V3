@@ -46,6 +46,14 @@
                         </asp:DropDownList>
                     </div>
 
+                         <div class="col-md-3">
+                         <div class="form-group">
+                             <label for="category">Doc Category</label>
+                          <asp:DropDownList ID="ddl_doctype"  runat="server"  CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_doctype_SelectedIndexChanged"></asp:DropDownList>
+
+                             <div class="invalid-feedback">Please select a category</div>
+                         </div>
+                     </div>
 
                     <label class="text-dark">Select Category and Document you want to show.</label>
                     <div class="border p-2 rounded">
@@ -54,16 +62,23 @@
                                 <strong>Select Category</strong>
                             </label>
 
-                            <asp:Repeater ID="rptDocumentTypes" runat="server">
-                                <ItemTemplate>
-                                    <div class="form-check" style="display: inline-block; width: 230px; margin: 15px;">
-                                        <asp:CheckBox ID="chkDoc" runat="server" CssClass="form-check-input me-2" />
-                                        <asp:Label ID="lblDocName" runat="server" AssociatedControlID="chkDoc"
-                                            Text='<%# Eval("DocTypeName") %>' CssClass="form-check-label text-dark"></asp:Label>
-                                        <asp:HiddenField ID="hdnDocTypeName" runat="server" Value='<%# Eval("DocTypeName") %>' />
-                                    </div>
-                                </ItemTemplate>
-                            </asp:Repeater>
+                       <asp:Repeater ID="rptDocumentTypes" runat="server">
+    <ItemTemplate>
+        <div class="form-check" style="display:inline-block;width:230px;margin:15px;">
+            <asp:CheckBox ID="chkDoc" runat="server"
+                CssClass="form-check-input me-2"/>
+
+            <asp:Label ID="lblDocName" runat="server"
+                AssociatedControlID="chkDoc"
+                Text='<%# Eval("SubDocTypeName") %>'
+                CssClass="form-check-label text-dark" />
+
+            <asp:HiddenField ID="hdnDocTypeName" runat="server"
+                Value='<%# Eval("SubDocTypeName") %>' />
+        </div>
+    </ItemTemplate>
+</asp:Repeater>
+
 
                         </div>
                     </div>
