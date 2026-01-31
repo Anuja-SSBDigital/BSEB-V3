@@ -44,7 +44,7 @@
                                             <h2 class="mb-3 font-18">
                                                 <asp:Label runat="server" ID="Label1"></asp:Label>
                                             </h2>
-                                            <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" Required="true">
+                                            <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" >
                                                 <asp:ListItem Value="" Text="Select Agency Name" Selected="True"></asp:ListItem>
                                                 <asp:ListItem Value="Hitech" Text="Hitech"></asp:ListItem>
                                                 <asp:ListItem Value="Datacon" Text="Datacon"></asp:ListItem>

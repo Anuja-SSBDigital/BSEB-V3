@@ -28,13 +28,19 @@ public partial class UploadedFilesReport : System.Web.UI.Page
         rpt_Agencywisedata.DataSource = null;
         rpt_Agencywisedata.DataBind();
 
-        if (string.IsNullOrEmpty(ddl_AgencyName.SelectedValue))
-        {
-            lblMessage.Text = "Please select an agency.";
-            return;
-        }
+        string selectedAgency = ddl_AgencyName.SelectedValue;
 
-        DataTable dt = fl.ShowFilesdetails(ddl_AgencyName.SelectedValue);
+        DataTable dt;
+
+        if (string.IsNullOrEmpty(selectedAgency))
+        {
+           
+            dt = fl.ShowFilesdetails(""); 
+        }
+        else
+        {
+            dt = fl.ShowFilesdetails(selectedAgency);
+        }
 
         if (dt.Rows.Count > 0)
         {
@@ -44,9 +50,10 @@ public partial class UploadedFilesReport : System.Web.UI.Page
         }
         else
         {
-            lblMessage.Text = "No files available for selected agency.";
+            lblMessage.Text = "No files available.";
         }
     }
+
 
     protected void ddl_AgencyName_SelectedIndexChanged(object sender, EventArgs e)
     {
