@@ -17,7 +17,10 @@ public partial class AgencyAccess : System.Web.UI.Page
             if (Session["userid"] != null)
             {
                 BindAgencies();
-                BindDocumentTypes();
+                //BindDocumentTypes();
+                BindDocCategory();
+                BindDocumentTypesByCategory();
+               
             }
             else            
             {
@@ -25,6 +28,24 @@ public partial class AgencyAccess : System.Web.UI.Page
             }
         }
     }
+    private void BindDocCategory()
+    {
+        FlureeCS fl = new FlureeCS();
+        DataTable dt = fl.DocumentCategoryMaster();
+
+        ddl_doctype.Items.Clear();
+
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            ddl_doctype.DataSource = dt;
+            ddl_doctype.DataTextField = "DocCategoryName";
+            ddl_doctype.DataValueField = "doctypeId"; // INT
+            ddl_doctype.DataBind();
+        }
+
+        ddl_doctype.Items.Insert(0, new ListItem("Select Doc Category", "0"));
+    }
+
     private void BindAgencies()
     {
         chkViewerAgencies.Items.Clear();
@@ -50,33 +71,39 @@ public partial class AgencyAccess : System.Web.UI.Page
         chkViewerAgencies.Items.Add(new ListItem("Hitech", "Hitech"));
     }
 
-    private void BindDocumentTypes()
-    {
-        DataTable dt = GetActiveDocumentTypes();
-        rptDocumentTypes.DataSource = dt;
-        rptDocumentTypes.DataBind();
+    //private void BindDocumentTypes()
+    //{
+    //    DataTable dt = GetActiveDocumentTypes();
+    //    rptDocumentTypes.DataSource = dt;
+    //    rptDocumentTypes.DataBind();
 
 
-        if (ddlOwnerAgency.SelectedValue != "ALL" && ddlOwnerAgency.SelectedValue != "")
-        {
-            PreselectDocumentTypes(ddlOwnerAgency.SelectedValue);
-        }
-    }
+    //    if (ddlOwnerAgency.SelectedValue != "ALL" && ddlOwnerAgency.SelectedValue != "")
+    //    {
+    //        PreselectDocumentTypes(ddlOwnerAgency.SelectedValue);
+    //    }
+    //}
 
-    public DataTable GetActiveDocumentTypes()
-    {
-        DataTable dt = new DataTable();
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            string query = "SELECT DocTypeName FROM Documenttypemaster where isactive=1   ORDER BY CreatedDate DESC";
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-            {
-                da.Fill(dt);
-            }
-        }
-        return dt; 
-    }
+    //public DataTable GetActiveDocumentTypes()
+    //{
+    //    DataTable dt = new DataTable();
+    //    using (SqlConnection conn = new SqlConnection(connectionString))
+    //    {
+    //        string query = @"
+    //        SELECT DocTypeName AS SubDocTypeName
+    //        FROM Documenttypemaster
+    //        WHERE isactive = 1
+    //        ORDER BY CreatedDate DESC";
+
+    //        using (SqlCommand cmd = new SqlCommand(query, conn))
+    //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+    //        {
+    //            da.Fill(dt);
+    //        }
+    //    }
+    //    return dt;
+    //}
+
 
     private void PreselectDocumentTypes(string ownerAgency)
     {
@@ -112,11 +139,12 @@ public partial class AgencyAccess : System.Web.UI.Page
         }
     }
    
-    protected void ddlOwnerAgency_SelectedIndexChanged(object sender, EventArgs e)
-    {
-            
-        BindDocumentTypes();      
-    }
+    //protected void ddlOwnerAgency_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+
+    //    BindDocumentTypes();      
+   
+    //}
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
@@ -273,4 +301,56 @@ public partial class AgencyAccess : System.Web.UI.Page
 
         return true;
     }
+
+    private DataTable GetDocumentTypesByCategory(string category)
+    {
+        DataTable dt = new DataTable();
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            string query = @"
+            SELECT DocTypeName AS SubDocTypeName
+            FROM SubDocTypeMaster
+            WHERE IsActive = 1
+              AND DocCategoryName = @Category
+            ORDER BY DocTypeName";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@Category", category);
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                }
+            }
+        }
+        return dt;
+    }
+
+    private void BindDocumentTypesByCategory()
+    {
+        int doctypeId;
+
+        // ✅ Prevent invalid conversion
+        if (!int.TryParse(ddl_doctype.SelectedValue, out doctypeId) || doctypeId == 0)
+        {
+            rptDocumentTypes.DataSource = null;
+            rptDocumentTypes.DataBind();
+            return;
+        }
+
+        FlureeCS fl = new FlureeCS();
+        DataTable dt = fl.GetSubDocTypes(doctypeId);
+
+        rptDocumentTypes.DataSource = dt;
+        rptDocumentTypes.DataBind();
+    }
+
+
+
+    protected void ddl_doctype_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindDocumentTypesByCategory();
+    }
+
 }
