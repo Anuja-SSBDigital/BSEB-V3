@@ -11,101 +11,111 @@ public partial class Agency_DocumentTypeMaster : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Session["userid"] != null)
-            {
-                string userRole = Session["role"] != null ? Session["role"].ToString() : "";
-
-
-                if (userRole == "Admin")
-                {
-                    div_search.Visible = true;
-                    Div_admin.Visible = true;
-                }
-                else
-                {
-
-                    Response.Redirect("../login.aspx");
-
-                }
-            }
-            else
+            if (Session["userid"] == null)
             {
                 Response.Redirect("../login.aspx");
+                return;
             }
+
+            string userRole = Session["role"] != null ? Session["role"].ToString() : "";
+
+            if (userRole != "Admin")
+            {
+                Response.Redirect("../login.aspx");
+                return;
+            }
+
+            div_search.Visible = true;
+            Div_admin.Visible = true;
+
+            BindDocCategory();          
+         //   BindDocumentCategoryData(); 
         }
     }
 
-    protected void btnAddCategory_Click(object sender, EventArgs e)
+   
+    private void BindDocCategory()
     {
-      try
-       {
-           string categoryName = txtCategoryName.Text.Trim();
- 
-           if (string.IsNullOrEmpty(categoryName))
-           {
-               ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
-                   "alert('Please enter a category name.');", true);
-               return;
-           }
- 
-           
-           string result = fl.AddDocumentType(categoryName);
- 
-          
-           ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
-               "alert('" + result.Replace("'", "\\'") + "');", true);
- 
-          
-           if (result.ToLower().Contains("success"))
-           {
-               txtCategoryName.Text = string.Empty;
-           }
-       }
-       catch (Exception ex)
-       {
-           string safeMsg = ex.Message.Replace("'", "\\'");
-           ScriptManager.RegisterStartupScript(this, this.GetType(), "error",
-               "alert('Error: " + safeMsg + "');", true);
-       }
+        DataTable dt = fl.GetDocumentCategoryForDropdown();
+
+        ddlDocType.DataSource = dt;
+        ddlDocType.DataTextField = "DocCategoryName"; 
+        ddlDocType.DataValueField = "doctypeId";      
+        ddlDocType.DataBind();
+
+        ddlDocType.Items.Insert(0,
+            new ListItem("-- Select Document Category --", ""));
     }
 
+   
+    protected void btnAddCategory_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(ddlDocType.SelectedValue))
+            {
+                Alert("Please select document category.");
+                return;
+            }
 
+            string subDocName = txtCategoryName.Text.Trim();
+            if (string.IsNullOrEmpty(subDocName))
+            {
+                Alert("Please enter document type name.");
+                return;
+            }
+
+            int doctypeId = Convert.ToInt32(ddlDocType.SelectedValue);
+
+            string result = fl.AddDocumentType(doctypeId, subDocName);
+
+            Alert(result);
+
+            if (result.ToLower().Contains("success"))
+            {
+                txtCategoryName.Text = "";
+                BindDocumentCategoryData();
+            }
+        }
+        catch (Exception ex)
+        {
+            Alert("Error : " + ex.Message);
+        }
+    }
+
+   
     protected void btnsearch_Click(object sender, EventArgs e)
     {
         BindDocumentCategoryData();
     }
 
+  
     private void BindDocumentCategoryData()
     {
         string status = ddl_Status.SelectedValue;
         DataTable dt = fl.GetDocumentTypeData(status);
 
-        if (dt.Rows.Count > 0)
-        {
-            rpt_DocumentTypeData.DataSource = dt;
-            rpt_DocumentTypeData.DataBind();
-            lblMessage.Text = "";
-        }
-        else
-        {
-            rpt_DocumentTypeData.DataSource = null;
-            rpt_DocumentTypeData.DataBind();
-            lblMessage.Text = "No records found.";
-        }
+        rpt_DocumentTypeData.DataSource = dt;
+        rpt_DocumentTypeData.DataBind();
+
+        lblMessage.Text = dt.Rows.Count == 0 ? "No records found." : "";
     }
 
+   
     protected void rpt_DocumentTypeData_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
-        int docId = Convert.ToInt32(e.CommandArgument);
+        int subdocId = Convert.ToInt32(e.CommandArgument);
 
         if (e.CommandName == "ToggleStatus")
         {
-            bool currentStatus = fl.GetDocumentTypeStatus(docId);
+            bool currentStatus = fl.GetDocumentTypeStatus(subdocId);
             bool newStatus = !currentStatus;
 
-            if (fl.UpdateDocumentTypeStatus(docId, newStatus))
+            if (fl.UpdateDocumentTypeStatus(subdocId, newStatus))
             {
-                lblMessage.Text = newStatus ? "Record activated successfully." : "Record deactivated successfully.";
+                lblMessage.Text = newStatus
+                    ? "Record activated successfully."
+                    : "Record deactivated successfully.";
             }
             else
             {
@@ -114,9 +124,12 @@ public partial class Agency_DocumentTypeMaster : System.Web.UI.Page
 
             BindDocumentCategoryData();
         }
-        else if (e.CommandName == "EditDoc")
-        {
-            Response.Redirect("Editdocumenttypedetail.aspx?DocId=" + docId);
-        }
+    }
+
+   
+    private void Alert(string msg)
+    {
+        ScriptManager.RegisterStartupScript(this, GetType(),
+            "alert", "alert('" + msg.Replace("'", "\\'") + "');", true);
     }
 }
