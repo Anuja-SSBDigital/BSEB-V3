@@ -213,6 +213,7 @@ public partial class fileupload : System.Web.UI.Page
 
                 if (!Directory.Exists(sessionFolder)) Directory.CreateDirectory(sessionFolder);
 
+                string examsession = ddl_Examsession.SelectedValue;
                 string doctype = ddl_doctype.SelectedValue;
                 string subdoctype = ddl_sub_doc_type.SelectedValue;
 
@@ -301,7 +302,7 @@ public partial class fileupload : System.Web.UI.Page
 
                 string resfile = fl.InsertProcessFileDetails(filename, dbFilePath, agency, username);
 
-                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, subdoctype, agency, "",remark);
+                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, examsession, doctype,subdoctype, agency, "",remark);
 
                 string userId = Session["username"].ToString();
                 string agencyName = Session["agencyname"].ToString();
