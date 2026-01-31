@@ -60,7 +60,7 @@
                                                 <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
                                                 <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
                                             </asp:DropDownList>
-                                            <small id="passwordHelpBlock" class="form-text text-muted">Fileformats : Agency_Board_doctype_Subdoctype_timestamp 
+                                            <small  class="form-text text-title"> <i class="fas fa-exclamation-circle"></i> Fileformats : Agency_Board_doctype_Subdoctype_timestamp 
                                         </small>
                                         </div>
                                         
