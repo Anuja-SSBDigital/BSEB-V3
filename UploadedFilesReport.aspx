@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 </head>
 
-<body>
+<body style="background-image: url('assets/img/bg1.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat; background-attachment: fixed;">
     <div class="loader"></div>
     <form id="form1" runat="server">
 
