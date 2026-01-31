@@ -50,7 +50,7 @@ public partial class UploadedFilesReport : System.Web.UI.Page
         }
         else
         {
-            lblMessage.Text = "No files available.";
+            Agency_detailes.Visible = true;
         }
     }
 

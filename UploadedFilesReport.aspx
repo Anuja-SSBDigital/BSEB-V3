@@ -32,7 +32,7 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h4>Search Records</h4>
+                                    <h4>Search File Upload Details</h4>
                                 </div>
                                 <div class="card-body">
 
@@ -77,7 +77,7 @@
 
                                 <div class="card card-primary">
                                     <div class="card-header">
-                                        <h4>Agency Wise Access Data</h4>
+                                        <h4>File Upload Details</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
