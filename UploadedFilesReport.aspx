@@ -37,7 +37,11 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h4>Search File Upload Details</h4>
+                                    <h4>Search File Upload Details</h4>&nbsp;&nbsp;
+                                    
+                                    <small class="form-text text-title"><i class="fas fa-exclamation-circle"></i> Fileformat : Agency_Board_doctype_Subdoctype_timestamp 
+
+                                    </small>
                                 </div>
                                 <div class="card-body">
 
@@ -60,10 +64,9 @@
                                                 <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
                                                 <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
                                             </asp:DropDownList>
-                                            <small  class="form-text text-title"> <i class="fas fa-exclamation-circle"></i> Fileformats : Agency_Board_doctype_Subdoctype_timestamp 
-                                        </small>
+
                                         </div>
-                                        
+
                                     </div>
 
 
@@ -85,6 +88,7 @@
                                 <div class="card card-primary">
                                     <div class="card-header">
                                         <h4>File Upload Details</h4>
+
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
