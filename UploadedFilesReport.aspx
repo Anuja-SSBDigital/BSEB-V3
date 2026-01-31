@@ -85,9 +85,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Sr.No.</th>
-                                                        <th>Owner Agency</th>
-                                                        <th>Viewer Agency</th>
-                                                        <th>Document Type</th>
+                                                        <th>Actual File Name</th>
+                                                        <th>File Name</th>
+                                                        <th>Remarks</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -96,9 +96,9 @@
                                                         <ItemTemplate>
                                                             <tr>
                                                                 <td><%# Container.ItemIndex + 1 %></td>
-                                                                <td><%# Eval("OwnerAgency") %></td>
-                                                                <td><%# Eval("ViewerAgency") %></td>
-                                                                <td><%# Eval("DocumentType") %></td>
+                                                                <td><%# Eval("actualfilename") %></td>
+                                                                <td><%# Eval("filename") %></td>
+                                                                <td><%# Eval("Remarks") %></td>
                                                             </tr>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
