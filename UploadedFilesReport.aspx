@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>BSEB - Admin Dashboard</title>
+    <title>BSEB</title>
     <!-- General CSS Files -->
     <link rel="stylesheet" href="assets/css/app.min.css">
     <!-- Template CSS -->
@@ -111,7 +111,7 @@
                                                                 <td><%# Eval("actualfilename") %></td>
                                                                 <td><%# Eval("filename") %></td>
                                                                 <td><%# Eval("Remarks") %></td>
-                                                                <td><%# Eval("createddate") %></td>
+                                                                <td> <%# Eval("createddate", "{0:dd-MMM-yyyy hh:mm tt}") %></td>
                                                             </tr>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
