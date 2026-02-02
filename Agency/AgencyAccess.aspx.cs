@@ -39,7 +39,7 @@ public partial class AgencyAccess : System.Web.UI.Page
         {
             ddl_doctype.DataSource = dt;
             ddl_doctype.DataTextField = "DocCategoryName";
-            ddl_doctype.DataValueField = "doctypeId"; // INT
+            ddl_doctype.DataValueField = "doctypeId";
             ddl_doctype.DataBind();
         }
 
@@ -330,8 +330,6 @@ public partial class AgencyAccess : System.Web.UI.Page
     private void BindDocumentTypesByCategory()
     {
         int doctypeId;
-
-        // ✅ Prevent invalid conversion
         if (!int.TryParse(ddl_doctype.SelectedValue, out doctypeId) || doctypeId == 0)
         {
             rptDocumentTypes.DataSource = null;
