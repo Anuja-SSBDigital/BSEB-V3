@@ -90,16 +90,45 @@ public partial class fileupload : System.Web.UI.Page
 
     private void BindDocCategory()
     {
+        string AgencyName = Session["agencyname"].ToString();
+
         DataTable dt = fl.DocumentCategoryMaster();
 
-        ddl_doctype.DataSource = dt;
+        // Clone structure
+        DataTable filteredDt = dt.Clone();
+
+        if (AgencyName.Equals("Hitech", StringComparison.OrdinalIgnoreCase))
+        {
+            // ONLY show Practical Printing & Theory Printing
+            var rows = dt.AsEnumerable()
+                         .Where(r =>
+                             r.Field<string>("DocCategoryName") == "Practical Printing" ||
+                             r.Field<string>("DocCategoryName") == "Theory Printing");
+
+            if (rows.Any())
+                filteredDt = rows.CopyToDataTable();
+        }
+        else
+        {
+            // EXCLUDE Practical Printing & Theory Printing
+            var rows = dt.AsEnumerable()
+                         .Where(r =>
+                             r.Field<string>("DocCategoryName") != "Practical Printing" &&
+                             r.Field<string>("DocCategoryName") != "Theory Printing");
+
+            if (rows.Any())
+                filteredDt = rows.CopyToDataTable();
+        }
+
+        ddl_doctype.DataSource = filteredDt;
         ddl_doctype.DataTextField = "DocCategoryName";
         ddl_doctype.DataValueField = "doctypeId";
         ddl_doctype.DataBind();
 
-        ddl_doctype.Items.Insert(0,
-            new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
+        ddl_doctype.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
+
     }
+
 
     protected void ddl_doctype_SelectedIndexChanged(object sender, EventArgs e)
     {
