@@ -37,22 +37,22 @@
                                 </div>
                             </div>
 
-
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="category">Doc Category</label>
-                                    <asp:DropDownList ID="ddl_doctype" runat="server" CssClass="form-control">
-                                    </asp:DropDownList>
-                                    <div class="invalid-feedback">Please select a category</div>
-                                </div>
+                                <label>Doc Category</label>
+                                <asp:DropDownList
+                                    ID="ddl_doctype"
+                                    runat="server"
+                                    CssClass="form-control">
+                                </asp:DropDownList>
                             </div>
 
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="category">Document Type</label>
-                                    <asp:DropDownList ID="ddl_sub_doc_type" runat="server" CssClass="form-control">
-                                    </asp:DropDownList>
-                                </div>
+                                <label>Document Type</label>
+                                <asp:DropDownList
+                                    ID="ddl_sub_doc_type"
+                                    runat="server"
+                                    CssClass="form-control">
+                                </asp:DropDownList>
                             </div>
 
                         </div>
@@ -74,8 +74,6 @@
 
                             </div>
                         </div>
-
-
 
                         <div class="row" runat="server" id="div_fileupload">
                             <div class="col-md-12">
@@ -110,43 +108,40 @@
             </div>
         </div>
     </div>
-    <script>     
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <script>
 
         function validateForm() {
+
             var ddlDoctype = document.getElementById('<%= ddl_doctype.ClientID %>').value;
             var ddlSubDocType = document.getElementById('<%= ddl_sub_doc_type.ClientID %>').value;
+            var ddlExamSession = document.getElementById('<%= ddl_Examsession.ClientID %>').value;
 
-            var ddlExamSessionType = document.getElementById('<%= ddl_Examsession.ClientID %>').value;
-
-            if (ddlDoctype === "ALL") {
-                alert("Please select a valid Document Category.");
+            if (ddlDoctype === "0") {
+                alert("Please select Document Category.");
                 return false;
             }
 
-            if (ddlSubDocType === "ALL") {
-                alert("Please select a valid File Type.");
+            if (ddlSubDocType === "0") {
+                alert("Please select Document Type.");
                 return false;
             }
 
-            if (ddlFaculty === "") {
-                alert("Please select a Faculty.");
+            if (ddlExamSession === "0" || ddlExamSession === "") {
+                alert("Please select Exam Session.");
                 return false;
             }
 
-            if (ddlSubject === "") {
-                alert("Please select a Subject.");
-                return false;
-            }
-
-            if (ddl_Examsession === "") {
-                alert("Please select a Exam Session.");
-                return false;
-            }
             return true;
         }
 
+
         function checkFile() {
+
             var fileInput = document.getElementById("<%= fl_file.ClientID %>");
             var filePath = fileInput.value;
             var allowedExtensions = /\.(csv|xlsx|xls|mdb|bak|zip)$/i;
@@ -156,13 +151,58 @@
                     title: "Invalid File Type",
                     text: "Only CSV, XLS, XLSX, MDB, BAK, or ZIP files are allowed.",
                     icon: "error",
-                    button: "OK",
+                    button: "OK"
                 });
 
                 fileInput.value = "";
+                return false;
             }
+
+            return true;
         }
 
+        // Cascading dropdown (AJAX)
+        $(document).ready(function () {
+
+            $('#<%= ddl_doctype.ClientID %>').change(function () {
+
+                var doctypeId = $(this).val();
+                var ddlSub = $('#<%= ddl_sub_doc_type.ClientID %>');
+
+                ddlSub.empty().append('<option value="0">Loading...</option>');
+
+                if (doctypeId === "0") {
+                    ddlSub.html('<option value="0">Select Document Type</option>');
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "fileupload.aspx/GetSubDocTypes",
+                    data: JSON.stringify({ doctypeId: doctypeId }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                    success: function (response) {
+                        ddlSub.empty();
+                        ddlSub.append('<option value="0">Select Document Type</option>');
+
+                        $.each(response.d, function (i, item) {
+                            ddlSub.append(
+                                $('<option></option>')
+                                    .val(item.subdocId)
+                                    .text(item.subdoctypename)
+                            );
+                        });
+                    },
+
+                    error: function () {
+                        alert("Error loading document types.");
+                    }
+                });
+            });
+
+        });
     </script>
 
 </asp:Content>
