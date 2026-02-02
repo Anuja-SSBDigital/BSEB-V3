@@ -59,7 +59,8 @@
                                     <th>Sr.No.</th>
                                     <th>Owner Agency</th>
                                     <th>Viewer Agency</th>
-                                    <th>Document Type</th>
+                                    <th>Doc Type</th>
+                                    <th>SubDoc Type</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +71,8 @@
                                             <td><%# Container.ItemIndex + 1 %></td>
                                             <td><%# Eval("OwnerAgency") %></td>
                                             <td><%# Eval("ViewerAgency") %></td>
-                                            <td><%# Eval("DocumentType") %></td>
+                                            <td><%# Eval("DocType") %></td>
+                                            <td><%# Eval("SubDocType") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
