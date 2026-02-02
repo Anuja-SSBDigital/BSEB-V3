@@ -46,13 +46,14 @@
                         </asp:DropDownList>
                     </div>
 
-                         <div class="col-md-3">
-                         <div class="form-group">
+                         <div class="mb-4">
+                         <%--<div class="col-md-3">--%>
+                         <%--<div class="form-group">--%>
                              <label for="category">Doc Category</label>
                           <asp:DropDownList ID="ddl_doctype"  runat="server"  CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_doctype_SelectedIndexChanged"></asp:DropDownList>
 
                              <div class="invalid-feedback">Please select a category</div>
-                         </div>
+                         <%--</div>--%>
                      </div>
 
                     <label class="text-dark">Select Category and Document you want to show.</label>
