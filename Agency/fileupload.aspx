@@ -37,6 +37,8 @@
                                 </div>
                             </div>
 
+
+
                             <div class="col-md-3">
                                 <label>Doc Category</label>
                                 <asp:DropDownList
@@ -44,6 +46,10 @@
                                     runat="server"
                                     CssClass="form-control">
                                 </asp:DropDownList>
+
+
+                                <asp:HiddenField ID="hfDoctypeId" runat="server" />
+                                <asp:HiddenField ID="hfDoctypeText" runat="server" />
                             </div>
 
                             <div class="col-md-3">
@@ -53,9 +59,14 @@
                                     runat="server"
                                     CssClass="form-control">
                                 </asp:DropDownList>
+
+                                <asp:HiddenField ID="hfSubdoctypeId" runat="server" />
+                                <asp:HiddenField ID="hfSubdoctypeText" runat="server" />
                             </div>
 
                         </div>
+
+
 
                         <div class="row">
                             <div class="col-md-12">
@@ -100,6 +111,8 @@
                             </div>
                         </div>
 
+
+
                         <div class="form-group text-center">
                             <asp:Button runat="server" ID="btn_submit" CssClass="btn btn-primary btn-lg" Text="Submit" OnClick="btn_submit_Click" OnClientClick="return validateForm();" />
                         </div>
@@ -128,6 +141,17 @@
 
             if (ddlSubDocType === "0") {
                 alert("Please select Document Type.");
+                return false;
+            }
+
+
+            if (ddlSubDocType === "0" || ddlSubDocType === "") {
+                swal({
+                    title: "Required!",
+                    text: "Please select Document Type.",
+                    icon: "warning",
+                    button: "OK"
+                });
                 return false;
             }
 
@@ -161,13 +185,20 @@
             return true;
         }
 
-        // Cascading dropdown (AJAX)
+
         $(document).ready(function () {
 
-            $('#<%= ddl_doctype.ClientID %>').change(function () {
+           
+            $('#<%= ddl_doctype.ClientID %>').on('change', function () {
 
                 var doctypeId = $(this).val();
                 var ddlSub = $('#<%= ddl_sub_doc_type.ClientID %>');
+
+                
+                $('#<%= hfDoctypeId.ClientID %>').val(doctypeId);
+                $('#<%= hfDoctypeText.ClientID %>').val(
+                    $('#<%= ddl_doctype.ClientID %> option:selected').text()
+        );
 
                 ddlSub.empty().append('<option value="0">Loading...</option>');
 
@@ -202,7 +233,18 @@
                 });
             });
 
+           
+            $('#<%= ddl_sub_doc_type.ClientID %>').on('change', function () {
+
+                var subId = $(this).val();
+                var subText = $('#<%= ddl_sub_doc_type.ClientID %> option:selected').text();
+
+        $('#<%= hfSubdoctypeId.ClientID %>').val(subId);
+        $('#<%= hfSubdoctypeText.ClientID %>').val(subText);
+    });
+
         });
+
     </script>
 
 </asp:Content>

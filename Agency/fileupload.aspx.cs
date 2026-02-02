@@ -1,4 +1,4 @@
-﻿using CsvHelper;       
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 using ExcelDataReader;
 using iTextSharp.text;
@@ -7,11 +7,11 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;      
+using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.IO;             
-using System.Linq;        
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Services;
@@ -26,22 +26,31 @@ public partial class fileupload : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["userid"] == null)
+        {
+            Response.Redirect("../login.aspx");
+        }
+
         if (!IsPostBack)
         {
-            if (Session["userid"] != null)
-            {
-                BindDocCategory();  
-                BindExamSessionType();
+            BindDocCategory();
+            BindExamSessionType();
 
-                btn_submit.Visible = false;
-                div_fileupload.Visible = false;
-            }
-            else
+            btn_submit.Visible = false;
+            div_fileupload.Visible = false;
+        }
+        else
+        {
+           
+            if (!string.IsNullOrEmpty(hfDoctypeId.Value))
             {
-                Response.Redirect("../login.aspx");
+                ddl_doctype.SelectedValue = hfDoctypeId.Value;
+                BindSubDocumentType(Convert.ToInt32(hfDoctypeId.Value));
+                ddl_sub_doc_type.SelectedValue = hfSubdoctypeId.Value;
             }
         }
     }
+
 
 
     public class SubDocTypeVM
@@ -50,40 +59,34 @@ public partial class fileupload : System.Web.UI.Page
         public string subdoctypename { get; set; }
     }
 
+  
     [WebMethod]
     public static List<SubDocTypeVM> GetSubDocTypes(string doctypeId)
     {
         List<SubDocTypeVM> list = new List<SubDocTypeVM>();
 
-        string connectionString = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
+        int docTypeId;
+        if (!int.TryParse(doctypeId, out docTypeId))
+            return list;
 
-        string cs = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
+        FlureeCS fl = new FlureeCS();
+        DataTable dt = fl.GetSubDocTypes(docTypeId);
 
-        using (SqlConnection con = new SqlConnection(cs))
+        for (int i = 0; i < dt.Rows.Count; i++)
         {
-            string query = @"
-            SELECT subdocId, subdoctypename
-            FROM subdoctypemaster
-            WHERE IsActive = 1 AND doctypeId = @doctypeId";
+            DataRow row = dt.Rows[i];
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue("@doctypeId", doctypeId);
-                con.Open();
+            SubDocTypeVM vm = new SubDocTypeVM();
+            vm.subdocId = Convert.ToInt32(row["subdocId"]);
+            vm.subdoctypename = row["subdoctypename"].ToString();
 
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    list.Add(new SubDocTypeVM
-                    {
-                        subdocId = Convert.ToInt32(dr["subdocId"]),
-                        subdoctypename = dr["subdoctypename"].ToString()
-                    });
-                }
-            }
+            list.Add(vm);
         }
+
         return list;
     }
+
+
 
     private void BindDocCategory()
     {
@@ -91,7 +94,7 @@ public partial class fileupload : System.Web.UI.Page
 
         ddl_doctype.DataSource = dt;
         ddl_doctype.DataTextField = "DocCategoryName";
-        ddl_doctype.DataValueField = "doctypeId";  
+        ddl_doctype.DataValueField = "doctypeId";
         ddl_doctype.DataBind();
 
         ddl_doctype.Items.Insert(0,
@@ -111,7 +114,7 @@ public partial class fileupload : System.Web.UI.Page
 
         int doctypeId = Convert.ToInt32(ddl_doctype.SelectedValue);
 
-        DataTable dt = fl.GetSubDocumentTypeByCategory(doctypeId);
+        DataTable dt = fl.GetSubDocTypes(doctypeId);
 
         ddl_sub_doc_type.DataSource = dt;
         ddl_sub_doc_type.DataTextField = "subdoctypename";
@@ -126,7 +129,7 @@ public partial class fileupload : System.Web.UI.Page
 
     private void BindSubDocumentType(int doctypeId)
     {
-        DataTable dt = fl.DocumentTypeByCategory(doctypeId);
+        DataTable dt = fl.GetSubDocTypes(doctypeId);
 
         ddl_sub_doc_type.Items.Clear();
 
@@ -141,33 +144,33 @@ public partial class fileupload : System.Web.UI.Page
         ddl_sub_doc_type.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
     }
 
-private void BindExamSessionType()
+    private void BindExamSessionType()
     {
-      
-            FlureeCS fl = new FlureeCS();
-            DataTable dt = fl.ExamSessionmaster();
 
-            ddl_Examsession.Items.Clear();
+        FlureeCS fl = new FlureeCS();
+        DataTable dt = fl.ExamSessionmaster();
 
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                ddl_Examsession.DataSource = dt;
-                ddl_Examsession.DataTextField = "SessionName";
-                ddl_Examsession.DataValueField = "SessionName";
-                ddl_Examsession.DataBind();
-            }
+        ddl_Examsession.Items.Clear();
 
-          
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            ddl_Examsession.DataSource = dt;
+            ddl_Examsession.DataTextField = "SessionName";
+            ddl_Examsession.DataValueField = "SessionName";
+            ddl_Examsession.DataBind();
+        }
+
+
     }
 
-   
+
     public string GetClientIp()
     {
         string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
 
         if (!string.IsNullOrEmpty(ip))
         {
-           
+
             string[] ipArray = ip.Split(',');
             ip = ipArray[0].Trim();
         }
@@ -178,34 +181,34 @@ private void BindExamSessionType()
 
         if (string.IsNullOrEmpty(ip))
         {
-            ip = "127.0.0.1"; 
+            ip = "127.0.0.1";
         }
 
-   
+
         if (ip == "::1")
         {
             ip = "127.0.0.1";
         }
 
-      
+
         if (ip.StartsWith("::ffff:"))
         {
             ip = ip.Replace("::ffff:", "");
-        }                                
+        }
 
-        ip = ip.Trim(); 
+        ip = ip.Trim();
 
         return ip;
     }
 
     protected void btn_submit_Click(object sender, EventArgs e)
-    {      
+    {
         if (fl_file.HasFile)
         {
-            try       
+            try
             {
                 string clientIp = GetClientIp();
-                
+
 
                 // Normalize IPv6-mapped IPv4
                 if (clientIp.StartsWith("::ffff:"))
@@ -222,7 +225,7 @@ private void BindExamSessionType()
 
                 // Allow localhost for testing
                 if (!isAllowed && clientIp != "127.0.0.1")
-               
+
                 {
                     log.Info("Unauthorized upload attempt from IP: " + clientIp);
 
@@ -268,8 +271,12 @@ private void BindExamSessionType()
                 if (!Directory.Exists(sessionFolder)) Directory.CreateDirectory(sessionFolder);
 
                 string examsession = ddl_Examsession.SelectedValue;
-                string doctype = ddl_doctype.SelectedValue;
-                string subdoctype = ddl_sub_doc_type.SelectedValue;
+
+                string doctypeId = hfDoctypeId.Value;
+                string doctype = hfDoctypeText.Value;
+
+                string subdoctypeId = hfSubdoctypeId.Value;
+                string subdoctype = hfSubdoctypeText.Value;
 
                 string remark = txtRemark.Text.Trim();
 
@@ -307,11 +314,11 @@ private void BindExamSessionType()
 
                 string subdoctypeFolder = Path.Combine(doctypeFolder, subdoctype);
                 if (!Directory.Exists(subdoctypeFolder)) Directory.CreateDirectory(subdoctypeFolder);
-                 
+
                 string[] words = subdoctype.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 string cleanedSubdoctype = "";
-               
-                    
+
+
 
                 if (words.Length > 3)
                 {
@@ -321,17 +328,22 @@ private void BindExamSessionType()
                 {
                     cleanedSubdoctype = words[0] + "_" + words[1] + words[2];
                 }
-                else if (words.Length > 1)
-                {
-                    cleanedSubdoctype = words[0] + "_" + words[1];
-                }          
-                                
+                //else if (words.Length > 1)
+                //{
+                //    cleanedSubdoctype = words[0] + "_" + words[1];
+                //}          
+
+
                 else if (words.Length == 1)
                 {
-                    cleanedSubdoctype = words[0];                
+                    cleanedSubdoctype = words[0];
                 }
-                       
-     
+                else if (words.Length == 1)
+                {
+                    cleanedSubdoctype = words[0];
+                }
+
+
                 else
                 {
                     cleanedSubdoctype = subdoctype.Replace(" ", "");
@@ -340,8 +352,6 @@ private void BindExamSessionType()
 
                 //string uploadRootPath = Path.Combine(baseUploadFolder, filename);
                 //fl_file.SaveAs(uploadRootPath);
-                 
-                
 
                 string savedFilePath = Path.Combine(subdoctypeFolder, filename);
                 fl_file.SaveAs(savedFilePath);
@@ -357,28 +367,42 @@ private void BindExamSessionType()
 
                 string resfile = fl.InsertProcessFileDetails(filename, dbFilePath, agency, username);
 
-                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, examsession, doctype,subdoctype, agency, "",remark);
+                string resdatainst2 = fl.Insert_DownloadFileDetail(actualfilename, filename, dbFilePath, examsession, doctype, subdoctype, agency, "", remark);
 
                 string userId = Session["username"].ToString();
                 string agencyName = Session["agencyname"].ToString();
                 string deviceUsed = Request.Browser.Type;
-                   
+
                 string reslog = fl.Insertactivitylog(userId, clientIp, deviceUsed, "upload", filename, agencyName);
 
-                ClientScript.RegisterStartupScript(
-     this.GetType(),
-     "alert",
-     "swal({ " +
-     "title: 'Success!', " +
-     "text: 'Your file " + filename + " has been uploaded successfully!', " +
-     "icon: 'success', " +
-     "button: 'OK' " +
-     "});",
-     true
- );
-                return;
+                //               ClientScript.RegisterStartupScript(
+                //    this.GetType(),
+                //    "alert",
+                //    "swal({ " +
+                //    "title: 'Success!', " +
+                //    "text: 'Your file " + filename + " has been uploaded successfully!', " +
+                //    "icon: 'success', " +
+                //    "button: 'OK' " +
+                //    "});",
+                //    true
+                //);
+                //               return;
+
+                string script = "swal({ " +
+    "title: 'Success!', " +
+    "text: 'Your file " + filename + " has been uploaded successfully!', " +
+    "icon: 'success', " +
+    "button: 'OK' " +
+"}).then(function(value) { " +
+
+    "$('#" + txtRemark.ClientID + "').val(''); " +
+
+"});";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "successAlert", script, true);
 
             }
+
             catch (Exception ex)
             {
                 string errorMessage = ex.Message.Replace("'", "\\'");
@@ -413,10 +437,12 @@ private void BindExamSessionType()
 );
             return;
 
+
+
         }
 
     }
-         
+
     private DataTable ReadExcelFile(string filePath)
     {
         DataTable dt = new DataTable();
@@ -431,10 +457,10 @@ private void BindExamSessionType()
                         UseHeaderRow = true
                     }
                 });
-                dt = ds.Tables[0]; 
+                dt = ds.Tables[0];
             }
         }
-        return dt;       
+        return dt;
     }
 
     private DataTable ReadCsvFile(string filePath)
@@ -444,7 +470,7 @@ private void BindExamSessionType()
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = true,
-            Delimiter = ",",  
+            Delimiter = ",",
             TrimOptions = TrimOptions.Trim,
             BadDataFound = null,
             MissingFieldFound = null
@@ -455,11 +481,11 @@ private void BindExamSessionType()
         {
             csv.Read();
             csv.ReadHeader();
-                 
+
             foreach (var header in csv.HeaderRecord)
             {
                 if (!dt.Columns.Contains(header))
-                    dt.Columns.Add(header, typeof(string)); 
+                    dt.Columns.Add(header, typeof(string));
             }
 
             while (csv.Read())
@@ -468,7 +494,7 @@ private void BindExamSessionType()
 
                 foreach (DataColumn column in dt.Columns)
                 {
-                   
+
                     string fieldValue = csv.HeaderRecord.Contains(column.ColumnName) ? csv.GetField(column.ColumnName) : null;
 
                     Console.WriteLine("Column: " + column.ColumnName + ", Value: " + fieldValue);
@@ -480,7 +506,7 @@ private void BindExamSessionType()
                 dt.Rows.Add(row);
             }
         }
-               
+
         return dt;
     }
 
@@ -488,25 +514,25 @@ private void BindExamSessionType()
     {
         using (StreamWriter writer = new StreamWriter(filePath))
         {
-           
+
             writer.WriteLine(string.Join(",", dt.Columns.Cast<DataColumn>().Select(col => col.ColumnName)));
 
-          
+
             foreach (DataRow row in dt.Rows)
             {
                 writer.WriteLine(string.Join(",", row.ItemArray.Select(field => field.ToString().Replace(",", " "))));
             }
         }
-    }         
+    }
 
     protected void btn_submittoken_Click(object sender, EventArgs e)
     {
-    
+
         FlureeCS fl = new FlureeCS();
         string username = Session["Username"].ToString();
         string enteredKey = txt_pvtkey.Text.Trim();
 
-        if (fl.IsPrivateKeyValidwithusername(username,enteredKey))  
+        if (fl.IsPrivateKeyValidwithusername(username, enteredKey))
         {
             lbl_validate.Text = "Key is Valid";
             lbl_validate.ForeColor = System.Drawing.Color.Green;
@@ -525,5 +551,5 @@ private void BindExamSessionType()
         }
     }
 
-  
+
 }
