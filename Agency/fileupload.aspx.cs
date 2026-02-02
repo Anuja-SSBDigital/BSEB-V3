@@ -13,7 +13,8 @@ using System.Globalization;
 using System.IO;             
 using System.Linq;        
 using System.Text;
-using System.Web;   
+using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -29,11 +30,9 @@ public partial class fileupload : System.Web.UI.Page
         {
             if (Session["userid"] != null)
             {
-                
-                BindDocCategory();
-                BindDocumentType();
-             
-             BindExamSessionType();
+                BindDocCategory();  
+                BindExamSessionType();
+
                 btn_submit.Visible = false;
                 div_fileupload.Visible = false;
             }
@@ -44,43 +43,105 @@ public partial class fileupload : System.Web.UI.Page
         }
     }
 
+
+    public class SubDocTypeVM
+    {
+        public int subdocId { get; set; }
+        public string subdoctypename { get; set; }
+    }
+
+    [WebMethod]
+    public static List<SubDocTypeVM> GetSubDocTypes(string doctypeId)
+    {
+        List<SubDocTypeVM> list = new List<SubDocTypeVM>();
+
+        string connectionString = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
+
+        string cs = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
+
+        using (SqlConnection con = new SqlConnection(cs))
+        {
+            string query = @"
+            SELECT subdocId, subdoctypename
+            FROM subdoctypemaster
+            WHERE IsActive = 1 AND doctypeId = @doctypeId";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@doctypeId", doctypeId);
+                con.Open();
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    list.Add(new SubDocTypeVM
+                    {
+                        subdocId = Convert.ToInt32(dr["subdocId"]),
+                        subdoctypename = dr["subdoctypename"].ToString()
+                    });
+                }
+            }
+        }
+        return list;
+    }
+
     private void BindDocCategory()
     {
-       
-            FlureeCS fl = new FlureeCS();
-            DataTable dt = fl.DocumentCategoryMaster();
+        DataTable dt = fl.DocumentCategoryMaster();
 
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                ddl_doctype.DataSource = dt;
-                ddl_doctype.DataTextField = "DocCategoryName";
-                ddl_doctype.DataValueField = "DocCategoryName";
-                ddl_doctype.DataBind();
-            }
+        ddl_doctype.DataSource = dt;
+        ddl_doctype.DataTextField = "DocCategoryName";
+        ddl_doctype.DataValueField = "doctypeId";  
+        ddl_doctype.DataBind();
 
-            ddl_doctype.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
-      
+        ddl_doctype.Items.Insert(0,
+            new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
     }
 
-    private void BindDocumentType()
+    protected void ddl_doctype_SelectedIndexChanged(object sender, EventArgs e)
     {
-       
-            FlureeCS fl = new FlureeCS();
-            DataTable dt = fl.Documenttypemaster();
+        ddl_sub_doc_type.Items.Clear();
 
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                ddl_sub_doc_type.DataSource = dt;
-                ddl_sub_doc_type.DataTextField = "DocTypeName";
-                ddl_sub_doc_type.DataValueField = "DocTypeName";
-                ddl_sub_doc_type.DataBind();
-            }
+        if (ddl_doctype.SelectedValue == "0")
+        {
+            ddl_sub_doc_type.Items.Insert(0,
+                new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
+            return;
+        }
 
-            ddl_sub_doc_type.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
-       
+        int doctypeId = Convert.ToInt32(ddl_doctype.SelectedValue);
+
+        DataTable dt = fl.GetSubDocumentTypeByCategory(doctypeId);
+
+        ddl_sub_doc_type.DataSource = dt;
+        ddl_sub_doc_type.DataTextField = "subdoctypename";
+        ddl_sub_doc_type.DataValueField = "subdocId";
+        ddl_sub_doc_type.DataBind();
+
+        ddl_sub_doc_type.Items.Insert(0,
+            new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
     }
 
-    private void BindExamSessionType()
+
+
+    private void BindSubDocumentType(int doctypeId)
+    {
+        DataTable dt = fl.DocumentTypeByCategory(doctypeId);
+
+        ddl_sub_doc_type.Items.Clear();
+
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            ddl_sub_doc_type.DataSource = dt;
+            ddl_sub_doc_type.DataTextField = "subdoctypename";
+            ddl_sub_doc_type.DataValueField = "subdocId";
+            ddl_sub_doc_type.DataBind();
+        }
+
+        ddl_sub_doc_type.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
+    }
+
+private void BindExamSessionType()
     {
       
             FlureeCS fl = new FlureeCS();
@@ -97,16 +158,9 @@ public partial class fileupload : System.Web.UI.Page
             }
 
           
-           // System.Web.UI.WebControls.ListItem exam26 = ddl_Examsession.Items.FindByValue("Exam-26");
-           // if (exam26 != null)
-            //{
-            //    ddl_Examsession.ClearSelection();
-            //    exam26.Selected = true;
-            //}
-        
     }
 
-    //   
+   
     public string GetClientIp()
     {
         string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -276,7 +330,8 @@ public partial class fileupload : System.Web.UI.Page
                 {
                     cleanedSubdoctype = words[0];                
                 }
-
+                       
+     
                 else
                 {
                     cleanedSubdoctype = subdoctype.Replace(" ", "");
