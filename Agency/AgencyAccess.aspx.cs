@@ -111,7 +111,7 @@ public partial class AgencyAccess : System.Web.UI.Page
         DataTable dtSelected = new DataTable();
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
-            string query = "SELECT DISTINCT DocumentType FROM AgencyDocumentAccess WHERE OwnerAgency = @OwnerAgency";
+            string query = "SELECT DISTINCT SubDocType FROM AgencyDocumentAccess WHERE OwnerAgency = @OwnerAgency";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
@@ -157,6 +157,7 @@ public partial class AgencyAccess : System.Web.UI.Page
         }
              
         string ownerAgency = ddlOwnerAgency.SelectedValue;
+        string DocType_Cate = ddl_doctype.SelectedItem.Text;
         List<string> selectedDocs = new List<string>();
 
         foreach (RepeaterItem item in rptDocumentTypes.Items)
@@ -198,11 +199,12 @@ public partial class AgencyAccess : System.Web.UI.Page
                         SELECT COUNT(*) FROM AgencyDocumentAccess 
                         WHERE OwnerAgency = @OwnerAgency 
                           AND ViewerAgency = @ViewerAgency 
-                          AND DocumentType = @DocumentType", con))
+                          AND SubDocType = @DocumentType", con))
                     {
                         checkCmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
                         checkCmd.Parameters.AddWithValue("@ViewerAgency", viewerAgency);
                         checkCmd.Parameters.AddWithValue("@DocumentType", doc);
+                      
 
                         int exists = (int)checkCmd.ExecuteScalar();
 
@@ -216,13 +218,13 @@ public partial class AgencyAccess : System.Web.UI.Page
 
                     using (SqlCommand cmd = new SqlCommand(@"
                         INSERT INTO AgencyDocumentAccess 
-                        (OwnerAgency, ViewerAgency, DocumentType) 
-                        VALUES (@OwnerAgency, @ViewerAgency, @DocumentType)", con))
+                        (OwnerAgency, ViewerAgency,DocType,SubDocType) 
+                        VALUES (@OwnerAgency, @ViewerAgency, @DocType_Cate,@DocumentType)", con))
                     {
                         cmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
                         cmd.Parameters.AddWithValue("@ViewerAgency", viewerAgency);
                         cmd.Parameters.AddWithValue("@DocumentType", doc);
-
+                        cmd.Parameters.AddWithValue("@DocType_Cate", DocType_Cate);
                         insertedCount += cmd.ExecuteNonQuery();
                     }
                 }
