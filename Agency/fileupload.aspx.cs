@@ -100,10 +100,15 @@ public partial class fileupload : System.Web.UI.Page
         if (AgencyName.Equals("Hitech", StringComparison.OrdinalIgnoreCase))
         {
             // ONLY show Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable()
-                         .Where(r =>
-                             r.Field<string>("DocCategoryName") == "Practical Printing" ||
-                             r.Field<string>("DocCategoryName") == "Theory Printing");
+            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical Printing" ||  r.Field<string>("DocCategoryName") == "Theory Printing");
+
+            if (rows.Any())
+                filteredDt = rows.CopyToDataTable();
+        }
+        else if (AgencyName.Equals("SSB Digital", StringComparison.OrdinalIgnoreCase) || AgencyName.Equals("Antier", StringComparison.OrdinalIgnoreCase))
+        {
+            // ONLY show Practical Printing & Theory Printing
+            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical" || r.Field<string>("DocCategoryName") == "Theory"|| r.Field<string>("DocCategoryName") == "Result Data");
 
             if (rows.Any())
                 filteredDt = rows.CopyToDataTable();
@@ -111,10 +116,7 @@ public partial class fileupload : System.Web.UI.Page
         else
         {
             // EXCLUDE Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable()
-                         .Where(r =>
-                             r.Field<string>("DocCategoryName") != "Practical Printing" &&
-                             r.Field<string>("DocCategoryName") != "Theory Printing");
+            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") != "Practical Printing" && r.Field<string>("DocCategoryName") != "Theory Printing" && r.Field<string>("DocCategoryName") != "Result Data");
 
             if (rows.Any())
                 filteredDt = rows.CopyToDataTable();
