@@ -23,6 +23,9 @@
         body {
             background: radial-gradient(circle at top left, #2c4a9c 0%, #142b5e 70%);
         }
+		    .container {
+        max-width: 1400px !important;
+    }
     </style>
 </head>
 
@@ -92,14 +95,16 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-striped" id="table-1">
+                                            <table class="table table-striped" id="table-1" >
                                                 <thead>
                                                     <tr>
                                                         <th>Sr.No.</th>
                                                         <th>Actual File Name</th>
+														  <th>Doc Type</th>
                                                         <th>File Name</th>
                                                         <th>Remarks</th>
                                                         <th>Upload Date</th>
+                                                        <th>Access Agency</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -109,9 +114,11 @@
                                                             <tr>
                                                                 <td><%# Container.ItemIndex + 1 %></td>
                                                                 <td><%# Eval("actualfilename") %></td>
+																  <td><%# Eval("subdoctype") %></td>
                                                                 <td><%# Eval("filename") %></td>
                                                                 <td><%# Eval("Remarks") %></td>
                                                                 <td> <%# Eval("createddate", "{0:dd-MMM-yyyy hh:mm tt}") %></td>
+                                                                <td> <%# Eval("ViewerAgencies") %></td>
                                                             </tr>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
