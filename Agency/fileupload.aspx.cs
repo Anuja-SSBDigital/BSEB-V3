@@ -351,16 +351,16 @@ public partial class fileupload : System.Web.UI.Page
 
                 if (words.Length > 3)
                 {
-                    cleanedSubdoctype = words[0] + "_" + words[1] + "_" + words[2] + "_" + words[3];
+                    cleanedSubdoctype = words[0]  + words[1]  + words[2]  + words[3];
                 }
                 else if (words.Length > 2)
                 {
-                    cleanedSubdoctype = words[0] + "_" + words[1] + words[2];
+                    cleanedSubdoctype = words[0]  + words[1] + words[2];
                 }
-                //else if (words.Length > 1)
-                //{
-                //    cleanedSubdoctype = words[0] + "_" + words[1];
-                //}          
+                else if (words.Length > 1)
+                {
+                    cleanedSubdoctype = words[0]  + words[1];
+                }
 
 
                 else if (words.Length == 1)

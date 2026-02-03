@@ -36,7 +36,7 @@ public partial class Agency_DocumentTypeMaster : System.Web.UI.Page
    
     private void BindDocCategory()
     {
-        DataTable dt = fl.GetDocumentCategoryForDropdown();
+        DataTable dt = fl.DocumentCategoryMaster();
 
         ddlDocType.DataSource = dt;
         ddlDocType.DataTextField = "DocCategoryName"; 
