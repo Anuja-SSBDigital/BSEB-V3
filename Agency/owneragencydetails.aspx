@@ -8,10 +8,10 @@
 
     <div class="row" runat="server" id="div_search">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card card-primary">
+            <div class="card card-primary">                     
                 <div class="card-body">
                     <div class="row">
-
+                            
 
                         <div class="col-md-6 " runat="server" id="Div_admin">
                             <h5 class="font-15">Select Agency</h5>
@@ -45,7 +45,7 @@
     </div>
 
 
-    <div class="row mt-3" runat="server" id="Agency_detailes" visible="false" >
+    <div class="row mt-3" runat="server" id="Agency_detailes" visible="false">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card card-primary">
                 <div class="card-header">
@@ -61,6 +61,8 @@
                                     <th>Viewer Agency</th>
                                     <th>Doc Type</th>
                                     <th>SubDoc Type</th>
+
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,6 +75,15 @@
                                             <td><%# Eval("ViewerAgency") %></td>
                                             <td><%# Eval("DocType") %></td>
                                             <td><%# Eval("SubDocType") %></td>
+
+                                            <td>
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="deleteAccess(<%# Eval("AccessId") %>)">
+                                                    Delete
+                                                </button>
+                                            </td>
+
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -83,5 +94,35 @@
             </div>
         </div>
     </div>
+
+             
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        function deleteAccess(accessId) {
+
+            if (!confirm("Are you sure you want to delete this access?"))
+                return;
+
+            $.ajax({
+                type: "POST",
+                url: "owneragencydetails.aspx/DeleteAccess",
+                data: JSON.stringify({ accessId: accessId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response.d === true) {
+                        alert("Access deleted successfully.");
+                        location.reload();
+                    } else {
+                        alert("Delete failed.");
+                    }
+                },
+                error: function () {
+                    alert("Server error.");
+                }
+            });
+        }
+    </script>
 
 </asp:Content>
