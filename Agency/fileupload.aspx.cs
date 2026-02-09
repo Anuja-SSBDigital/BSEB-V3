@@ -108,7 +108,7 @@ public partial class fileupload : System.Web.UI.Page
         else if (AgencyName.Equals("SSB Digital", StringComparison.OrdinalIgnoreCase) || AgencyName.Equals("Antier", StringComparison.OrdinalIgnoreCase))
         {
             // ONLY show Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical" || r.Field<string>("DocCategoryName") == "Theory"|| r.Field<string>("DocCategoryName") == "Result Data");
+            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Result Data");
 
             if (rows.Any())
                 filteredDt = rows.CopyToDataTable();
