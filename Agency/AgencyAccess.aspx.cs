@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spire.Pdf.General.Paper.Uof;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -158,6 +159,7 @@ public partial class AgencyAccess : System.Web.UI.Page
              
         string ownerAgency = ddlOwnerAgency.SelectedValue;
         string DocType_Cate = ddl_doctype.SelectedItem.Text;
+        string doctypeId = ddl_doctype.SelectedValue;
         List<string> selectedDocs = new List<string>();
 
         foreach (RepeaterItem item in rptDocumentTypes.Items)
@@ -218,13 +220,14 @@ public partial class AgencyAccess : System.Web.UI.Page
 
                     using (SqlCommand cmd = new SqlCommand(@"
                         INSERT INTO AgencyDocumentAccess 
-                        (OwnerAgency, ViewerAgency,DocType,SubDocType) 
-                        VALUES (@OwnerAgency, @ViewerAgency, @DocType_Cate,@DocumentType)", con))
+                        (OwnerAgency, ViewerAgency,DocType,SubDocType,doctypeId) 
+                        VALUES (@OwnerAgency, @ViewerAgency, @DocType_Cate,@DocumentType,@doctypeId)", con))
                     {
                         cmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
                         cmd.Parameters.AddWithValue("@ViewerAgency", viewerAgency);
                         cmd.Parameters.AddWithValue("@DocumentType", doc);
                         cmd.Parameters.AddWithValue("@DocType_Cate", DocType_Cate);
+                        cmd.Parameters.AddWithValue("@doctypeId", doctypeId);
                         insertedCount += cmd.ExecuteNonQuery();
                     }
                 }
@@ -340,7 +343,7 @@ public partial class AgencyAccess : System.Web.UI.Page
         }
 
         FlureeCS fl = new FlureeCS();
-        DataTable dt = fl.GetSubDocTypes(doctypeId);
+        DataTable dt = fl.GetSubdoctypeforAccess(doctypeId);
 
         rptDocumentTypes.DataSource = dt;
         rptDocumentTypes.DataBind();

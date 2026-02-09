@@ -70,15 +70,15 @@ public partial class fileupload : System.Web.UI.Page
             return list;
 
         FlureeCS fl = new FlureeCS();
-        DataTable dt = fl.GetSubDocTypes(docTypeId);
+        DataTable dt = fl.GetSubDocTypes(docTypeId, HttpContext.Current.Session["agencyname"].ToString());
 
         for (int i = 0; i < dt.Rows.Count; i++)
         {
             DataRow row = dt.Rows[i];
 
             SubDocTypeVM vm = new SubDocTypeVM();
-            vm.subdocId = Convert.ToInt32(row["subdocId"]);
-            vm.subdoctypename = row["subdoctypename"].ToString();
+          //  vm.subdocId = Convert.ToInt32(row["subdocId"]);
+            vm.subdoctypename = row["SubDocType"].ToString();
 
             list.Add(vm);
         }
@@ -145,11 +145,11 @@ public partial class fileupload : System.Web.UI.Page
 
         int doctypeId = Convert.ToInt32(ddl_doctype.SelectedValue);
 
-        DataTable dt = fl.GetSubDocTypes(doctypeId);
+        DataTable dt = fl.GetSubDocTypes(doctypeId, HttpContext.Current.Session["agencyname"].ToString());
 
         ddl_sub_doc_type.DataSource = dt;
-        ddl_sub_doc_type.DataTextField = "subdoctypename";
-        ddl_sub_doc_type.DataValueField = "subdocId";
+        ddl_sub_doc_type.DataTextField = "SubDocType";
+        ddl_sub_doc_type.DataValueField = "SubDocType";
         ddl_sub_doc_type.DataBind();
 
         ddl_sub_doc_type.Items.Insert(0,
@@ -160,15 +160,15 @@ public partial class fileupload : System.Web.UI.Page
 
     private void BindSubDocumentType(int doctypeId)
     {
-        DataTable dt = fl.GetSubDocTypes(doctypeId);
+        DataTable dt = fl.GetSubDocTypes(doctypeId, HttpContext.Current.Session["agencyname"].ToString());
 
         ddl_sub_doc_type.Items.Clear();
 
         if (dt != null && dt.Rows.Count > 0)
         {
             ddl_sub_doc_type.DataSource = dt;
-            ddl_sub_doc_type.DataTextField = "subdoctypename";
-            ddl_sub_doc_type.DataValueField = "subdocId";
+            ddl_sub_doc_type.DataTextField = "SubDocType";
+            ddl_sub_doc_type.DataValueField = "SubDocType";
             ddl_sub_doc_type.DataBind();
         }
 
@@ -304,10 +304,10 @@ public partial class fileupload : System.Web.UI.Page
                 string examsession = ddl_Examsession.SelectedValue;
 
                 string doctypeId = hfDoctypeId.Value;
-                string doctype = hfDoctypeText.Value;
+                string doctype = hfDoctypeText.Value.Trim();
 
                 string subdoctypeId = hfSubdoctypeId.Value;
-                string subdoctype = hfSubdoctypeText.Value;
+                string subdoctype = hfSubdoctypeText.Value.Trim();
 
                 string remark = txtRemark.Text.Trim();
 

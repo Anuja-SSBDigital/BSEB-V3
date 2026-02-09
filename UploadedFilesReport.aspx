@@ -105,6 +105,7 @@
                                                         <th>Remarks</th>
                                                         <th>Upload Date</th>
                                                         <th>Access Agency</th>
+                                                        <th>Downloaded By</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -119,6 +120,7 @@
                                                                 <td><%# Eval("Remarks") %></td>
                                                                 <td> <%# Eval("createddate", "{0:dd-MMM-yyyy hh:mm tt}") %></td>
                                                                 <td> <%# Eval("ViewerAgencies") %></td>
+                                                                <td> <%# Eval("DownloadedBy") %></td>
                                                             </tr>
                                                         </ItemTemplate>
                                                     </asp:Repeater>
