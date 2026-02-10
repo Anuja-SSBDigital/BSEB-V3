@@ -1,14 +1,16 @@
-﻿using Spire.Pdf.General.Paper.Uof;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class AgencyAccess : System.Web.UI.Page
-{      
+{
     string connectionString = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -18,34 +20,16 @@ public partial class AgencyAccess : System.Web.UI.Page
             if (Session["userid"] != null)
             {
                 BindAgencies();
-                //BindDocumentTypes();
                 BindDocCategory();
-                BindDocumentTypesByCategory();
-               
             }
-            else            
+            else
             {
                 Response.Redirect("../login.aspx");
             }
         }
     }
-    private void BindDocCategory()
-    {
-        FlureeCS fl = new FlureeCS();
-        DataTable dt = fl.DocumentCategoryMaster();
 
-        ddl_doctype.Items.Clear();
 
-        if (dt != null && dt.Rows.Count > 0)
-        {
-            ddl_doctype.DataSource = dt;
-            ddl_doctype.DataTextField = "DocCategoryName";
-            ddl_doctype.DataValueField = "doctypeId";
-            ddl_doctype.DataBind();
-        }
-
-        ddl_doctype.Items.Insert(0, new ListItem("Select Doc Category", "0"));
-    }
 
     private void BindAgencies()
     {
@@ -72,194 +56,177 @@ public partial class AgencyAccess : System.Web.UI.Page
         chkViewerAgencies.Items.Add(new ListItem("Hitech", "Hitech"));
     }
 
-    //private void BindDocumentTypes()
-    //{
-    //    DataTable dt = GetActiveDocumentTypes();
-    //    rptDocumentTypes.DataSource = dt;
-    //    rptDocumentTypes.DataBind();
-
-
-    //    if (ddlOwnerAgency.SelectedValue != "ALL" && ddlOwnerAgency.SelectedValue != "")
-    //    {
-    //        PreselectDocumentTypes(ddlOwnerAgency.SelectedValue);
-    //    }
-    //}
-
-    //public DataTable GetActiveDocumentTypes()
-    //{
-    //    DataTable dt = new DataTable();
-    //    using (SqlConnection conn = new SqlConnection(connectionString))
-    //    {
-    //        string query = @"
-    //        SELECT DocTypeName AS SubDocTypeName
-    //        FROM Documenttypemaster
-    //        WHERE isactive = 1
-    //        ORDER BY CreatedDate DESC";
-
-    //        using (SqlCommand cmd = new SqlCommand(query, conn))
-    //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-    //        {
-    //            da.Fill(dt);
-    //        }
-    //    }
-    //    return dt;
-    //}
-
-
-    private void PreselectDocumentTypes(string ownerAgency)
+    private void BindDocCategory()
     {
+        FlureeCS fl = new FlureeCS();
+        DataTable dt = fl.DocumentCategoryMaster();
 
-        DataTable dtSelected = new DataTable();
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        ddl_doctype.Items.Clear();
+
+        if (dt != null && dt.Rows.Count > 0)
         {
-            string query = "SELECT DISTINCT SubDocType FROM AgencyDocumentAccess WHERE OwnerAgency = @OwnerAgency";
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    da.Fill(dtSelected);
-                }
-            }
+            ddl_doctype.DataSource = dt;
+            ddl_doctype.DataTextField = "DocCategoryName";
+            ddl_doctype.DataValueField = "doctypeId";
+            ddl_doctype.DataBind();
         }
 
-        foreach (RepeaterItem item in rptDocumentTypes.Items)
-        {
-            CheckBox chk = (CheckBox)item.FindControl("chkDoc");
-            if (chk != null)
-            {
-                foreach (DataRow dr in dtSelected.Rows)
-                {
-                    if (chk.Text == dr["DocumentType"].ToString())
-                    {
-                        chk.Checked = true;
-                        break;
-                    }
-                }
-            }
-        }
+        ddl_doctype.Items.Insert(0, new ListItem("Select Doc Category", "0"));
     }
-   
-    //protected void ddlOwnerAgency_SelectedIndexChanged(object sender, EventArgs e)
-    //{
+                               
+    public class SubDocTypeVM
+    {
+        public int subdocId { get; set; }
+        public string subdoctypename { get; set; }
+    }
 
-    //    BindDocumentTypes();      
-   
-    //}
+    [WebMethod]
+    public static List<SubDocTypeVM> GetSubDocTypes(string doctypeId)
+    {
+        List<SubDocTypeVM> list = new List<SubDocTypeVM>();
+        int docTypeId;
+        if (!int.TryParse(doctypeId, out docTypeId))
+            return list;
+
+        FlureeCS fl = new FlureeCS();
+        DataTable dt = fl.GetSubdoctypeforAccess(docTypeId);
+
+        foreach (DataRow row in dt.Rows)
+        {
+            SubDocTypeVM vm = new SubDocTypeVM();
+            vm.subdocId = Convert.ToInt32(row["subdocId"]);
+            vm.subdoctypename = row["subdoctypename"].ToString();
+            list.Add(vm);
+        }
+        return list;
+    }
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
         string error;
         if (!ValidateServerSide(out error))
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "vFail",
-                string.Format("alert('{0}');", error.Replace("'", "\\'")), true);
+            ScriptManager.RegisterStartupScript(
+                this, this.GetType(), "vFail",
+                "alert('" + error.Replace("'", "\\'") + "');", true);
             return;
         }
-             
+
         string ownerAgency = ddlOwnerAgency.SelectedValue;
-        string DocType_Cate = ddl_doctype.SelectedItem.Text;
+        string docTypeCategory = ddl_doctype.SelectedItem.Text; // Category → DocType
+
+
+
         string doctypeId = ddl_doctype.SelectedValue;
-        List<string> selectedDocs = new List<string>();
 
-        foreach (RepeaterItem item in rptDocumentTypes.Items)
+
+        // Selected Sub Document Types
+        List<string> selectedDocs = hfSubdoctypeNames.Value
+            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => x.Trim())
+            .ToList();
+
+        if (selectedDocs.Count == 0)
         {
-            CheckBox chk = item.FindControl("chkDoc") as CheckBox;
-            Label lbl = item.FindControl("lblDocName") as Label;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "noDocs",
+                "alert('Please select at least one Sub Document Type.');", true);
+            return;
+        }
 
-            if (chk != null && chk.Checked)
+        // Selected Viewer Agencies
+        List<string> selectedViewers = new List<string>();
+        foreach (ListItem item in chkViewerAgencies.Items)
+        {
+            if (item.Selected && item.Enabled)
             {
-                string docName = lbl != null ? lbl.Text : chk.Text;
-                selectedDocs.Add(docName);
+                selectedViewers.Add(item.Value);
             }
         }
-       
-        List<string> selectedViewers = new List<string>();
-        foreach (ListItem viewer in chkViewerAgencies.Items)
-        {
-            if (viewer.Enabled && viewer.Selected)
-            {
-                selectedViewers.Add(viewer.Value);
-            }
-        }     
 
-        string connectionString = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
+        if (selectedViewers.Count == 0)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "noViewers",
+                "alert('Please select at least one Viewer Agency.');", true);
+            return;
+        }
+
+        int insertedCount = 0;
+        int skippedCount = 0;
 
         using (SqlConnection con = new SqlConnection(connectionString))
         {
             con.Open();
 
-            int insertedCount = 0;
-            int skippedCount = 0;
-
             foreach (string viewerAgency in selectedViewers)
             {
-                foreach (string doc in selectedDocs)
+                foreach (string subDoc in selectedDocs)
                 {
+                    string docType = docTypeCategory; // Category
+                    string subDocType = subDoc;       // Sub document
 
-                    using (SqlCommand checkCmd = new SqlCommand(@"
-                        SELECT COUNT(*) FROM AgencyDocumentAccess 
-                        WHERE OwnerAgency = @OwnerAgency 
-                          AND ViewerAgency = @ViewerAgency 
-                          AND SubDocType = @DocumentType", con))
+                    // 🔎 Skip check (active only)
+                    int activeCount = 0;
+                    using (SqlCommand checkCmd = new SqlCommand(
+                        @"SELECT COUNT(*) 
+                      FROM AgencyDocumentAccess
+                      WHERE OwnerAgency=@OwnerAgency
+                        AND ViewerAgency=@ViewerAgency
+                        AND DocType=@DocType
+                        AND SubDocType=@SubDocType
+                        AND IsActive=1", con))
                     {
                         checkCmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
                         checkCmd.Parameters.AddWithValue("@ViewerAgency", viewerAgency);
-                        checkCmd.Parameters.AddWithValue("@DocumentType", doc);
-                      
+                        checkCmd.Parameters.AddWithValue("@DocType", docType);
+                        checkCmd.Parameters.AddWithValue("@SubDocType", subDocType);
 
-                        int exists = (int)checkCmd.ExecuteScalar();
-
-                        if (exists > 0)
-                        {
-
-                            skippedCount++;
-                            continue;
-                        }
+                        activeCount = Convert.ToInt32(checkCmd.ExecuteScalar());
                     }
 
-                    using (SqlCommand cmd = new SqlCommand(@"
-                        INSERT INTO AgencyDocumentAccess 
-                        (OwnerAgency, ViewerAgency,DocType,SubDocType,doctypeId) 
-                        VALUES (@OwnerAgency, @ViewerAgency, @DocType_Cate,@DocumentType,@doctypeId)", con))
+                    if (activeCount > 0)
                     {
-                        cmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
-                        cmd.Parameters.AddWithValue("@ViewerAgency", viewerAgency);
-                        cmd.Parameters.AddWithValue("@DocumentType", doc);
-                        cmd.Parameters.AddWithValue("@DocType_Cate", DocType_Cate);
-                        cmd.Parameters.AddWithValue("@doctypeId", doctypeId);
-                        insertedCount += cmd.ExecuteNonQuery();
+                        skippedCount++;
+                        continue;
                     }
+
+
+                    using (SqlCommand insertCmd = new SqlCommand(
+                        @"INSERT INTO AgencyDocumentAccess
+                      (OwnerAgency, ViewerAgency, SubDocType, DocType, createddate,doctypeId, IsActive)
+                      VALUES
+                      (@OwnerAgency, @ViewerAgency, @SubDocType, @DocType, GETDATE(),@doctypeId, 1)", con))
+                    {
+                        insertCmd.Parameters.AddWithValue("@OwnerAgency", ownerAgency);
+                        insertCmd.Parameters.AddWithValue("@ViewerAgency", viewerAgency);
+                        insertCmd.Parameters.AddWithValue("@SubDocType", subDocType);
+                        insertCmd.Parameters.AddWithValue("@DocType", docType);
+
+                        insertCmd.Parameters.AddWithValue("@doctypeId", doctypeId);
+
+                        insertCmd.ExecuteNonQuery();
+                        insertedCount++;
+                    }
+
                 }
             }
-
-
-            string finalMessage = "";
-
-            if (insertedCount > 0)
-            {
-                finalMessage = "Records saved successfully! Inserted: " + insertedCount +
-                               ", Skipped (already existed): " + skippedCount;
-            }
-            else if (skippedCount > 0)
-            {
-                finalMessage = "All selected records already exist! Skipped: " + skippedCount;
-            }
-            else
-            {
-                finalMessage = "No records were selected.";
-            }
-
-            ScriptManager.RegisterStartupScript(
-    this,
-    this.GetType(),
-    "done",
-    string.Format("alert('{0}');", finalMessage.Replace("'", "\\'")),
-    true
-);
-
         }
+
+        // ✅ Final message + reset form (no refresh)
+        string finalMessage = "Inserted: " + insertedCount + ", Skipped: " + skippedCount;
+
+        string script =
+            "alert('" + finalMessage.Replace("'", "\\'") + "');" +
+            "document.getElementById('" + ddlOwnerAgency.ClientID + "').value='ALL';" +
+            "document.getElementById('" + ddl_doctype.ClientID + "').value='0';" +
+            "document.getElementById('" + hfSubdoctypeIds.ClientID + "').value='';" +
+            "document.getElementById('" + hfSubdoctypeNames.ClientID + "').value='';" +
+            "document.getElementById('subDocContainer').innerHTML='<span class=\"text-muted\">Please select category</span>';" +
+            "var v=document.getElementById('" + chkViewerAgencies.ClientID + "').getElementsByTagName('input');" +
+            "for(var i=0;i<v.length;i++){v[i].checked=false;}";
+
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "done", script, true);
     }
+
 
     private bool ValidateServerSide(out string error)
     {
@@ -268,23 +235,12 @@ public partial class AgencyAccess : System.Web.UI.Page
         if (ddlOwnerAgency.SelectedValue == "ALL" || ddlOwnerAgency.SelectedValue == "")
         {
             error = "Please select Owner Agency.";
-            return false;     
+            return false;
         }
 
-        bool anyDocSelected = false;
-        foreach (RepeaterItem item in rptDocumentTypes.Items)    
+        if (string.IsNullOrEmpty(hfSubdoctypeIds.Value))
         {
-            CheckBox chk = item.FindControl("chkDoc") as CheckBox;
-            if (chk != null && chk.Checked)
-            {
-                anyDocSelected = true;
-                break;
-            }
-        }
-
-        if (!anyDocSelected)
-        {
-            error = "Please select at least one document.";
+            error = "Please select at least one Sub Document Type.";
             return false;
         }
 
@@ -306,54 +262,4 @@ public partial class AgencyAccess : System.Web.UI.Page
 
         return true;
     }
-
-    private DataTable GetDocumentTypesByCategory(string category)
-    {
-        DataTable dt = new DataTable();
-
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            string query = @"
-            SELECT DocTypeName AS SubDocTypeName
-            FROM SubDocTypeMaster
-            WHERE IsActive = 1
-              AND DocCategoryName = @Category
-            ORDER BY DocTypeName";
-
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@Category", category);
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    da.Fill(dt);
-                }
-            }
-        }
-        return dt;
-    }
-
-    private void BindDocumentTypesByCategory()
-    {
-        int doctypeId;
-        if (!int.TryParse(ddl_doctype.SelectedValue, out doctypeId) || doctypeId == 0)
-        {
-            rptDocumentTypes.DataSource = null;
-            rptDocumentTypes.DataBind();
-            return;
-        }
-
-        FlureeCS fl = new FlureeCS();
-        DataTable dt = fl.GetSubdoctypeforAccess(doctypeId);
-
-        rptDocumentTypes.DataSource = dt;
-        rptDocumentTypes.DataBind();
-    }
-
-
-
-    protected void ddl_doctype_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindDocumentTypesByCategory();
-    }
-
 }
