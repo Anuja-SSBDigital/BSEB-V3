@@ -7,27 +7,32 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>User Detailes </h4>
+                    <h4>User Details </h4>
                 </div>
 
                 <div class="card-body">
                     <div class="row">
 
-                        <%--  <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="agency-name">Agency Name</label>
-                                <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control" Required="true">
-                                    <asp:ListItem Value="" Text="Select Agency Name" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Value="Mappel" Text="Mappel"></asp:ListItem>
-                                    <asp:ListItem Value="Datacone" Text="Datacone"></asp:ListItem>
-                                    <asp:ListItem Value="Kids" Text="Kids"></asp:ListItem>
-                                    <asp:ListItem Value="MCRK" Text="MCRK"></asp:ListItem>
-                                    <asp:ListItem Value="Keltron" Text="Keltron"></asp:ListItem>
-                                    <asp:ListItem Value="Charu Mindworks" Text="Charu Mindworks"></asp:ListItem>
-                                </asp:DropDownList>
-                                <div class="invalid-feedback">Please select User name</div>
-                            </div>
-                        </div>--%>
+
+<%--                                <div class="col-md-6">
+             <label for="ddlOwnerAgency" class="form-label fw-bold text-dark">
+                 Step 1: Select Agency
+             </label>
+             <asp:DropDownList ID="ddlOwnerAgency" runat="server" CssClass="form-control">
+                 <asp:ListItem Value="">-- Select Agency --</asp:ListItem>
+                 <asp:ListItem Value="Antier">Antier</asp:ListItem>
+                 <asp:ListItem Value="Charu Mindworks">Charu Mindworks</asp:ListItem>
+                 <asp:ListItem Value="Datacon">Datacon</asp:ListItem>
+                 <asp:ListItem Value="Hitech">Hitech</asp:ListItem>
+                 <asp:ListItem Value="Kids">Kids</asp:ListItem>
+                 <asp:ListItem Value="Mapple">Mapple</asp:ListItem>
+                 <asp:ListItem Value="MCRK">MCRK</asp:ListItem>
+                 <asp:ListItem Value="Shree Jagannath Udyog">Shree Jagannath Udyog</asp:ListItem>
+                 <asp:ListItem Value="SSB Digital">SSB Digital</asp:ListItem>
+                 <asp:ListItem Value="DatacenterBSEB">DatacenterBSEB</asp:ListItem>
+             </asp:DropDownList>
+         </div>--%>
+
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -35,7 +40,7 @@
 
                                 <asp:DropDownList
                                     runat="server"
-                                    ID="ddl_AgencyName"
+                                    ID="ddlOwnerAgency"
                                     CssClass="form-control"
                                     AppendDataBoundItems="true">
                                     <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
@@ -71,7 +76,7 @@
         <div class="col-12" runat="server" id="User_detailes" visible="false">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>User Detailes</h4>
+                    <h4>User Details</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -132,8 +137,7 @@
                                                     Deactive</asp:LinkButton>
                                             </td>
 
-
-                                        </tr>
+                                        </tr> 
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </tbody>

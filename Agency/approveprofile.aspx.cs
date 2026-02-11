@@ -8,24 +8,22 @@ using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
+using System.Configuration;    
 using System.Data.SqlClient;
 
 public partial class Agency_approveprofile : System.Web.UI.Page
 {
     FlureeCS fl = new FlureeCS();
-
+  
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        BindAgencyDropdown();
+       
         if (!IsPostBack)
         {
             if (Session["userid"] != null)
             {
-
-             
-
+                BindAgencyDropdown();
             }
             else
             {
@@ -33,12 +31,14 @@ public partial class Agency_approveprofile : System.Web.UI.Page
             }
         }
     }
-
+                              
     protected void btn_submit_Click(object sender, EventArgs e)
     {
        
         var UserStatus = ddl_Userstatus.SelectedValue;
-        DataTable resforuser = fl.FindUser(ddl_AgencyName.SelectedValue, UserStatus);
+        DataTable resforuser = fl.FindUser(ddlOwnerAgency.SelectedValue, UserStatus);
+
+     
         if (resforuser.Rows.Count > 0)
         {
             User_detailes.Visible = true;
@@ -52,6 +52,7 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         }
     }
 
+
     private void BindAgencyDropdown()
     {
         string conStr = ConfigurationManager
@@ -61,20 +62,22 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         using (SqlConnection con = new SqlConnection(conStr))
         {
             using (SqlCommand cmd = new SqlCommand(
-                @"SELECT DISTINCT agencyname 
-                  FROM agencyuser 
-                  WHERE agencyname IS NOT NULL 
-                  ORDER BY agencyname", con))
+                @"SELECT DISTINCT LTRIM(RTRIM(agencyname)) AS agencyname
+              FROM agencyuser
+              WHERE agencyname IS NOT NULL
+              GROUP BY LTRIM(RTRIM(agencyname))
+              ORDER BY LTRIM(RTRIM(agencyname))", con))
             {
                 con.Open();
 
-                ddl_AgencyName.DataSource = cmd.ExecuteReader();
-                ddl_AgencyName.DataTextField = "agencyname";
-                ddl_AgencyName.DataValueField = "agencyname";
-                ddl_AgencyName.DataBind();
+                ddlOwnerAgency.DataSource = cmd.ExecuteReader();
+                ddlOwnerAgency.DataTextField = "agencyname";
+                ddlOwnerAgency.DataValueField = "agencyname";
+                ddlOwnerAgency.DataBind();
             }
         }
     }
+
 
 
     protected void rpt_userData_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -151,14 +154,14 @@ public partial class Agency_approveprofile : System.Web.UI.Page
             string userId = e.CommandArgument.ToString();
             string resUser = fl.Updateagencyuserstatus(userId, "Active");
 
-            if (!string.IsNullOrEmpty(resUser) && emailid != null && username != null && agency != null)
-            {
-                SendUserIdEmail(emailid.Value, username.Value, agency.Value, userId);
-            }
-            else
-            {
-                fl.log.Error("Error: One or more hidden fields are null.");
-            }
+            //if (!string.IsNullOrEmpty(resUser) && emailid != null && username != null && agency != null)
+            //{
+            //    SendUserIdEmail(emailid.Value, username.Value, agency.Value, userId);
+            //}
+            //else
+            //{
+            //    fl.log.Error("Error: One or more hidden fields are null.");
+            //}
         }
         else if (e.CommandName == "link_rejected")
         {
@@ -189,64 +192,64 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         }
     }
 
-    private void SendUserIdEmail(string email, string username, string agencyname, string Userid)
-    {
-        // Generate a random password
-        string password = GenerateRandomPassword(8);
-        string encryptedPassword = fl.EncryptString(password);
+    //private void SendUserIdEmail(string email, string username, string agencyname, string Userid)
+    //{
+    //    // Generate a random password
+    //    string password = GenerateRandomPassword(8);
+    //    string encryptedPassword = fl.EncryptString(password);
 
-        // Update user password in the database
-        bool resUser = fl.UpdateUserPassword(encryptedPassword, Userid);
+    //    // Update user password in the database
+    //    bool resUser = fl.UpdateUserPassword(encryptedPassword, Userid);
 
-        if (resUser)
-        {
-            // Email body with login credentials
-            string html = "<div style='width: 80%; height: auto; margin: auto; padding: 20px; font-family: Arial;'>"
-                        + "<div style='border: 3px solid #f1f1f1; padding: 20px; background-color: #f1f1f1;'>"
-                        + "<h2>Account Approved</h2>"
-                        + "<p>Dear " + username + ",</p>"
-                        + "<p>Your account has been approved. You can now log in using the following credentials:</p>"
-                        + "<p><strong>Username:</strong> " + username + "</p>"
-                        + "<p><strong>Password:</strong> " + password + " </p>"
-                        + "<p><strong>Agency Name:</strong> " + agencyname + "</p>"
-                        + "<p><strong>Key for Upload:</strong></p>"
-                        + "<p><a href='https://ho.ssbdigital.in/bseb-v1/'>Click here to login</a></p>"
-                        + "<h3>Regards,<br/><b>SSBI Team</b></h3>"
-                        + "</div></div>";
+    //    if (resUser)
+    //    {
+    //        // Email body with login credentials
+    //        string html = "<div style='width: 80%; height: auto; margin: auto; padding: 20px; font-family: Arial;'>"
+    //                    + "<div style='border: 3px solid #f1f1f1; padding: 20px; background-color: #f1f1f1;'>"
+    //                    + "<h2>Account Approved</h2>"
+    //                    + "<p>Dear " + username + ",</p>"
+    //                    + "<p>Your account has been approved. You can now log in using the following credentials:</p>"
+    //                    + "<p><strong>Username:</strong> " + username + "</p>"
+    //                    + "<p><strong>Password:</strong> " + password + " </p>"
+    //                    + "<p><strong>Agency Name:</strong> " + agencyname + "</p>"
+    //                    + "<p><strong>Key for Upload:</strong></p>"
+    //                    + "<p><a href='https://ho.ssbdigital.in/bseb-v1/'>Click here to login</a></p>"
+    //                    + "<h3>Regards,<br/><b>SSBI Team</b></h3>"
+    //                    + "</div></div>";
 
-            try
-            {
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
+    //        try
+    //        {
+    //            MailMessage message = new MailMessage();
+    //            SmtpClient smtp = new SmtpClient(); 
 
-                message.From = new MailAddress("helpme@ssbdigital.in");
-                message.To.Add(new MailAddress(email));
-                message.Subject = "Your Account Has Been Approved";
-                message.IsBodyHtml = true;
-                message.Body = html;
+    //            message.From = new MailAddress("helpme@ssbdigital.in");
+    //            message.To.Add(new MailAddress(email));
+    //            message.Subject = "Your Account Has Been Approved";
+    //            message.IsBodyHtml = true;
+    //            message.Body = html;
 
-                smtp.Port = 587;
-                smtp.Host = "sg2plzcpnl505639.prod.sin2.secureserver.net";
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("helpme@ssbdigital.in", "5FG_W^nt.#TU");
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.EnableSsl = true;
-                smtp.Send(message);
-                Response.Write("<script language='javascript'>window.alert('Approval email sent successfully!'); location.href = location.href;</script>");
+    //            smtp.Port = 587;
+    //            smtp.Host = "sg2plzcpnl505639.prod.sin2.secureserver.net";
+    //            smtp.UseDefaultCredentials = false;
+    //            smtp.Credentials = new NetworkCredential("helpme@ssbdigital.in", "5FG_W^nt.#TU");
+    //            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+    //            smtp.EnableSsl = true;
+    //            smtp.Send(message);
+    //            Response.Write("<script language='javascript'>window.alert('Approval email sent successfully!'); location.href = location.href;</script>");
 
-            }
-            catch (Exception ex)
-            {
-                fl.log.Error("Email Sending Error: " + ex.Message);
-            }
-        }
-        else
-        {
-            Response.Write("<script language='javascript'>window.alert('Oops! Something went wrong with your registration. Please try again.'); window.location.reload();</script>");
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            fl.log.Error("Email Sending Error: " + ex.Message);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Response.Write("<script language='javascript'>window.alert('Oops! Something went wrong with your registration. Please try again.'); window.location.reload();</script>");
 
-            //Console.WriteLine("Password update failed.");
-        }
-    }
+    //        //Console.WriteLine("Password update failed.");
+    //    }
+    //}
     private string GenerateRandomPassword(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
