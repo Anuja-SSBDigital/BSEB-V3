@@ -20,40 +20,37 @@ public partial class UploadedFilesReport : System.Web.UI.Page
 
         }
     }
-
+           
+      //    
     protected void btn_Search_Click(object sender, EventArgs e)
     {
-        lblMessage.Text = "";
-        Agency_detailes.Visible = false;
-        rpt_Agencywisedata.DataSource = null;
-        rpt_Agencywisedata.DataBind();
+        Agency_detailes.Visible = true;
 
         string selectedAgency = ddl_AgencyName.SelectedValue;
+        DataTable dt = new DataTable();
 
-        DataTable dt;
-
+       
         if (string.IsNullOrEmpty(selectedAgency))
         {
-           
-            dt = fl.ShowFilesdetails(""); 
+            rpt_Agencywisedata.DataSource = null;
+            rpt_Agencywisedata.DataBind();
+            return;
+        }
+
+      
+        if (selectedAgency == "ALL")
+        {
+            dt = fl.ShowFilesdetails("");  
         }
         else
         {
+          
             dt = fl.ShowFilesdetails(selectedAgency);
         }
 
-        if (dt.Rows.Count > 0)
-        {
-            rpt_Agencywisedata.DataSource = dt;
-            rpt_Agencywisedata.DataBind();
-            Agency_detailes.Visible = true;
-        }
-        else
-        {
-            Agency_detailes.Visible = true;
-        }
+        rpt_Agencywisedata.DataSource = dt;
+        rpt_Agencywisedata.DataBind();
     }
-
 
     protected void ddl_AgencyName_SelectedIndexChanged(object sender, EventArgs e)
     {
