@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <!-- STEP 1 -->
-                   <%-- <div class="mb-4">
+                    <%-- <div class="mb-4">
                         <label class="text-dark">This is the agency that originally uploaded the document.</label>
                         <asp:DropDownList ID="ddlOwnerAgency" runat="server" CssClass="form-control">
                             <asp:ListItem Value="ALL">Select Agency</asp:ListItem>
@@ -51,46 +51,31 @@
 
                     <div class="mb-4">
 
-    <div class="form-group">
-        <label class="text-dark">This is the agency that originally uploaded the document.</label>
+                        <div class="form-group">
+                            <label class="text-dark">This is the agency that originally uploaded the document.</label>
 
-        <asp:DropDownList
-            runat="server"
-            ID="ddlOwnerAgency"
-            CssClass="form-control"
-            AppendDataBoundItems="true">
-            <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
-        </asp:DropDownList>
+                            <asp:DropDownList
+                                runat="server"
+                                ID="ddlOwnerAgency"
+                                CssClass="form-control"
+                                AppendDataBoundItems="true">
+                                <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
+                            </asp:DropDownList>
 
-        <div class="invalid-feedback">Please select Agency Name</div>
-    </div>
-</div>
-
-
+                            <div class="invalid-feedback">Please select Agency Name</div>
+                        </div>
+                    </div>
 
 
+                    <div class="mb-4">
+                        <%--<div class="col-md-3">--%>
+                        <%--<div class="form-group">--%>
+                        <label for="category">Doc Category</label>
+                        <asp:DropDownList ID="ddl_doctype" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_doctype_SelectedIndexChanged"></asp:DropDownList>
 
-
-
-
-
-
-
-
-
-
-
-
-
-                         <div class="mb-4">
-                         <%--<div class="col-md-3">--%>
-                         <%--<div class="form-group">--%>
-                             <label for="category">Doc Category</label>
-                          <asp:DropDownList ID="ddl_doctype"  runat="server"  CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddl_doctype_SelectedIndexChanged"></asp:DropDownList>
-
-                             <div class="invalid-feedback">Please select a category</div>
-                         <%--</div>--%>
-                     </div>
+                        <div class="invalid-feedback">Please select a category</div>
+                        <%--</div>--%>
+                    </div>
 
                     <label class="text-dark">Select Category and Document you want to show.</label>
                     <div class="border p-2 rounded">
@@ -99,22 +84,22 @@
                                 <strong>Select Category</strong>
                             </label>
 
-                       <asp:Repeater ID="rptDocumentTypes" runat="server">
-    <ItemTemplate>
-        <div class="form-check" style="display:inline-block;width:230px;margin:15px;">
-            <asp:CheckBox ID="chkDoc" runat="server"
-                CssClass="form-check-input me-2"/>
+                            <asp:Repeater ID="rptDocumentTypes" runat="server">
+                                <ItemTemplate>
+                                    <div class="form-check" style="display: inline-block; width: 230px; margin: 15px;">
+                                        <asp:CheckBox ID="chkDoc" runat="server"
+                                            CssClass="form-check-input me-2" />
 
-            <asp:Label ID="lblDocName" runat="server"
-                AssociatedControlID="chkDoc"
-                Text='<%# Eval("SubDocTypeName") %>'
-                CssClass="form-check-label text-dark" />
+                                        <asp:Label ID="lblDocName" runat="server"
+                                            AssociatedControlID="chkDoc"
+                                            Text='<%# Eval("SubDocTypeName") %>'
+                                            CssClass="form-check-label text-dark" />
 
-            <asp:HiddenField ID="hdnDocTypeName" runat="server"
-                Value='<%# Eval("SubDocTypeName") %>' />
-        </div>
-    </ItemTemplate>
-</asp:Repeater>
+                                        <asp:HiddenField ID="hdnDocTypeName" runat="server"
+                                            Value='<%# Eval("SubDocTypeName") %>' />
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
 
 
                         </div>

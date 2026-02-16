@@ -32,9 +32,6 @@ public partial class AgencyAccess : System.Web.UI.Page
         }
     }
 
-
-
-
     private void BindAgencyDropdown()
     {
         string conStr = ConfigurationManager
@@ -59,14 +56,6 @@ public partial class AgencyAccess : System.Web.UI.Page
             }
         }
     }
-
-
-
-
-
-
-
-
 
     private void BindDocCategory()
     {
