@@ -18,12 +18,14 @@ public partial class Agency_owneragencydetails : System.Web.UI.Page
             {
                 if (Session["role"].ToString() == "Admin")
                     div_search.Visible = true;
+
                 else
-                {                            
-                                
+                {
                     div_search.Visible = true;
                     Div_admin.Visible = false;
                 }
+
+                BindAgencyDropdown();
             }
             else
             {
@@ -32,6 +34,30 @@ public partial class Agency_owneragencydetails : System.Web.UI.Page
         }
     }
 
+    private void BindAgencyDropdown()
+    {
+        string conStr = ConfigurationManager
+                        .ConnectionStrings["dbcon"]
+                        .ConnectionString;
+
+        using (SqlConnection con = new SqlConnection(conStr))
+        {
+            using (SqlCommand cmd = new SqlCommand(
+                @"SELECT DISTINCT LTRIM(RTRIM(agencyname)) AS agencyname
+              FROM agencyuser
+              WHERE agencyname IS NOT NULL
+              GROUP BY LTRIM(RTRIM(agencyname))
+              ORDER BY LTRIM(RTRIM(agencyname))", con))
+            {
+                con.Open();
+
+                ddlOwnerAgency.DataSource = cmd.ExecuteReader();
+                ddlOwnerAgency.DataTextField = "agencyname";
+                ddlOwnerAgency.DataValueField = "agencyname";
+                ddlOwnerAgency.DataBind();
+            }
+        }
+    }
     [WebMethod]
     public static bool DeleteAccess(int accessId)
     {
@@ -49,7 +75,7 @@ public partial class Agency_owneragencydetails : System.Web.UI.Page
 
     protected void btnsearch_Click(object sender, EventArgs e)
     {
-        string ownerAgency = ddl_AgencyName.SelectedValue.Trim();
+        string ownerAgency = ddlOwnerAgency.SelectedValue.Trim();
 
         if (string.IsNullOrEmpty(ownerAgency))
         {
