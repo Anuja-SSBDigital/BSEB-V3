@@ -44,9 +44,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="CharuMindworks-tab" data-toggle="tab" href="#Charu_Mindworks" role="tab">Charu Mindworks</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="Shree_Jagannath_UdyogagAG-tab" data-toggle="tab" href="#Shree_Jagannath_UdyogagAG" role="tab">Shree Jagannath Udyog</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" id="Hitech-tab" data-toggle="tab" href="#Hitech_ag" role="tab">Hitech</a>
                         </li>
@@ -61,6 +59,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="SSBDigital-tab" data-toggle="tab" href="#SSBDigital_ag" role="tab">SSB Digital</a>
+                        </li>
+						<li class="nav-item">
+                            <a class="nav-link" id="Atharva-tab" data-toggle="tab" href="#Atharva" role="tab">Atharva</a>
+                        </li>
+						<li class="nav-item">
+                            <a class="nav-link" id="DataFox-tab" data-toggle="tab" href="#DataFox" role="tab">DataFox</a>
                         </li>
                     </ul>
 
@@ -289,9 +293,9 @@
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>
-                        <!-- Shree_Jagannath_Udyogag Tab -->
-                        <div class="tab-pane fade" id="Shree_Jagannath_UdyogagAG" role="tabpanel">
-                            <asp:Repeater ID="RepeaterShree_Jagannath_Udyog" runat="server" OnItemDataBound="RepeaterShree_Jagannath_Udyog_ItemDataBound">
+                        <!-- DataFox -->
+                        <div class="tab-pane fade" id="DataFox" role="tabpanel">
+                            <asp:Repeater ID="RepeaterDataFox" runat="server" OnItemDataBound="RepeaterDataFox_ItemDataBound">
                                 <HeaderTemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
@@ -374,6 +378,51 @@
                                     </tbody>
                         </table>
                                 </FooterTemplate>
+                            </asp:Repeater>
+                        </div>
+						
+						 <!-- Atharva -->
+                        <div class="tab-pane fade" id="Atharva" role="tabpanel">
+                            <asp:Repeater ID="RepeaterAtharva" runat="server" OnItemDataBound="RepeaterAtharva_ItemDataBound">
+                                <HeaderTemplate>
+                                    <table class="table table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>File Name</th>
+                                                <th>Remarks</th>
+                                                <th>Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <tr>
+                                        <td><%# Eval("fileName") %></td>
+
+
+                                        <td>
+                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                                   ? " " 
+                                               : Eval("Remarks") %>
+                                        </td>
+
+                                        <td>
+                                            <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
+                                            <asp:LinkButton
+                                                ID="btnDownload"
+                                                runat="server"
+                                                CssClass="btn btn-icon icon-left btn-success"
+                                                CommandArgument='<%# Eval("filePath") %>'
+                                                OnClick="btnDownload_Click">
+                                          <i class="fa fa-download"></i> 
+                                            </asp:LinkButton>
+                                        </td>
+                                    </tr>
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                     </tbody>
+                                    </table>
+                                  </FooterTemplate>
                             </asp:Repeater>
                         </div>
                         <%--    <div class="tab-pane fade" id="KeltronAG" role="tabpanel">

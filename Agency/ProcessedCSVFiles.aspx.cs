@@ -91,7 +91,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
                             { "MCRK", res.Clone() },
                             { "Mapple", res.Clone() },
                             { "Charu_Mindworks", res.Clone() },
-                            { "Shree_Jagannath_Udyog", res.Clone() },
+                            { "DataFox", res.Clone() },
+                            { "Atharva", res.Clone() },
                             { "Hitech", res.Clone() },
                             //{ "Keltron", res.Clone() },
                             //{ "Datasoft", res.Clone() },
@@ -101,7 +102,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
                  
     tabData["SSB Digital"] = tabData["SSBDigital"];
 	 tabData["Charu Mindworks"] = tabData["Charu_Mindworks"];
- tabData["Shree Jagannath Udyog"] = tabData["Shree_Jagannath_Udyog"];
+ tabData["DataFox"] = tabData["DataFox"];
+ tabData["Atharva"] = tabData["Atharva"];
             HashSet<DataRow> processedFiles = new HashSet<DataRow>();
 
             foreach (DataRow row in res.Rows)
@@ -123,7 +125,8 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
             BindRepeater(rptMCRK, tabData["MCRK"]);
             BindRepeater(rptMapple, tabData["Mapple"]);
             BindRepeater(RepeaterCharu_Mindworks, tabData["Charu_Mindworks"]);
-            BindRepeater(RepeaterShree_Jagannath_Udyog, tabData["Shree_Jagannath_Udyog"]);
+            BindRepeater(RepeaterDataFox, tabData["DataFox"]);
+            BindRepeater(RepeaterAtharva, tabData["Atharva"]);
             BindRepeater(RepeaterHitech, tabData["Hitech"]);
             //BindRepeater(RepeaterKeltronAG, tabData["Keltron"]);
             //BindRepeater(RepeaterDatasoft_ag, tabData["Datasoft"]);
@@ -421,7 +424,31 @@ public partial class ProcessedCSVFiles : System.Web.UI.Page
         }
     }
 
-    protected void RepeaterShree_Jagannath_Udyog_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    protected void RepeaterDataFox_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    {
+        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+        {
+            
+            string loggedInAgency = Session["agencyname"].ToString();
+
+           
+            string fileAgency = DataBinder.Eval(e.Item.DataItem, "agency").ToString();
+
+            // Remark
+            string remark = DataBinder.Eval(e.Item.DataItem, "Remarks").ToString();
+
+
+            LinkButton btnDownload = (LinkButton)e.Item.FindControl("btnDownload");
+
+
+            if (btnDownload != null)
+            {
+                btnDownload.Visible = loggedInAgency != fileAgency;
+            }
+        }
+    }
+	
+	 protected void RepeaterAtharva_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {

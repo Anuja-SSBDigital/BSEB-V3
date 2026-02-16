@@ -36,6 +36,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
+        Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+        Response.Cache.SetNoStore();
+        Response.Cache.SetRevalidation(System.Web.HttpCacheRevalidation.AllCaches);
+        Response.Cache.AppendCacheExtension("must-revalidate, proxy-revalidate");
         if (!IsPostBack)
         {
             if (Session["userid"] != null)

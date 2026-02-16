@@ -38,7 +38,7 @@ public partial class Agency_owneragencydetails : System.Web.UI.Page
         try
         {
             FlureeCS fl = new FlureeCS();
-            fl.DeleteAgencyDocumentAccess(accessId);
+            fl.SoftdeleteAgencyDocumentAccess(accessId);
             return true;
         }
         catch

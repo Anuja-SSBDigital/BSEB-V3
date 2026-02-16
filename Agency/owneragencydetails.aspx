@@ -28,6 +28,8 @@
                                 <asp:ListItem Value="Kids" Text="Kids"></asp:ListItem>
                                 <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
                                 <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
+								   <asp:ListItem Value="Atharva" Text="Atharva"></asp:ListItem>
+                            <asp:ListItem Value="DataFox" Text="DataFox"></asp:ListItem>
                             </asp:DropDownList>
                         </div>
 

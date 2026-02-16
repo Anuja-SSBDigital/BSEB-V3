@@ -41,7 +41,7 @@ public partial class fileupload : System.Web.UI.Page
         }
         else
         {
-           
+
             if (!string.IsNullOrEmpty(hfDoctypeId.Value))
             {
                 ddl_doctype.SelectedValue = hfDoctypeId.Value;
@@ -59,7 +59,7 @@ public partial class fileupload : System.Web.UI.Page
         public string subdoctypename { get; set; }
     }
 
-  
+
     [WebMethod]
     public static List<SubDocTypeVM> GetSubDocTypes(string doctypeId)
     {
@@ -77,7 +77,7 @@ public partial class fileupload : System.Web.UI.Page
             DataRow row = dt.Rows[i];
 
             SubDocTypeVM vm = new SubDocTypeVM();
-          //  vm.subdocId = Convert.ToInt32(row["subdocId"]);
+            //  vm.subdocId = Convert.ToInt32(row["subdocId"]);
             vm.subdoctypename = row["SubDocType"].ToString();
 
             list.Add(vm);
@@ -100,7 +100,7 @@ public partial class fileupload : System.Web.UI.Page
         if (AgencyName.Equals("Hitech", StringComparison.OrdinalIgnoreCase))
         {
             // ONLY show Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical Printing" ||  r.Field<string>("DocCategoryName") == "Theory Printing");
+            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical Printing" || r.Field<string>("DocCategoryName") == "Theory Printing");
 
             if (rows.Any())
                 filteredDt = rows.CopyToDataTable();
@@ -353,15 +353,15 @@ public partial class fileupload : System.Web.UI.Page
 
                 if (words.Length > 3)
                 {
-                    cleanedSubdoctype = words[0]  + words[1]  + words[2]  + words[3];
+                    cleanedSubdoctype = words[0] + words[1] + words[2] + words[3];
                 }
                 else if (words.Length > 2)
                 {
-                    cleanedSubdoctype = words[0]  + words[1] + words[2];
+                    cleanedSubdoctype = words[0] + words[1] + words[2];
                 }
                 else if (words.Length > 1)
                 {
-                    cleanedSubdoctype = words[0]  + words[1];
+                    cleanedSubdoctype = words[0] + words[1];
                 }
 
 

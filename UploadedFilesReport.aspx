@@ -23,10 +23,9 @@
         body {
             background: radial-gradient(circle at top left, #2c4a9c 0%, #142b5e 70%);
         }
-
-        .container {
-            max-width: 1400px !important;
-        }
+		    .container {
+        max-width: 1400px !important;
+    }
     </style>
 </head>
 
@@ -41,10 +40,9 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h4>Search File Upload Details</h4>
-                                    &nbsp;&nbsp;
+                                    <h4>Search File Upload Details</h4>&nbsp;&nbsp;
                                     
-                                    <small class="form-text text-title"><i class="fas fa-exclamation-circle"></i>Fileformat : Agency_Board_doctype_Subdoctype_timestamp 
+                                    <small class="form-text text-title"><i class="fas fa-exclamation-circle"></i> Fileformat : Agency_Board_doctype_Subdoctype_timestamp 
 
                                     </small>
                                 </div>
@@ -58,7 +56,6 @@
                                             <h2 class="mb-3 font-18">
                                                 <asp:Label runat="server" ID="Label1"></asp:Label>
                                             </h2>
-
                                             <asp:DropDownList runat="server" ID="ddl_AgencyName" CssClass="form-control">
                                                 <asp:ListItem Value="" Text="Select Agency Name" Selected="True"></asp:ListItem>
                                                 <asp:ListItem Value="Hitech" Text="Hitech"></asp:ListItem>
@@ -69,20 +66,21 @@
                                                 <asp:ListItem Value="Kids" Text="Kids"></asp:ListItem>
                                                 <asp:ListItem Value="Antier" Text="Antier"></asp:ListItem>
                                                 <asp:ListItem Value="SSB Digital" Text="SSB Digital"></asp:ListItem>
-                                                <asp:ListItem Value="ALL" Text="ALL"></asp:ListItem>
+												 <asp:ListItem Value="Atharva" Text="Atharva"></asp:ListItem>
+                            <asp:ListItem Value="DataFox" Text="DataFox"></asp:ListItem>
+												  <asp:ListItem Value="" Text="ALL"></asp:ListItem>
                                             </asp:DropDownList>
 
                                         </div>
 
                                     </div>
 
+
+
                                 </div>
                                 <div class="card-footer text-end">
                                     <asp:Button runat="server" ID="btnsearch" OnClick="btn_Search_Click" CssClass="btn btn-primary" Text="Search" />
-                                    <%--<asp:Label ID="lblMessage" runat="server" CssClass="text-info d-block mb-2"></asp:Label>--%>
-
-                                    <asp:Label ID="lblMessage" runat="server" CssClass="d-block mb-2"></asp:Label>
-
+                                    <asp:Label ID="lblMessage" runat="server" CssClass="text-info d-block mb-2"></asp:Label>
 
                                 </div>
 
@@ -93,7 +91,6 @@
                         <div class="col-md-12">
                             <div class="mt-3" runat="server" id="Agency_detailes" visible="false">
 
-
                                 <div class="card card-primary">
                                     <div class="card-header">
                                         <h4>File Upload Details</h4>
@@ -101,12 +98,12 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-striped" id="table-1">
+                                            <table class="table table-striped" id="table-1" >
                                                 <thead>
                                                     <tr>
                                                         <th>Sr.No.</th>
                                                         <th>Actual File Name</th>
-                                                        <th>Doc Type</th>
+														  <th>Doc Type</th>
                                                         <th>File Name</th>
                                                         <th>Remarks</th>
                                                         <th>Upload Date</th>
@@ -121,12 +118,12 @@
                                                             <tr>
                                                                 <td><%# Container.ItemIndex + 1 %></td>
                                                                 <td><%# Eval("actualfilename") %></td>
-                                                                <td><%# Eval("subdoctype") %></td>
+																  <td><%# Eval("subdoctype") %></td>
                                                                 <td><%# Eval("filename") %></td>
                                                                 <td><%# Eval("Remarks") %></td>
-                                                                <td><%# Eval("createddate", "{0:dd-MMM-yyyy hh:mm tt}") %></td>
-                                                                <td><%# Eval("ViewerAgencies") %></td>
-                                                                <td><%# Eval("DownloadedBy") %></td>
+                                                                <td> <%# Eval("createddate", "{0:dd-MMM-yyyy hh:mm tt}") %></td>
+                                                                <td> <%# Eval("ViewerAgencies") %></td>
+                                                                <td> <%# Eval("DownloadedBy") %></td>
                                                             </tr>
                                                         </ItemTemplate>
                                                     </asp:Repeater>

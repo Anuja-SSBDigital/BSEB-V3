@@ -25,9 +25,10 @@
                             <asp:ListItem Value="Kids">Kids</asp:ListItem>
                             <asp:ListItem Value="Mapple">Mapple</asp:ListItem>
                             <asp:ListItem Value="MCRK">MCRK</asp:ListItem>
-                            <asp:ListItem Value="Shree Jagannath Udyog">Shree Jagannath Udyog</asp:ListItem>
-                            <asp:ListItem Value="SSB Digital">SSB Digital</asp:ListItem>
+                           <asp:ListItem Value="SSB Digital">SSB Digital</asp:ListItem>
                             <asp:ListItem Value="DatacenterBSEB">DatacenterBSEB</asp:ListItem>
+						   <asp:ListItem Value="Atharva">Atharva</asp:ListItem>
+                            <asp:ListItem Value="DataFox">DataFox</asp:ListItem>
                         </asp:DropDownList>
                     </div>
 
