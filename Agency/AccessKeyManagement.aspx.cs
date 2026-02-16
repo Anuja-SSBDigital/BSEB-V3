@@ -23,6 +23,7 @@ public partial class AccessKeyManagement : System.Web.UI.Page
         {
             if (Session["userid"] != null)
             {
+                BindAgencyDropdown();
 
             }
 
@@ -33,7 +34,44 @@ public partial class AccessKeyManagement : System.Web.UI.Page
         }
     }
 
-                                    
+
+    private void BindAgencyDropdown()
+    {
+        string conStr = ConfigurationManager
+                        .ConnectionStrings["dbcon"]
+                        .ConnectionString;
+
+        using (SqlConnection con = new SqlConnection(conStr))
+        {
+            using (SqlCommand cmd = new SqlCommand(@"
+            SELECT DISTINCT LTRIM(RTRIM(agencyname)) AS agencyname
+            FROM agencyuser
+            WHERE agencyname IS NOT NULL
+            ORDER BY LTRIM(RTRIM(agencyname))", con))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Bind First Dropdown
+                    ddlOwnerAgency.DataSource = dt;
+                    ddlOwnerAgency.DataTextField = "agencyname";
+                    ddlOwnerAgency.DataValueField = "agencyname";
+                    ddlOwnerAgency.DataBind();
+
+                    // Bind Second Dropdown
+                    ddl_search_agency.DataSource = dt;
+                    ddl_search_agency.DataTextField = "agencyname";
+                    ddl_search_agency.DataValueField = "agencyname";
+                    ddl_search_agency.DataBind();
+
+
+                }
+            }
+        }
+    }
+
     public string GenerateJwtToken(string agencyName, out DateTime expiryDate)
     {
         expiryDate = DateTime.UtcNow.AddMonths(9);
@@ -189,7 +227,9 @@ public partial class AccessKeyManagement : System.Web.UI.Page
 
     }
 
-
+        
+                        
+                                                       
     protected void btnsearch_Click(object sender, EventArgs e)
     {
         BindAgencyUserData();
@@ -198,7 +238,7 @@ public partial class AccessKeyManagement : System.Web.UI.Page
     private void BindAgencyUserData()
     {
       
-        if (string.IsNullOrEmpty(ddl_agency.SelectedValue))
+        if (string.IsNullOrEmpty(ddl_search_agency.SelectedValue))
         {
             rpt_DocumentTypeData.DataSource = null;
             rpt_DocumentTypeData.DataBind();
@@ -208,7 +248,7 @@ public partial class AccessKeyManagement : System.Web.UI.Page
             return;
         }
 
-        string agency = ddl_agency.SelectedValue;
+        string agency = ddl_search_agency.SelectedValue;
         DataTable dt = fl.AgencyWiseData(agency);
 
         if (dt.Rows.Count > 0)

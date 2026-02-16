@@ -12,7 +12,7 @@
                 <div class="card-body">
 
 
-                    <div class="mb-3">
+               <%--     <div class="mb-3">
                         <label for="ddlOwnerAgency" class="form-label fw-bold text-dark">
                             Step 1: Select Agency
                         </label>
@@ -30,8 +30,28 @@
 						   <asp:ListItem Value="Atharva">Atharva</asp:ListItem>
                             <asp:ListItem Value="DataFox">DataFox</asp:ListItem>
                         </asp:DropDownList>
-                    </div>
+                    </div>--%>
 
+
+                    
+                    <div class="mb-3">
+                        <label for="ddlOwnerAgency" class="form-label fw-bold text-dark">
+                            Step 1: Select Agency
+                        </label>
+
+                        <div class="form-group">
+
+                            <asp:DropDownList
+                                runat="server"
+                                ID="ddlOwnerAgency"
+                                CssClass="form-control"
+                                AppendDataBoundItems="true">
+                                <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
+                            </asp:DropDownList>
+
+                            <div class="invalid-feedback">Please select Agency Name</div>
+                        </div>
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-bold text-dark">
@@ -77,7 +97,7 @@
                 <div class="card-body">
 
                     
-                    <div class="row mb-3">
+                 <%--   <div class="row mb-3">
                         <div class="col-lg-6 col-md-6">
                             <label class="fw-bold">Select Agency</label>
                             <div class="form-group">
@@ -94,7 +114,25 @@
                                         <asp:ListItem Value="Shree Jagannath Udyog">Shree Jagannath Udyog</asp:ListItem>
                                         <asp:ListItem Value="SSB Digital">SSB Digital</asp:ListItem>
                                         <asp:ListItem Value="DatacenterBSEB">DatacenterBSEB</asp:ListItem>
-                                    </asp:DropDownList>
+                                    </asp:DropDownList>--%>
+
+
+                    
+                    <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6">
+                            <label class="fw-bold">Select Agency</label>
+                            <div class="form-group">
+                                <asp:DropDownList
+                                    runat="server"
+                                    ID="ddl_search_agency"
+                                    CssClass="form-control"
+                                    AppendDataBoundItems="true">
+                                    <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
+                                </asp:DropDownList>
+
+                                <div class="invalid-feedback">Please select Agency Name</div>
+                            </div>
+
                                     <div class="input-group-append">
                                         <asp:Button ID="btnsearch" runat="server"
                                             Text="Search"
@@ -167,9 +205,9 @@
 
                     </asp:Repeater>
 
-                </div>
+             <%--   </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
 </asp:Content>
