@@ -12,17 +12,23 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.Activities.Expressions;
+using System.Activities.Statements;
+using System.IdentityModel.Protocols.WSTrust;
 
 public partial class AccessKeyManagement : System.Web.UI.Page
 {
 
     FlureeCS fl = new FlureeCS();
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             if (Session["userid"] != null)
             {
+               
                 BindAgencyDropdown();
 
             }
@@ -33,44 +39,27 @@ public partial class AccessKeyManagement : System.Web.UI.Page
             }
         }
     }
-
-
+ 
     private void BindAgencyDropdown()
     {
-        string conStr = ConfigurationManager
-                        .ConnectionStrings["dbcon"]
-                        .ConnectionString;
 
-        using (SqlConnection con = new SqlConnection(conStr))
+        DataTable dt = fl.GetActiveAgencies();
+        if (dt != null && dt.Rows.Count > 0)
         {
-            using (SqlCommand cmd = new SqlCommand(@"
-            SELECT DISTINCT LTRIM(RTRIM(agencyname)) AS agencyname
-            FROM agencyuser
-            WHERE agencyname IS NOT NULL
-            ORDER BY LTRIM(RTRIM(agencyname))", con))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-
-                    // Bind First Dropdown
-                    ddlOwnerAgency.DataSource = dt;
-                    ddlOwnerAgency.DataTextField = "agencyname";
-                    ddlOwnerAgency.DataValueField = "agencyname";
-                    ddlOwnerAgency.DataBind();
-
-                    // Bind Second Dropdown
-                    ddl_search_agency.DataSource = dt;
-                    ddl_search_agency.DataTextField = "agencyname";
-                    ddl_search_agency.DataValueField = "agencyname";
-                    ddl_search_agency.DataBind();
+            ddlOwnerAgency.DataSource = dt;
+            ddlOwnerAgency.DataTextField = "agencyname";
+            ddlOwnerAgency.DataValueField = "agencyname";
+            ddlOwnerAgency.DataBind();
 
 
-                }
-            }
+            ddl_search_agency.DataSource = dt;
+            ddl_search_agency.DataTextField = "agencyname";
+            ddl_search_agency.DataValueField = "agencyname";
+            ddl_search_agency.DataBind();
+
         }
     }
+
 
     public string GenerateJwtToken(string agencyName, out DateTime expiryDate)
     {

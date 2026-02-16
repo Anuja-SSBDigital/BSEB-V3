@@ -36,28 +36,18 @@ public partial class Agency_owneragencydetails : System.Web.UI.Page
 
     private void BindAgencyDropdown()
     {
-        string conStr = ConfigurationManager
-                        .ConnectionStrings["dbcon"]
-                        .ConnectionString;
 
-        using (SqlConnection con = new SqlConnection(conStr))
+        DataTable dt = fl.GetActiveAgencies();
+        if (dt != null && dt.Rows.Count > 0)
         {
-            using (SqlCommand cmd = new SqlCommand(
-                @"SELECT DISTINCT LTRIM(RTRIM(agencyname)) AS agencyname
-              FROM agencyuser
-              WHERE agencyname IS NOT NULL
-              GROUP BY LTRIM(RTRIM(agencyname))
-              ORDER BY LTRIM(RTRIM(agencyname))", con))
-            {
-                con.Open();
+            ddlOwnerAgency.DataSource = dt;
+            ddlOwnerAgency.DataTextField = "agencyname";
+            ddlOwnerAgency.DataValueField = "agencyname";
+            ddlOwnerAgency.DataBind();
 
-                ddlOwnerAgency.DataSource = cmd.ExecuteReader();
-                ddlOwnerAgency.DataTextField = "agencyname";
-                ddlOwnerAgency.DataValueField = "agencyname";
-                ddlOwnerAgency.DataBind();
-            }
         }
     }
+
     [WebMethod]
     public static bool DeleteAccess(int accessId)
     {
