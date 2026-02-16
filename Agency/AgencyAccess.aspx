@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <!-- STEP 1 -->
-                    <div class="mb-4">
+                   <%-- <div class="mb-4">
                         <label class="text-dark">This is the agency that originally uploaded the document.</label>
                         <asp:DropDownList ID="ddlOwnerAgency" runat="server" CssClass="form-control">
                             <asp:ListItem Value="ALL">Select Agency</asp:ListItem>
@@ -46,7 +46,41 @@
                             <asp:ListItem Value="DataFox">DataFox</asp:ListItem>
                             
                         </asp:DropDownList>
-                    </div>
+                    </div>--%>
+
+
+                    <div class="mb-4">
+
+    <div class="form-group">
+        <label class="text-dark">This is the agency that originally uploaded the document.</label>
+
+        <asp:DropDownList
+            runat="server"
+            ID="ddlOwnerAgency"
+            CssClass="form-control"
+            AppendDataBoundItems="true">
+            <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
+        </asp:DropDownList>
+
+        <div class="invalid-feedback">Please select Agency Name</div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                          <div class="mb-4">
                          <%--<div class="col-md-3">--%>

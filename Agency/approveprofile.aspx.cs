@@ -8,17 +8,17 @@ using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;    
+using System.Configuration;
 using System.Data.SqlClient;
 
 public partial class Agency_approveprofile : System.Web.UI.Page
 {
     FlureeCS fl = new FlureeCS();
-  
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
-       
+
         if (!IsPostBack)
         {
             if (Session["userid"] != null)
@@ -31,21 +31,24 @@ public partial class Agency_approveprofile : System.Web.UI.Page
             }
         }
     }
-                              
+
+
+
+
     protected void btn_submit_Click(object sender, EventArgs e)
     {
-       
+
         var UserStatus = ddl_Userstatus.SelectedValue;
         DataTable resforuser = fl.FindUser(ddlOwnerAgency.SelectedValue, UserStatus);
 
-     
+
         if (resforuser.Rows.Count > 0)
         {
             User_detailes.Visible = true;
             rpt_userData.DataSource = resforuser;
-            rpt_userData.DataBind();    
+            rpt_userData.DataBind();
         }
-        else 
+        else
         {
             rpt_userData.DataSource = null;
             rpt_userData.DataBind();
@@ -78,8 +81,7 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         }
     }
 
-
-
+  
     protected void rpt_userData_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -149,6 +151,8 @@ public partial class Agency_approveprofile : System.Web.UI.Page
         HiddenField agency = (HiddenField)e.Item.FindControl("hf_agency");
         HiddenField username = (HiddenField)e.Item.FindControl("hf_username");
 
+
+        //                       
         if (e.CommandName == "link_approve")
         {
             string userId = e.CommandArgument.ToString();
