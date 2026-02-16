@@ -16,40 +16,56 @@ public partial class UploadedFilesReport : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            BindAgencyDropdown();
             lblMessage.Text = "";
 
         }
     }
-           
-      //    
+
     protected void btn_Search_Click(object sender, EventArgs e)
     {
-        Agency_detailes.Visible = true;
+        lblMessage.Text = "";
+        Agency_detailes.Visible = false;
+        rpt_Agencywisedata.DataSource = null;
+        rpt_Agencywisedata.DataBind();
 
-        string selectedAgency = ddl_AgencyName.SelectedValue;
-        DataTable dt = new DataTable();
+        string selectedAgency = ddlOwnerAgency.SelectedValue;
 
-       
+        DataTable dt;
+
         if (string.IsNullOrEmpty(selectedAgency))
         {
-            rpt_Agencywisedata.DataSource = null;
-            rpt_Agencywisedata.DataBind();
-            return;
-        }
-
-      
-        if (selectedAgency == "ALL")
-        {
-            dt = fl.ShowFilesdetails("");  
+           
+            dt = fl.ShowFilesdetails(""); 
         }
         else
         {
-          
             dt = fl.ShowFilesdetails(selectedAgency);
         }
 
-        rpt_Agencywisedata.DataSource = dt;
-        rpt_Agencywisedata.DataBind();
+        if (dt.Rows.Count > 0)
+        {
+            rpt_Agencywisedata.DataSource = dt;
+            rpt_Agencywisedata.DataBind();
+            Agency_detailes.Visible = true;
+        }
+        else
+        {
+            Agency_detailes.Visible = true;
+        }
+    }
+    private void BindAgencyDropdown()
+    {
+
+        DataTable dt = fl.GetActiveAgencies();
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            ddlOwnerAgency.DataSource = dt;
+            ddlOwnerAgency.DataTextField = "agencyname";
+            ddlOwnerAgency.DataValueField = "agencyname";
+            ddlOwnerAgency.DataBind();
+
+        }
     }
 
     protected void ddl_AgencyName_SelectedIndexChanged(object sender, EventArgs e)
