@@ -152,6 +152,16 @@
                         </div>
                     </div>
 
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card card-primary">
+
+                <div class="card-header">
+                    <h4>Agency User Key Data</h4>
+                </div>
+
+                <div class="card-body">
+
 
                     <asp:Repeater ID="rpt_DocumentTypeData" runat="server">
 
@@ -205,9 +215,9 @@
 
                     </asp:Repeater>
 
-             <%--   </div>
+                </div>
             </div>
         </div>
-    </div>--%>
+    </div>
 
 </asp:Content>
