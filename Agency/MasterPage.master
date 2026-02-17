@@ -183,6 +183,10 @@
                                 <a href="Ip.aspx" class="nav-link"><i data-feather="server"></i><span><strong>IP Master</strong></span></a>
                             </li>
 
+                          <li class="dropdown" runat="server" id="li_agencymater" visible="false">
+                         <a href="Agencymaster.aspx" class="nav-link"><i data-feather="briefcase"></i><span><strong> Add Agency </strong></span></a>
+                            </li>
+
 
                             <%-- <li class="dropdown">
                                 <a href="#" class="menu-toggle nav-link has-dropdown"><i

@@ -25,6 +25,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
             li_doccategory.Visible = true;
             li_Ipmaster.Visible = true;
             li_Documenttypemaster.Visible = true;
+		    li_agencymater.Visible = true;
         }
         else
         {
