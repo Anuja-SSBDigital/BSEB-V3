@@ -18,7 +18,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
+  
 public partial class fileupload : System.Web.UI.Page
 {
     FlureeCS fl = new FlureeCS();
@@ -29,8 +29,9 @@ public partial class fileupload : System.Web.UI.Page
         if (Session["userid"] == null)
         {
             Response.Redirect("../login.aspx");
-        }
 
+        }       
+           
         if (!IsPostBack)
         {
             BindDocCategory();
@@ -40,8 +41,7 @@ public partial class fileupload : System.Web.UI.Page
             div_fileupload.Visible = false;
         }
         else
-        {
-
+        {                                        
             if (!string.IsNullOrEmpty(hfDoctypeId.Value))
             {
                 ddl_doctype.SelectedValue = hfDoctypeId.Value;
@@ -50,7 +50,9 @@ public partial class fileupload : System.Web.UI.Page
             }
         }
     }
-
+                         
+    
+    
 
 
     public class SubDocTypeVM
@@ -58,8 +60,7 @@ public partial class fileupload : System.Web.UI.Page
         public int subdocId { get; set; }
         public string subdoctypename { get; set; }
     }
-
-
+    
     [WebMethod]
     public static List<SubDocTypeVM> GetSubDocTypes(string doctypeId)
     {
@@ -84,53 +85,77 @@ public partial class fileupload : System.Web.UI.Page
         }
 
         return list;
-    }
+    }    
+   
+   
 
 
+    //private void BindDocCategory()
+    //{
+    //    string AgencyName = Session["agencyname"].ToString();
 
+    //    DataTable dt = fl.DocumentCategoryMaster();
+
+    //    // Clone structure
+    //    DataTable filteredDt = dt.Clone();
+
+    //    if (AgencyName.Equals("Hitech", StringComparison.OrdinalIgnoreCase))
+    //    {
+
+    //        var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical Printing" || r.Field<string>("DocCategoryName") == "Theory Printing");
+
+    //        if (rows.Any())
+    //            filteredDt = rows.CopyToDataTable();
+    //    }
+    //    else if (AgencyName.Equals("SSB Digital", StringComparison.OrdinalIgnoreCase) || AgencyName.Equals("Antier", StringComparison.OrdinalIgnoreCase))
+    //    {
+    //        // ONLY show Practical Printing & Theory Printing
+    //        var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Result Data");
+
+    //        if (rows.Any())
+    //            filteredDt = rows.CopyToDataTable();
+    //    }
+    //    else
+    //    {
+    //        // EXCLUDE Practical Printing & Theory Printing
+    //        var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") != "Practical Printing" && r.Field<string>("DocCategoryName") != "Theory Printing" && r.Field<string>("DocCategoryName") != "Result Data");
+
+    //        if (rows.Any())
+    //            filteredDt = rows.CopyToDataTable();
+    //    }
+
+    //    ddl_doctype.DataSource = filteredDt;
+    //    ddl_doctype.DataTextField = "DocCategoryName";
+    //    ddl_doctype.DataValueField = "doctypeId";
+    //    ddl_doctype.DataBind();
+
+    //    ddl_doctype.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
+
+    //}
+
+
+     
+ 
     private void BindDocCategory()
     {
+        if (Session["agencyname"] == null)
+            return;
+
         string AgencyName = Session["agencyname"].ToString();
 
-        DataTable dt = fl.DocumentCategoryMaster();
+        DataTable dt =fl.Agencyaccesssetup(AgencyName);
 
-        // Clone structure
-        DataTable filteredDt = dt.Clone();
 
-        if (AgencyName.Equals("Hitech", StringComparison.OrdinalIgnoreCase))
+        if (dt != null && dt.Rows.Count > 0)
         {
-            // ONLY show Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Practical Printing" || r.Field<string>("DocCategoryName") == "Theory Printing");
-
-            if (rows.Any())
-                filteredDt = rows.CopyToDataTable();
+            ddl_doctype.DataSource = dt;
+            ddl_doctype.DataTextField = "DocCategoryName";
+            ddl_doctype.DataValueField = "doctypeId";
+            ddl_doctype.DataBind();
         }
-        else if (AgencyName.Equals("SSB Digital", StringComparison.OrdinalIgnoreCase) || AgencyName.Equals("Antier", StringComparison.OrdinalIgnoreCase))
-        {
-            // ONLY show Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") == "Result Data");
-
-            if (rows.Any())
-                filteredDt = rows.CopyToDataTable();
-        }
-        else
-        {
-            // EXCLUDE Practical Printing & Theory Printing
-            var rows = dt.AsEnumerable().Where(r => r.Field<string>("DocCategoryName") != "Practical Printing" && r.Field<string>("DocCategoryName") != "Theory Printing" && r.Field<string>("DocCategoryName") != "Result Data");
-
-            if (rows.Any())
-                filteredDt = rows.CopyToDataTable();
-        }
-
-        ddl_doctype.DataSource = filteredDt;
-        ddl_doctype.DataTextField = "DocCategoryName";
-        ddl_doctype.DataValueField = "doctypeId";
-        ddl_doctype.DataBind();
 
         ddl_doctype.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select Doc Category", "0"));
-
     }
-
 
     protected void ddl_doctype_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -156,8 +181,7 @@ public partial class fileupload : System.Web.UI.Page
             new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
     }
 
-
-
+    
     private void BindSubDocumentType(int doctypeId)
     {
         DataTable dt = fl.GetSubDocTypes(doctypeId, HttpContext.Current.Session["agencyname"].ToString());
@@ -191,9 +215,7 @@ public partial class fileupload : System.Web.UI.Page
             ddl_Examsession.DataBind();
         }
 
-
     }
-
 
     public string GetClientIp()
     {
@@ -348,8 +370,6 @@ public partial class fileupload : System.Web.UI.Page
 
                 string[] words = subdoctype.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 string cleanedSubdoctype = "";
-
-
 
                 if (words.Length > 3)
                 {
@@ -540,7 +560,7 @@ public partial class fileupload : System.Web.UI.Page
 
         return dt;
     }
-
+     
     private void SaveDataTableToCSV(DataTable dt, string filePath)
     {
         using (StreamWriter writer = new StreamWriter(filePath))

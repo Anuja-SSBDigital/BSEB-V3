@@ -229,7 +229,7 @@
 
                     error: function () {
                         alert("Error loading document types.");
-                    }
+                    } 
                 });
             });
 
