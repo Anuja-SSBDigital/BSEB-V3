@@ -114,7 +114,7 @@ public partial class AgencyAccess : System.Web.UI.Page
         {
             ddl_examsession.DataSource = dt;
             ddl_examsession.DataTextField = "SessionName";
-            ddl_examsession.DataValueField = "SessionName";
+            ddl_examsession.DataValueField = "Id";
             ddl_examsession.DataBind();
         }
 
