@@ -1,19 +1,34 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master"
-    AutoEventWireup="true"
-    CodeFile="Accessfilelist.aspx.cs"
-    Inherits="Agency_Accessfilelist" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master" AutoEventWireup="true" CodeFile="Accessfilelist.aspx.cs"Inherits="Accessfilelist" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
+<%--    <style>
   
     #table-1 td .btn {
         margin-right: 5px;
         margin-bottom: 3px;
     }
-</style>
+</style>--%>
+    <script>
+        function validateSearch() {
 
+            var OwnerAgency = document.getElementById('<%= ddlOwnerAgency.ClientID %>').value;
+
+            if (OwnerAgency === "") {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Validation Error',
+                    text: 'Please select Agency Name'
+                });
+
+                return false; // stop postback
+            }
+
+            return true; // allow postback
+        }
+    </script>
  
 </asp:Content>
 
@@ -33,11 +48,7 @@
                             <div class="form-group">
                                 <label>Agency Name</label>
 
-                                <asp:DropDownList
-                                    ID="ddlOwnerAgency"
-                                    runat="server"
-                                    CssClass="form-control"
-                                    AppendDataBoundItems="true">
+                                <asp:DropDownList ID="ddlOwnerAgency"  runat="server"  CssClass="form-control" AppendDataBoundItems="true">
                                     <asp:ListItem Value="">Select Agency Name</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
@@ -48,17 +59,10 @@
                 </div>
 
                 <div class="card-footer text-end">
-                    <asp:Button
-                        ID="btn_Search_Click"
-                        runat="server"
-                        Text="Search"
-                        CssClass="btn btn-primary"
-                        OnClick="btnsearch_Click" />
+                     <asp:Button  ID="btn_Search_Click"  runat="server" Text="Search"  CssClass="btn btn-primary" OnClick="btnsearch_Click" OnClientClick="return validateSearch();" />
 
                     <asp:Label
-                        ID="lblMessage"
-                        runat="server"
-                        CssClass="text-danger d-block mt-2"></asp:Label>
+                        ID="lblMessage" runat="server" CssClass="text-danger d-block mt-2"></asp:Label>
                 </div>
             </div>
         </div>
@@ -67,7 +71,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="mt-3" runat="server" id="Agency_detailes" visible="false">
+            <div class="mt-3">
+            <%--<div class="mt-3" runat="server" id="Agency_detailes" visible="false">--%>
 
                 <div class="card card-primary">
                     <div class="card-header">
@@ -77,11 +82,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
 
-                            <asp:Repeater
-                                ID="rpt_Agencywisedata"
-                                runat="server"
-                                OnItemCommand="rpt_Agencywisedata_ItemCommand"
-                                OnItemDataBound="rpt_Agencywisedata_ItemDataBound">
+                            <asp:Repeater ID="rpt_Agencywisedata" runat="server" OnItemCommand="rpt_Agencywisedata_ItemCommand" OnItemDataBound="rpt_Agencywisedata_ItemDataBound">
 
                                 <HeaderTemplate>
 
@@ -123,16 +124,16 @@
                                         <td><%# Eval("ViewerAgencies") %></td>
 
                                         <td>
-                                            <asp:DropDownList
+  <asp:DropDownList
                                                 ID="ddlRowAgency"
                                                 runat="server"
                                                 CssClass="form-control form-control-sm"
                                                 AutoPostBack="false">
-                                            </asp:DropDownList>
+                                            </asp:DropDownList>     
                                         </td>
 
                                         <td>
-                                            <asp:Button
+<asp:Button
                                                 ID="btnToggle"
                                                 runat="server"
                                                 Text="Hide File"
@@ -148,8 +149,7 @@
                                                 CssClass="btn btn-warning btn-sm"
                                                 CommandName="ToggleStatus"
                                                 CommandArgument='<%# Eval("id") %>'
-                                                OnClientClick="return confirm('Are you sure you want to Show file this agency?');" />
-                                        </td>
+                                                OnClientClick="return confirm('Are you sure you want to Show file this agency?');" />                                            </td>
 
 
                                     </tr>
