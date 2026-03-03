@@ -150,7 +150,7 @@ public partial class Agency_Agencymaster : System.Web.UI.Page
 
         if (resforuser.Rows.Count > 0)
         {
-            User_detailes.Visible = true;
+            //User_detailes.Visible = true;
             rpt_userData.DataSource = resforuser;
             rpt_userData.DataBind();
         }
