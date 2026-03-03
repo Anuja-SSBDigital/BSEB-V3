@@ -144,19 +144,14 @@
                         </div>
 
                     </div>
-             
 
-                <div class="card-footer">
-                    <asp:Button runat="server" ID="btn_search" Text="Search" CssClass="btn btn-primary btn-lg " OnClick="btn_search_Click" />
 
+                    <div class="card-footer">
+                        <asp:Button runat="server" ID="btn_search" Text="Search" CssClass="btn btn-primary btn-lg " OnClick="btn_search_Click" />
+
+                    </div>
                 </div>
 
-         
-        </div>
-
-       
-          
-                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
@@ -226,9 +221,9 @@
                         </table>
                     </div>
 
-              
-               </div>
+
+                </div>
+            </div>
         </div>
-           </div>
     </div>
 </asp:Content>
