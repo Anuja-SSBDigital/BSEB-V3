@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Agency_Accessfilelist : System.Web.UI.Page
+public partial class Accessfilelist : System.Web.UI.Page
 {
     FlureeCS fl = new FlureeCS();
     string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
@@ -42,49 +42,80 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
    
     protected void btnsearch_Click(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(ddlOwnerAgency.SelectedValue))
-        {
-            lblMessage.Text = "Please Select Agency";
-            return;
-        }
+        //if (string.IsNullOrEmpty(ddlOwnerAgency.SelectedValue))
+        //{
+        //    lblMessage.Text = "Please Select Agency";
+        //    return;
+        //}
 
         BindFiles();
-        Agency_detailes.Visible = true;
+        //Agency_detailes.Visible = true;
     }
-
     private void BindFiles()
     {
-        
-        lblMessage.Text = "";
-        Agency_detailes.Visible = false;
+            lblMessage.Text = "";
 
-        string selectedAgency = ddlOwnerAgency.SelectedValue;
+            string selectedAgency = ddlOwnerAgency.SelectedValue;
+            DataTable dt;
 
-        DataTable dt;
+            if (selectedAgency == "ALL")
+                dt = fl.ShowFilesdetails("ALL");
+            else
+                dt = fl.ShowFilesdetails(selectedAgency);
 
-        if (selectedAgency == "ALL")
-        {
-           
-            dt = fl.ShowFilesdetails("ALL");
-        }
-        else
-        {
-            dt = fl.ShowFilesdetails(selectedAgency);
-        }
-        if (dt != null && dt.Rows.Count > 0)
-        {
+            if (dt == null)
+                dt = new DataTable();
+
             rpt_Agencywisedata.DataSource = dt;
             rpt_Agencywisedata.DataBind();
-            Agency_detailes.Visible = true;
-        }
-        else
-        {
-            rpt_Agencywisedata.DataSource = null;
-            rpt_Agencywisedata.DataBind();
-            Agency_detailes.Visible = true;
-            lblMessage.Text = "No records found.";
-        }
+
+            // ✅ If no rows → add message row manually
+            if (dt.Rows.Count == 0)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "noDataRow",
+                    @"
+                $(document).ready(function () {
+                    $('#table-1 tbody').html(
+                        '<tr><td colspan=""9"" class=""text-center text-danger"">No records found.</td></tr>'
+                    );
+                });
+                ", true);
+            }
     }
+    //private void BindFiles()
+    //{
+
+    //    lblMessage.Text = "";
+    //    Agency_detailes.Visible = false;
+
+    //    string selectedAgency = ddlOwnerAgency.SelectedValue;
+
+    //    DataTable dt;
+
+    //    if (selectedAgency == "ALL")
+    //    {
+
+    //        dt = fl.ShowFilesdetails("ALL");
+    //    }
+    //    else
+    //    {
+    //        dt = fl.ShowFilesdetails(selectedAgency);
+    //    }
+    //    if (dt != null && dt.Rows.Count > 0)
+    //    {
+    //        rpt_Agencywisedata.DataSource = dt;
+    //        rpt_Agencywisedata.DataBind();
+    //        Agency_detailes.Visible = true;
+    //    }
+    //    else
+    //    {
+    //        rpt_Agencywisedata.DataSource = null;
+    //        rpt_Agencywisedata.DataBind();
+    //        Agency_detailes.Visible = true;
+    //        lblMessage.Text = "No records found.";
+    //    }
+    //}
 
 
 
