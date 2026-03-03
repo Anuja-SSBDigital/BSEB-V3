@@ -130,11 +130,21 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
 
             string selectedAgency = ddlRowAgency.SelectedItem.Text;
 
+
+            string createdBy = "";
+
+          
+            if (Session["username"] != null)
+            {
+                createdBy = Session["username"].ToString();
+            }
+
+
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 con.Open();
 
-              
+
                 SqlCommand getFile = new SqlCommand(
                     "SELECT filename FROM downloadfiledetail WHERE id=@id", con);
                 getFile.Parameters.AddWithValue("@id", fileId);
@@ -147,12 +157,12 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
                 bool isHideAction = ((Button)e.CommandSource).Text == "Hide File";
                 bool newStatus = isHideAction ? false : true;
 
-              
+
                 SqlCommand checkCmd = new SqlCommand(@"
-                SELECT COUNT(*) 
-                FROM FileAgencyAccessList 
-                WHERE FileId = @FileId 
-                  AND ViewerAgency = @ViewerAgency", con);
+                    SELECT COUNT(*) 
+                    FROM FileAgencyAccessList 
+                    WHERE FileId = @FileId 
+                      AND ViewerAgency = @ViewerAgency", con);
 
                 checkCmd.Parameters.AddWithValue("@FileId", fileId);
                 checkCmd.Parameters.AddWithValue("@ViewerAgency", selectedAgency);
@@ -161,38 +171,40 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
 
                 if (recordCount > 0)
                 {
-                   
+
                     SqlCommand updateAccess = new SqlCommand(@"
-                    UPDATE FileAgencyAccessList
-                    SET IsVisible=@IsVisible,
-                        UpdatedDate=GETDATE()
-                    WHERE FileId=@FileId
-                      AND ViewerAgency=@ViewerAgency", con);
+                        UPDATE FileAgencyAccessList
+                        SET IsVisible=@IsVisible,
+                            UpdatedDate=GETDATE()
+                        WHERE FileId=@FileId
+                          AND ViewerAgency=@ViewerAgency", con);
 
                     updateAccess.Parameters.AddWithValue("@IsVisible", newStatus);
                     updateAccess.Parameters.AddWithValue("@FileId", fileId);
                     updateAccess.Parameters.AddWithValue("@ViewerAgency", selectedAgency);
+                    updateAccess.Parameters.AddWithValue("@CreatedBy", createdBy);
 
                     updateAccess.ExecuteNonQuery();
                 }
                 else
                 {
-                    
+
                     SqlCommand insert = new SqlCommand(@"
-                    INSERT INTO FileAgencyAccessList
-                    (FileId, FileName, ViewerAgency, IsVisible, CreatedDate, UpdatedDate)
-                    VALUES
-                    (@FileId, @FileName, @ViewerAgency, @IsVisible, GETDATE(), GETDATE())", con);
+                        INSERT INTO FileAgencyAccessList
+                        (FileId, FileName, ViewerAgency, IsVisible,CreatedBy, CreatedDate, UpdatedDate)
+                        VALUES
+                        (@FileId, @FileName, @ViewerAgency, @IsVisible,@CreatedBy, GETDATE(), GETDATE())", con);
 
                     insert.Parameters.AddWithValue("@FileId", fileId);
                     insert.Parameters.AddWithValue("@FileName", fileName);
                     insert.Parameters.AddWithValue("@ViewerAgency", selectedAgency);
                     insert.Parameters.AddWithValue("@IsVisible", newStatus);
+                    insert.Parameters.AddWithValue("@CreatedBy", createdBy);
 
                     insert.ExecuteNonQuery();
                 }
 
-             
+
                 string safeFileName = fileName.Replace("'", "\\'");
                 string safeAgency = selectedAgency.Replace("'", "\\'");
 
@@ -216,4 +228,7 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
             BindFiles();
         }
     }
+
+
 }
+
