@@ -236,14 +236,15 @@ public partial class Accessfilelist : System.Web.UI.Page
 
             while (dr.Read())
             {
-                result += "<span class='badge bg-danger me-1'>"
-                          + dr["ViewerAgency"].ToString()
-                          + "</span>";
+               
+                result += "<span>"
+                         + dr["ViewerAgency"].ToString()
+                         + "</span>";
             }
         }
 
-        return result == "" ? "<span class='badge bg-success'>None</span>" : result;
+       
+        return result == "" ? "<span>None</span>" : result;
     }
 
 }
-

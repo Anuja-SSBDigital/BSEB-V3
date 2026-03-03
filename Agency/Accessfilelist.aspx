@@ -3,13 +3,30 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
     <style>
-  
-    #table-1 td .btn {
-        margin-right: 5px;
-        margin-bottom: 3px;
-    }
-</style>
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        #table-1 td .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .table th {
+            white-space: nowrap;
+        }
+
+        .action-btns .btn {
+            margin-bottom: 4px;
+        }
+    </style>
+
     <script>
         function validateSearch() {
 
@@ -23,10 +40,10 @@
                     text: 'Please select Agency Name'
                 });
 
-                return false; // stop postback
+                return false; 
             }
 
-            return true; // allow postback
+            return true; 
         }
     </script>
  
@@ -72,7 +89,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mt-3">
-            <%--<div class="mt-3" runat="server" id="Agency_detailes" visible="false">--%>
+       
 
                 <div class="card card-primary">
                     <div class="card-header">
@@ -90,7 +107,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Sr.No.</th>
-                                                <th>Actual File Name</th>
+                                              <%--  <th>Actual File Name</th>--%>
                                                 <th>Doc Type</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
@@ -112,7 +129,7 @@
                                     <tr>
                                         <td><%# Container.ItemIndex + 1 %></td>
 
-                                        <td><%# Eval("actualfilename") %></td>
+                                  <%--      <td><%# Eval("actualfilename") %></td>--%>
 
                                         <td><%# Eval("subdoctype") %></td>
 
@@ -155,7 +172,7 @@
                                                 ID="btnToggle1"
                                                 runat="server"
                                                 Text="Show File"
-                                                CssClass="btn btn-warning btn-sm"
+                                               CssClass="btn btn-success btn-sm"
                                                 CommandName="ToggleStatus"
                                                 CommandArgument='<%# Eval("id") %>'
                                                 OnClientClick="return confirm('Are you sure you want to Show file this agency?');" />                                            </td>
