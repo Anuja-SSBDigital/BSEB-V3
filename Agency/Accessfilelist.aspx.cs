@@ -35,11 +35,11 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
         ddlOwnerAgency.DataValueField = "agencyname";
         ddlOwnerAgency.DataBind();
 
-        ddlOwnerAgency.Items.Insert(0, new ListItem("Select Agency", ""));
+    
         ddlOwnerAgency.Items.Insert(1, new ListItem("ALL", "ALL"));
     }
 
-
+   
     protected void btnsearch_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrEmpty(ddlOwnerAgency.SelectedValue))
@@ -54,13 +54,23 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
 
     private void BindFiles()
     {
+        
         lblMessage.Text = "";
         Agency_detailes.Visible = false;
 
         string selectedAgency = ddlOwnerAgency.SelectedValue;
 
-        DataTable dt = fl.ShowFilesdetails(selectedAgency);
+        DataTable dt;
 
+        if (selectedAgency == "ALL")
+        {
+           
+            dt = fl.ShowFilesdetails("ALL");
+        }
+        else
+        {
+            dt = fl.ShowFilesdetails(selectedAgency);
+        }
         if (dt != null && dt.Rows.Count > 0)
         {
             rpt_Agencywisedata.DataSource = dt;
@@ -124,111 +134,54 @@ public partial class Agency_Accessfilelist : System.Web.UI.Page
 
             if (ddlRowAgency == null || string.IsNullOrEmpty(ddlRowAgency.SelectedValue))
             {
-                lblMessage.Text = "Please select agency from row.";
+                string script = @"
+    Swal.fire({
+        icon: 'warning',
+        title: 'Select Agency',
+        text: 'Please select agency from row.',
+        confirmButtonColor: '#3085d6'
+    });";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "swalMessage", script, true);
+
                 return;
             }
 
+
+
             string selectedAgency = ddlRowAgency.SelectedItem.Text;
 
-
             string createdBy = "";
-
-          
             if (Session["username"] != null)
             {
                 createdBy = Session["username"].ToString();
             }
 
+            bool isHideAction = ((Button)e.CommandSource).Text == "Hide File";
+            bool newStatus = isHideAction ? false : true;
 
-            using (SqlConnection con = new SqlConnection(conStr))
+           
+            fl.FileAgencyAccessRights(fileId, selectedAgency, newStatus, createdBy);
+
+            string message = "";
+
+            if (isHideAction)
             {
-                con.Open();
-
-
-                SqlCommand getFile = new SqlCommand(
-                    "SELECT filename FROM downloadfiledetail WHERE id=@id", con);
-                getFile.Parameters.AddWithValue("@id", fileId);
-
-                string fileName = Convert.ToString(getFile.ExecuteScalar());
-
-                if (string.IsNullOrEmpty(fileName))
-                    return;
-
-                bool isHideAction = ((Button)e.CommandSource).Text == "Hide File";
-                bool newStatus = isHideAction ? false : true;
-
-
-                SqlCommand checkCmd = new SqlCommand(@"
-                    SELECT COUNT(*) 
-                    FROM FileAgencyAccessList 
-                    WHERE FileId = @FileId 
-                      AND ViewerAgency = @ViewerAgency", con);
-
-                checkCmd.Parameters.AddWithValue("@FileId", fileId);
-                checkCmd.Parameters.AddWithValue("@ViewerAgency", selectedAgency);
-
-                int recordCount = (int)checkCmd.ExecuteScalar();
-
-                if (recordCount > 0)
-                {
-
-                    SqlCommand updateAccess = new SqlCommand(@"
-                        UPDATE FileAgencyAccessList
-                        SET IsVisible=@IsVisible,
-                            UpdatedDate=GETDATE()
-                        WHERE FileId=@FileId
-                          AND ViewerAgency=@ViewerAgency", con);
-
-                    updateAccess.Parameters.AddWithValue("@IsVisible", newStatus);
-                    updateAccess.Parameters.AddWithValue("@FileId", fileId);
-                    updateAccess.Parameters.AddWithValue("@ViewerAgency", selectedAgency);
-                    updateAccess.Parameters.AddWithValue("@CreatedBy", createdBy);
-
-                    updateAccess.ExecuteNonQuery();
-                }
-                else
-                {
-
-                    SqlCommand insert = new SqlCommand(@"
-                        INSERT INTO FileAgencyAccessList
-                        (FileId, FileName, ViewerAgency, IsVisible,CreatedBy, CreatedDate, UpdatedDate)
-                        VALUES
-                        (@FileId, @FileName, @ViewerAgency, @IsVisible,@CreatedBy, GETDATE(), GETDATE())", con);
-
-                    insert.Parameters.AddWithValue("@FileId", fileId);
-                    insert.Parameters.AddWithValue("@FileName", fileName);
-                    insert.Parameters.AddWithValue("@ViewerAgency", selectedAgency);
-                    insert.Parameters.AddWithValue("@IsVisible", newStatus);
-                    insert.Parameters.AddWithValue("@CreatedBy", createdBy);
-
-                    insert.ExecuteNonQuery();
-                }
-
-
-                string safeFileName = fileName.Replace("'", "\\'");
-                string safeAgency = selectedAgency.Replace("'", "\\'");
-
-                string message = "";
-
-                if (isHideAction)
-                {
-                    message = safeFileName + " file hidden for " + safeAgency + ".";
-                }
-                else
-                {
-                    message = safeFileName + " file visible for " + safeAgency + ".";
-                }
-
-                string script = "alert('" + message + "');";
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(),
-                    "alertMessage", script, true);
+                message = "File hidden for " + selectedAgency + ".";
             }
+            else
+            {
+                message = "File visible for " + selectedAgency + ".";
+            }
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(),
+                "alertMessage", "alert('" + message + "');", true);
 
             BindFiles();
         }
     }
 
-
+ 
 }
 

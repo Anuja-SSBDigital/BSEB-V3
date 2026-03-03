@@ -4,6 +4,8 @@
     Inherits="Agency_Accessfilelist" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
   
     #table-1 td .btn {
