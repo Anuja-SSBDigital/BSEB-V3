@@ -35,11 +35,11 @@ public partial class Accessfilelist : System.Web.UI.Page
         ddlOwnerAgency.DataValueField = "agencyname";
         ddlOwnerAgency.DataBind();
 
-    
+
         ddlOwnerAgency.Items.Insert(1, new ListItem("ALL", "ALL"));
     }
 
-   
+
     protected void btnsearch_Click(object sender, EventArgs e)
     {
         //if (string.IsNullOrEmpty(ddlOwnerAgency.SelectedValue))
@@ -53,35 +53,35 @@ public partial class Accessfilelist : System.Web.UI.Page
     }
     private void BindFiles()
     {
-            lblMessage.Text = "";
+        lblMessage.Text = "";
 
-            string selectedAgency = ddlOwnerAgency.SelectedValue;
-            DataTable dt;
+        string selectedAgency = ddlOwnerAgency.SelectedValue;
+        DataTable dt;
 
-            if (selectedAgency == "ALL")
-                dt = fl.ShowFilesdetails("ALL");
-            else
-                dt = fl.ShowFilesdetails(selectedAgency);
+        if (selectedAgency == "ALL")
+            dt = fl.ShowFilesdetails("ALL");
+        else
+            dt = fl.ShowFilesdetails(selectedAgency);
 
-            if (dt == null)
-                dt = new DataTable();
+        if (dt == null)
+            dt = new DataTable();
 
-            rpt_Agencywisedata.DataSource = dt;
-            rpt_Agencywisedata.DataBind();
+        rpt_Agencywisedata.DataSource = dt;
+        rpt_Agencywisedata.DataBind();
 
-            // ✅ If no rows → add message row manually
-            if (dt.Rows.Count == 0)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(),
-                    "noDataRow",
-                    @"
+        // ✅ If no rows → add message row manually
+        if (dt.Rows.Count == 0)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(),
+                "noDataRow",
+                @"
                 $(document).ready(function () {
                     $('#table-1 tbody').html(
                         '<tr><td colspan=""9"" class=""text-center text-danger"">No records found.</td></tr>'
                     );
                 });
                 ", true);
-            }
+        }
     }
     //private void BindFiles()
     //{
@@ -192,7 +192,7 @@ public partial class Accessfilelist : System.Web.UI.Page
             bool isHideAction = ((Button)e.CommandSource).Text == "Hide File";
             bool newStatus = isHideAction ? false : true;
 
-           
+
             fl.FileAgencyAccessRights(fileId, selectedAgency, newStatus, createdBy);
 
             string message = "";
@@ -213,6 +213,37 @@ public partial class Accessfilelist : System.Web.UI.Page
         }
     }
 
- 
+
+    public string GetHiddenAgencies(object fileIdObj)
+    {
+        int fileId = Convert.ToInt32(fileIdObj);
+
+        string result = "";
+
+        string query = @"
+            SELECT ViewerAgency
+            FROM FileAgencyAccessList
+            WHERE FileId = @FileId
+            AND IsVisible = 0";
+
+        using (SqlConnection con = new SqlConnection(conStr))
+        using (SqlCommand cmd = new SqlCommand(query, con))
+        {
+            cmd.Parameters.AddWithValue("@FileId", fileId);
+
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                result += "<span class='badge bg-danger me-1'>"
+                          + dr["ViewerAgency"].ToString()
+                          + "</span>";
+            }
+        }
+
+        return result == "" ? "<span class='badge bg-success'>None</span>" : result;
+    }
+
 }
 

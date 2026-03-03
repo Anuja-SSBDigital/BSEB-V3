@@ -3,13 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<%--    <style>
+    <style>
   
     #table-1 td .btn {
         margin-right: 5px;
         margin-bottom: 3px;
     }
-</style>--%>
+</style>
     <script>
         function validateSearch() {
 
@@ -96,8 +96,11 @@
                                                 <th>Remarks</th>
                                                 <th>Upload Date</th>
                                                 <th>Access Agency</th>
+                                               
 
                                                 <th>Agency Drop</th>
+
+                                                  <th>Disable Agency</th>
 
                                                 <th>Action</th>
                                             </tr>
@@ -131,6 +134,12 @@
                                                 AutoPostBack="false">
                                             </asp:DropDownList>     
                                         </td>
+
+
+                                          <td>
+                                        <%# GetHiddenAgencies(Eval("id")) %>
+                                    </td>
+
 
                                         <td>
 <asp:Button
