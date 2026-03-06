@@ -27,7 +27,52 @@
         .container {
             max-width: 1400px !important;
         }
+
+       .card {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+#table-1 td .btn {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+.action-btns .btn {
+    margin-bottom: 4px;
+}
+
     </style>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+     function validateSearch() {
+
+         var OwnerAgency = document.getElementById('<%= ddlOwnerAgency.ClientID %>').value;
+
+         if (OwnerAgency === "") {
+
+             Swal.fire({
+                 icon: 'warning',
+           
+                 text: 'Please select Agency Name'
+             });
+
+             return false;
+         }
+
+         return true;
+     }
+ </script>
+ 
 </head>
 
 <body>
@@ -64,7 +109,7 @@
                                                 CssClass="form-control"
                                                 AppendDataBoundItems="true">
                                                 <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
-                                                <asp:ListItem Value="" Text="ALL"></asp:ListItem>
+                                                <asp:ListItem Value="ALL" Text="ALL"></asp:ListItem>
                                             </asp:DropDownList>
 
                                             <div class="invalid-feedback">Please select Agency Name</div>
@@ -74,12 +119,16 @@
 
 
                                 <div class="card-footer text-end">
-                                    <asp:Button runat="server" ID="btnsearch" OnClick="btn_Search_Click" CssClass="btn btn-primary" Text="Search" />
+                                   <%-- <asp:Button runat="server" ID="btnsearch" OnClick="btn_Search_Click" CssClass="btn btn-primary" Text="Search" />--%>
+
+                                    <asp:Button runat="server" ID="btnsearch" OnClick="btn_Search_Click" OnClientClick="return validateSearch();" CssClass="btn btn-primary" Text="Search" />
+
+
                                     <asp:Label ID="lblMessage" runat="server" CssClass="text-info d-block mb-2"></asp:Label>
 
                                 </div>
 
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <div class="row">
