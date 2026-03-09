@@ -9,16 +9,19 @@ public partial class Accessfilelist : System.Web.UI.Page
 {
     FlureeCS fl = new FlureeCS();
     string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
-
+       
+    
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
-            if (Session["userid"] != null)
+            if (Session["userid"] != null &&
+                Session["role"] != null &&
+                Session["role"].ToString() != "Agency")
             {
                 BindOwnerAgency();
             }
+
             else
             {
                 Response.Redirect("../login.aspx");
@@ -83,6 +86,9 @@ public partial class Accessfilelist : System.Web.UI.Page
                 ", true);
         }
     }
+    
+   
+   
     //private void BindFiles()
     //{
 
@@ -153,7 +159,10 @@ public partial class Accessfilelist : System.Web.UI.Page
         }
     }
 
+    
 
+              
+                                                                                                                   
     protected void rpt_Agencywisedata_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
         if (e.CommandName == "ToggleStatus")
@@ -214,6 +223,39 @@ public partial class Accessfilelist : System.Web.UI.Page
     }
 
 
+    //public string GetHiddenAgencies(object fileIdObj)
+    //{
+    //    int fileId = Convert.ToInt32(fileIdObj);
+
+    //    string result = "";
+
+    //    string query = @"
+    //        SELECT ViewerAgency
+    //        FROM FileAgencyAccessList
+    //        WHERE FileId = @FileId
+    //        AND IsVisible = 0";
+
+    //    using (SqlConnection con = new SqlConnection(conStr))
+    //    using (SqlCommand cmd = new SqlCommand(query, con))
+    //    {
+    //        cmd.Parameters.AddWithValue("@FileId", fileId);
+
+    //        con.Open();
+    //        SqlDataReader dr = cmd.ExecuteReader();
+
+    //        while (dr.Read())
+    //        {
+
+    //            result += "<span>"
+    //                     + dr["ViewerAgency"].ToString()
+    //                     + "</span>";
+    //        }
+    //    }
+
+
+    //    return result == "" ? "<span>None</span>" : result;
+    //}
+
     public string GetHiddenAgencies(object fileIdObj)
     {
         int fileId = Convert.ToInt32(fileIdObj);
@@ -221,10 +263,10 @@ public partial class Accessfilelist : System.Web.UI.Page
         string result = "";
 
         string query = @"
-            SELECT ViewerAgency
-            FROM FileAgencyAccessList
-            WHERE FileId = @FileId
-            AND IsVisible = 0";
+        SELECT ViewerAgency
+        FROM FileAgencyAccessList
+        WHERE FileId = @FileId
+        AND IsVisible = 0";
 
         using (SqlConnection con = new SqlConnection(conStr))
         using (SqlCommand cmd = new SqlCommand(query, con))
@@ -236,15 +278,16 @@ public partial class Accessfilelist : System.Web.UI.Page
 
             while (dr.Read())
             {
-               
-                result += "<span>"
-                         + dr["ViewerAgency"].ToString()
-                         + "</span>";
+                if (result != "")
+                {
+                    result += ", ";
+                }
+
+                result += dr["ViewerAgency"].ToString();
             }
         }
 
-       
-        return result == "" ? "<span>None</span>" : result;
+        return result == "" ? "None" : result;
     }
 
 }
