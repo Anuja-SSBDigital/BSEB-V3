@@ -65,7 +65,7 @@
                         <div class="col-md-6 mb-3">
                             <label>Status</label>
 
-                            <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control">
+                            <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control" Enabled="false">
                                 <asp:ListItem Value="Active">Active</asp:ListItem>
                                 <asp:ListItem Value="DeActive">DeActive</asp:ListItem>
                                 <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
@@ -80,12 +80,12 @@
 
                         <div class="col-md-6 mb-3">
                             <label>Private Key</label>
-                            <asp:TextBox ID="txtPrivateKey" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="txtPrivateKey" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label>Key Expiry</label>
-                            <asp:TextBox ID="txtKeyExpiry" runat="server" CssClass="form-control" TextMode="DateTimeLocal"></asp:TextBox>
+                            <asp:TextBox ID="txtKeyExpiry" runat="server" CssClass="form-control" TextMode="DateTimeLocal" Enabled="false"></asp:TextBox>
                         </div>
 
                     </div>
