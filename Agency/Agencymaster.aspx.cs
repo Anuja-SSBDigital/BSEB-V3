@@ -16,11 +16,14 @@ public partial class Agency_Agencymaster : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e) 
     {
+        
         if (!IsPostBack)
         {
-            if (Session["userid"] != null)
+            if (Session["userid"] != null &&
+                Session["role"] != null &&
+                Session["role"].ToString() != "Agency")
             {
-              //  BindAgencyDropdown();
+                
             }
             else
             {
@@ -150,7 +153,7 @@ public partial class Agency_Agencymaster : System.Web.UI.Page
 
         if (resforuser.Rows.Count > 0)
         {
-            //User_detailes.Visible = true;
+            User_detailes.Visible = true;
             rpt_userData.DataSource = resforuser;
             rpt_userData.DataBind();
         }
@@ -230,15 +233,24 @@ public partial class Agency_Agencymaster : System.Web.UI.Page
         }
 
     }
-            
+
     protected void rpt_userData_ItemCommand(object source, RepeaterCommandEventArgs e)
     {
+
+        if (e.CommandName == "EditUser")
+        {
+            string userId = e.CommandArgument.ToString();
+
+            Response.Redirect("EditAgencyDetails.aspx?id=" + userId);
+
+            return;
+        }
         HiddenField emailid = (HiddenField)e.Item.FindControl("hf_emailid");
         HiddenField agency = (HiddenField)e.Item.FindControl("hf_agency");
         HiddenField username = (HiddenField)e.Item.FindControl("hf_username");
 
 
-                   
+
         if (e.CommandName == "link_approve")
         {
             string userId = e.CommandArgument.ToString();
@@ -273,7 +285,8 @@ public partial class Agency_Agencymaster : System.Web.UI.Page
             }
         }
     }
-            
+
+
     private string GenerateRandomPassword(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
