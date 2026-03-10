@@ -113,23 +113,6 @@
                     <div class="row">
 
 
-                        <%--   <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="agency-name">Agency Name</label>
-
-                                <asp:DropDownList
-                                    runat="server"
-                                    ID="ddlOwnerAgency"
-                                    CssClass="form-control"
-                                    AppendDataBoundItems="true">
-                                    <asp:ListItem Value="" Text="Select Agency Name"></asp:ListItem>
-                                </asp:DropDownList>
-
-                                <div class="invalid-feedback">Please select Agency Name</div>
-                            </div>
-                        </div>--%>
-
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="agency-name">Agency Status</label>
@@ -144,14 +127,22 @@
                         </div>
 
                     </div>
-
-
-                    <div class="card-footer">
-                        <asp:Button runat="server" ID="btn_search" Text="Search" CssClass="btn btn-primary btn-lg " OnClick="btn_search_Click" />
-
-                    </div>
                 </div>
 
+                <div class="card-footer">
+                    <asp:Button runat="server" ID="btn_search" Text="Search" CssClass="btn btn-primary btn-lg " OnClick="btn_search_Click" />
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12" runat="server" id="User_detailes" visible="false">
+            <div class="card card-primary">
+                <div class="card-header">
+
+                    <h4>Agency Details</h4>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
@@ -191,6 +182,19 @@
                                                 <asp:Label ID="lbl_userstatus" runat="server" Text='<%#Eval("status") %>'></asp:Label>
                                             </td>
                                             <td>
+
+                                                <asp:LinkButton
+                                                    ID="link_edit"
+                                                    CommandName="EditUser"
+                                                    CommandArgument='<%#Eval("id") %>'
+                                                    runat="server"
+                                                    CssClass="btn-icon btn-primary btn-sm"
+                                                    ToolTip="Edit User">
+                                              <i class="fas fa-edit"></i>
+                                            </asp:LinkButton>
+
+                                                &nbsp;
+
                                                 <asp:LinkButton ID="link_approve" CommandName="link_approve"
                                                     CommandArgument='<%#Eval("id") %>'
                                                     runat="server" data-bs-toggle="tooltip" data-placement="right"
@@ -220,7 +224,6 @@
                             </tbody>
                         </table>
                     </div>
-
 
                 </div>
             </div>
