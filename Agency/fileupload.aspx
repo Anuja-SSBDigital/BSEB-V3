@@ -132,25 +132,16 @@
         function validateForm() {
 
             var ddlDoctype = document.getElementById('<%= ddl_doctype.ClientID %>').value;
-           var ddlSubDocType = document.getElementById('<%= ddl_sub_doc_type.ClientID %>').value;
-           var ddlExamSession = document.getElementById('<%= ddl_Examsession.ClientID %>').value;
+        var ddlSubDocType = document.getElementById('<%= ddl_sub_doc_type.ClientID %>').value;
+        var ddlExamSession = document.getElementById('<%= ddl_Examsession.ClientID %>').value;
 
-           var txtRemark = document.getElementById('<%= txtRemark.ClientID %>').value.trim();
+        var txtRemark = document.getElementById('<%= txtRemark.ClientID %>').value.trim();
 
             if (ddlDoctype === "0") {
                 alert("Please select Document Category.");
                 return false;
             }
 
-            if (ddlSubDocType === "0") {
-                alert("Please select Document Type.");
-                return false;
-            }
-
-            if (txtRemark === "") {
-                swal("Required!", "Please enter Remark.", "warning");
-                return false;
-            }
             if (ddlSubDocType === "0" || ddlSubDocType === "") {
                 swal({
                     title: "Required!",
@@ -158,6 +149,11 @@
                     icon: "warning",
                     button: "OK"
                 });
+                return false;
+            }
+
+            if (txtRemark === "") {
+                swal("Required!", "Please enter Remark.", "warning");
                 return false;
             }
 
@@ -197,59 +193,58 @@
 
             $('#<%= ddl_doctype.ClientID %>').on('change', function () {
 
-                var doctypeId = $(this).val();
-                var ddlSub = $('#<%= ddl_sub_doc_type.ClientID %>');
+            var doctypeId = $(this).val();
+            var ddlSub = $('#<%= ddl_sub_doc_type.ClientID %>');
 
+            $('#<%= hfDoctypeId.ClientID %>').val(doctypeId);
+            $('#<%= hfDoctypeText.ClientID %>').val(
+                $('#<%= ddl_doctype.ClientID %> option:selected').text()
+            );
 
-                $('#<%= hfDoctypeId.ClientID %>').val(doctypeId);
-                $('#<%= hfDoctypeText.ClientID %>').val(
-                    $('#<%= ddl_doctype.ClientID %> option:selected').text()
-                );
+            ddlSub.empty().append('<option value="0">Loading...</option>');
 
-                ddlSub.empty().append('<option value="0">Loading...</option>');
+            if (doctypeId === "0") {
+                ddlSub.html('<option value="0">Select Document Type</option>');
+                return;
+            }
 
-                if (doctypeId === "0") {
-                    ddlSub.html('<option value="0">Select Document Type</option>');
-                    return;
+            $.ajax({
+                type: "POST",
+                url: "fileupload.aspx/GetSubDocTypes",
+                data: JSON.stringify({ doctypeId: doctypeId }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (response) {
+                    ddlSub.empty();
+                    ddlSub.append('<option value="0">Select Document Type</option>');
+
+                    $.each(response.d, function (i, item) {
+                        ddlSub.append(
+                            $('<option></option>')
+                                .val(item.subdoctypename)   
+                                .text(item.subdoctypename)
+                        );
+                    });
+                },
+
+                error: function () {
+                    alert("Error loading document types.");
                 }
-
-                $.ajax({
-                    type: "POST",
-                    url: "fileupload.aspx/GetSubDocTypes",
-                    data: JSON.stringify({ doctypeId: doctypeId }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-
-                    success: function (response) {
-                        ddlSub.empty();
-                        ddlSub.append('<option value="0">Select Document Type</option>');
-
-                        $.each(response.d, function (i, item) {
-                            ddlSub.append(
-                                $('<option></option>')
-                                    .val(item.subdocId)
-                                    .text(item.subdoctypename)
-                            );
-                        });
-                    },
-
-                    error: function () {
-                        alert("Error loading document types.");
-                    }
-                });
             });
-
-
-            $('#<%= ddl_sub_doc_type.ClientID %>').on('change', function () {
-
-                var subId = $(this).val();
-                var subText = $('#<%= ddl_sub_doc_type.ClientID %> option:selected').text();
-
-                $('#<%= hfSubdoctypeId.ClientID %>').val(subId);
-                $('#<%= hfSubdoctypeText.ClientID %>').val(subText);
-            });
-
         });
+
+
+        $('#<%= ddl_sub_doc_type.ClientID %>').on('change', function () {
+
+            var subId = $(this).val();
+            var subText = $('#<%= ddl_sub_doc_type.ClientID %> option:selected').text();
+
+            $('#<%= hfSubdoctypeId.ClientID %>').val(subId);
+            $('#<%= hfSubdoctypeText.ClientID %>').val(subText);
+        });
+
+    });
 
     </script>
 
