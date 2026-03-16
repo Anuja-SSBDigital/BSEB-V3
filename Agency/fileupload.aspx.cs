@@ -29,7 +29,6 @@ public partial class fileupload : System.Web.UI.Page
         if (Session["userid"] == null)
         {
             Response.Redirect("../login.aspx");
-
         }
 
         if (!IsPostBack)
@@ -41,24 +40,22 @@ public partial class fileupload : System.Web.UI.Page
             div_fileupload.Visible = false;
         }
 
-     
-        if (!string.IsNullOrEmpty(hfDoctypeId.Value))
+      
+        if (!string.IsNullOrEmpty(hfDoctypeId.Value) && hfDoctypeId.Value != "0")
         {
-            System.Web.UI.WebControls.ListItem liDoctype = ddl_doctype.Items.FindByValue(hfDoctypeId.Value);
-            if (liDoctype != null)
-                ddl_doctype.SelectedValue = hfDoctypeId.Value;
+            ddl_doctype.SelectedValue = hfDoctypeId.Value;
 
-           
             BindSubDocumentType(Convert.ToInt32(hfDoctypeId.Value));
 
-         
-            if (!string.IsNullOrEmpty(hfSubdoctypeId.Value))
+            if (!string.IsNullOrEmpty(hfSubdoctypeText.Value))
             {
-                System.Web.UI.WebControls.ListItem liSub = ddl_sub_doc_type.Items.FindByValue(hfSubdoctypeId.Value);
-                if (liSub != null)
-                    ddl_sub_doc_type.SelectedValue = hfSubdoctypeId.Value;
-                else
-                    ddl_sub_doc_type.SelectedIndex = 0; 
+                System.Web.UI.WebControls.ListItem li = ddl_sub_doc_type.Items.FindByValue(hfSubdoctypeText.Value);
+
+                if (li != null)
+                {
+                    ddl_sub_doc_type.ClearSelection();
+                    li.Selected = true;
+                }
             }
         }
     }
@@ -68,6 +65,8 @@ public partial class fileupload : System.Web.UI.Page
         public int subdocId { get; set; }
         public string subdoctypename { get; set; }
     }
+
+   
 
     [WebMethod]
     public static List<SubDocTypeVM> GetSubDocTypes(string doctypeId)
@@ -79,14 +78,14 @@ public partial class fileupload : System.Web.UI.Page
             return list;
 
         FlureeCS fl = new FlureeCS();
+
         DataTable dt = fl.GetSubDocTypes(docTypeId, HttpContext.Current.Session["agencyname"].ToString());
 
-        for (int i = 0; i < dt.Rows.Count; i++)
+        foreach (DataRow row in dt.Rows)
         {
-            DataRow row = dt.Rows[i];
-
             SubDocTypeVM vm = new SubDocTypeVM();
-            //  vm.subdocId = Convert.ToInt32(row["subdocId"]);
+
+            vm.subdocId = 0; 
             vm.subdoctypename = row["SubDocType"].ToString();
 
             list.Add(vm);
@@ -141,11 +140,14 @@ public partial class fileupload : System.Web.UI.Page
     }
 
 
+  
     private void BindSubDocumentType(int doctypeId)
     {
         DataTable dt = fl.GetSubDocTypes(doctypeId, HttpContext.Current.Session["agencyname"].ToString());
 
         ddl_sub_doc_type.Items.Clear();
+
+        ddl_sub_doc_type.Items.Add(new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
 
         if (dt != null && dt.Rows.Count > 0)
         {
@@ -154,10 +156,7 @@ public partial class fileupload : System.Web.UI.Page
             ddl_sub_doc_type.DataValueField = "SubDocType";
             ddl_sub_doc_type.DataBind();
         }
-
-        ddl_sub_doc_type.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Select File Type", "0"));
     }
-
     private void BindExamSessionType()
     {
 
