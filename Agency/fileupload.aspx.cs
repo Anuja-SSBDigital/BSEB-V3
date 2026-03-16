@@ -23,14 +23,12 @@ public partial class fileupload : System.Web.UI.Page
     FlureeCS fl = new FlureeCS();
     private static readonly ILog log = LogManager.GetLogger(typeof(fileupload));
 
-
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["userid"] == null)
         {
             Response.Redirect("../login.aspx");
         }
-
         if (!IsPostBack)
         {
             BindDocCategory();
@@ -39,28 +37,30 @@ public partial class fileupload : System.Web.UI.Page
             btn_submit.Visible = false;
             div_fileupload.Visible = false;
         }
-
-      
-        if (!string.IsNullOrEmpty(hfDoctypeId.Value) && hfDoctypeId.Value != "0")
+        else
         {
-            ddl_doctype.SelectedValue = hfDoctypeId.Value;
-
-            BindSubDocumentType(Convert.ToInt32(hfDoctypeId.Value));
-
-            if (!string.IsNullOrEmpty(hfSubdoctypeText.Value))
+            if (!string.IsNullOrEmpty(hfDoctypeId.Value) && hfDoctypeId.Value != "0")
             {
-                System.Web.UI.WebControls.ListItem li = ddl_sub_doc_type.Items.FindByValue(hfSubdoctypeText.Value);
+                ddl_doctype.SelectedValue = hfDoctypeId.Value;
 
-                if (li != null)
+                BindSubDocumentType(Convert.ToInt32(hfDoctypeId.Value));
+
+                if (!string.IsNullOrEmpty(hfSubdoctypeId.Value))
                 {
-                    ddl_sub_doc_type.ClearSelection();
-                    li.Selected = true;
+                    System.Web.UI.WebControls.ListItem li = ddl_sub_doc_type.Items.FindByValue(hfSubdoctypeId.Value);
+
+                    if (li != null)
+                    {
+                        ddl_sub_doc_type.ClearSelection();
+                        li.Selected = true;
+                    }
                 }
             }
-        }
+        } 
     }
 
-    public class SubDocTypeVM
+
+public class SubDocTypeVM
     {
         public int subdocId { get; set; }
         public string subdoctypename { get; set; }
