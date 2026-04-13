@@ -2,10 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
-    <style>
+    <style> 
         .card {
             margin-bottom: 20px;
         }
+
         #table-1 {
             width: 100%;
             border-collapse: collapse;
@@ -109,6 +110,9 @@
             var rollNo = document.getElementById('<%= rollNo.ClientID %>').value.trim();
 
             if (rollCode === "" || rollNo === "") {
+
+                clearUI();
+
                 Swal.fire({
                     icon: 'warning',
                     title: 'Validation Error',
@@ -119,6 +123,9 @@
 
 
             if (!/^\d+$/.test(rollCode) || !/^\d+$/.test(rollNo)) {
+
+                clearUI();
+
                 Swal.fire({
                     icon: 'error',
                     title: 'Invalid Input',
@@ -129,6 +136,34 @@
 
             return true;
         }
+
+
+        function clearUI() {
+
+
+            document.getElementById('<%= rollCode.ClientID %>').value = "";
+            document.getElementById('<%= rollNo.ClientID %>').value = "";
+
+
+            var userDetails = document.getElementById('<%= Student_details.ClientID %>');
+            if (userDetails) {
+                userDetails.style.display = "none";
+            }
+
+
+            var tableBody = document.querySelector("#table-1 tbody");
+            if (tableBody) {
+                tableBody.innerHTML = "";
+            }
+
+
+            var actionDiv = document.getElementById('<%= divAction.ClientID %>');
+            if (actionDiv) {
+                actionDiv.style.display = "none";
+            }
+        }
+
+
     </script>
 
 </asp:Content>
@@ -172,7 +207,7 @@
                 ForeColor="Red" Font-Bold="true" />
 
 
-            <div runat="server" id="User_detailes" visible="false">
+            <div runat="server" id="Student_details" visible="false">
 
                 <div class="card">
                     <div class="card-header">
