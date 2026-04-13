@@ -13,21 +13,40 @@ public partial class Agency_Approvaldata_1 : System.Web.UI.Page
     string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        try
         {
-            if (Session["userid"] != null)
+            if (!IsPostBack)
             {
-                string userRole = Session["role"] != null ? Session["role"].ToString() : "";
 
-            }
-            else
-            {
-                Response.Redirect("../login.aspx", false);
+                if (Session["userid"] != null)
+                {
+                    string userRole = Session["role"] != null ? Session["role"].ToString() : string.Empty;
+
+                    if (userRole == "Admin")
+                    {
+                       
+
+                    }
+                    else
+                    {
+                        Response.Redirect("../login.aspx", false);
+                    }
+                }
+                else
+                {
+                    Response.Redirect("../login.aspx", false);
+                }
             }
         }
+        catch (Exception ex)
+        {
 
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                "alert('An unexpected error occurred during page load.');", true);
+        }
     }
-    
+
+
     protected void btn_search_Click(object sender, EventArgs e)
     {
         string rollCodeValue = rollCode.Text.Trim();
@@ -72,14 +91,14 @@ public partial class Agency_Approvaldata_1 : System.Web.UI.Page
 
             if (dt.Rows.Count > 0)
             {
-                User_detailes.Visible = true;
+                Student_details.Visible = true;
                 rpt_userData.DataSource = dt;
                 rpt_userData.DataBind();
 
 
                 divAction.Visible = true;
 
-
+                 
                 bool done = dt.AsEnumerable().All(r =>
                     r["Approval1"].ToString() == "Approved" ||
                     r["Approval1"].ToString() == "Rejected");
@@ -92,7 +111,7 @@ public partial class Agency_Approvaldata_1 : System.Web.UI.Page
             }
             else
             {
-                User_detailes.Visible = false;
+                Student_details.Visible = false;
                 divAction.Visible = false;
 
 
