@@ -88,7 +88,7 @@
             document.getElementById('<%= rollNo.ClientID %>').value = "";
 
 
-            var panel = document.getElementById('<%= User_detailes.ClientID %>');
+            var panel = document.getElementById('<%= Student_details.ClientID %>');
             if (panel) panel.style.display = "none";
 
 
@@ -152,7 +152,7 @@
     <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
 
 
-    <div runat="server" id="User_detailes" visible="false">
+    <div runat="server" id="Student_details" visible="false">
 
         <div class="card">
             <div class="card-header">
@@ -229,3 +229,4 @@
     </div>
 
 </asp:Content>
+ 
