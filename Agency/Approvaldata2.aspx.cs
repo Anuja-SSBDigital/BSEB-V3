@@ -14,7 +14,7 @@ public partial class Agency_Approvaldata2 : System.Web.UI.Page
     string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
-    {
+    {       
         try
         {
             if (!IsPostBack)
@@ -77,7 +77,7 @@ public partial class Agency_Approvaldata2 : System.Web.UI.Page
 
             if (dt.Rows.Count > 0)
             {
-                User_detailes.Visible = true;
+                Student_details.Visible = true;
 
                 rpt_userData.DataSource = dt;
                 rpt_userData.DataBind();
@@ -96,7 +96,7 @@ public partial class Agency_Approvaldata2 : System.Web.UI.Page
             }
             else
             {
-                User_detailes.Visible = false;
+                Student_details.Visible = false;
                 divAction2.Visible = false;
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "b",
@@ -105,62 +105,88 @@ public partial class Agency_Approvaldata2 : System.Web.UI.Page
         }
     }
 
+
     protected async void btnApproveAll_Click(object sender, EventArgs e)
     {
-
-        using (SqlConnection con = new SqlConnection(conStr))
-        {
-            string q = @"UPDATE scrutinydata 
-                         SET Approval2='Approved'
-                         WHERE roll_code=@rc AND roll_no=@rn";
-
-            SqlCommand cmd = new SqlCommand(q, con);
-            cmd.Parameters.AddWithValue("@rc", rollCode.Text.Trim());
-            cmd.Parameters.AddWithValue("@rn", rollNo.Text.Trim());
-
-            con.Open();
-            cmd.ExecuteNonQuery();
-        }
-
+        string rc = rollCode.Text.Trim();
+        string rn = rollNo.Text.Trim();
 
         try
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7171/");
+                string baseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+                client.BaseAddress = new Uri(baseUrl);
 
                 string url = string.Format(
-       "api/ResultUpdate/Updatereultdata?rollCode={0}&rollNo={1}",
-       rollCode.Text.Trim(),
-       rollNo.Text.Trim()
-   );
+                    "api/ResultUpdate/Updatereultdata?rollCode={0}&rollNo={1}",
+                    rc,
+                    rn
+                );
 
                 HttpResponseMessage response = await client.PostAsync(url, null);
 
                 if (response.IsSuccessStatusCode)
                 {
+
+                    using (SqlConnection con = new SqlConnection(conStr))
+                    {
+                        string q = @"UPDATE scrutinydata 
+                                 SET Approval2='Approved'
+                                 WHERE roll_code=@rc AND roll_no=@rn";
+
+                        SqlCommand cmd = new SqlCommand(q, con);
+                        cmd.Parameters.AddWithValue("@rc", rc);
+                        cmd.Parameters.AddWithValue("@rn", rn);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+
                     ScriptManager.RegisterStartupScript(this, GetType(), "c",
-                        "Swal.fire('Success','Approved & Published','success');", true);
+                        "Swal.fire('Success','Data Approved Successfully ','success');", true);
                 }
+               
                 else
                 {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    string cleanMessage = "Something went wrong";
+
+                    try
+                    {
+                        var obj = Newtonsoft.Json.Linq.JObject.Parse(errorResponse);
+                        cleanMessage = obj["message"].ToString();
+                    }
+                    catch
+                    {
+                        cleanMessage = "Unable to connect remote server";
+                    }
+
                     ScriptManager.RegisterStartupScript(this, GetType(), "c",
-                        "Swal.fire('Warning','Approved but API failed','warning');", true);
+                        "Swal.fire('Error','" + cleanMessage.Replace("'", "") + "','error');", true);
                 }
             }
         }
+        catch (HttpRequestException)
+        {
+            
+            ScriptManager.RegisterStartupScript(this, GetType(), "c",
+                "Swal.fire('Error','Api Not Connected','error');", true);
+        }
         catch (Exception ex)
         {
+          
             ScriptManager.RegisterStartupScript(this, GetType(), "c",
-                "Swal.fire('Error','API Error: " + ex.Message.Replace("'", "") + "','error');", true);
+                "Swal.fire('Error','Something went wrong','error');", true);
         }
 
+        BindData(rc, rn);
 
-        BindData(rollCode.Text.Trim(), rollNo.Text.Trim());
     }
 
 
-    protected void btnRejectAll_Click(object sender, EventArgs e)
+
+        protected void btnRejectAll_Click(object sender, EventArgs e)
     {
         string rc = rollCode.Text.Trim();
         string rn = rollNo.Text.Trim();
@@ -209,7 +235,7 @@ public partial class Agency_Approvaldata2 : System.Web.UI.Page
             {
                 approve.Visible = false;
                 reject.Visible = false;
-                return;
+                return; 
             }
             approve.Visible = true;
             reject.Visible = true;
