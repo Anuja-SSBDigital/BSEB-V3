@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
-using System.Linq; 
+using System.Linq;
+using System.Configuration;
 
 public partial class Agency_Updateddataget : System.Web.UI.Page
 {
@@ -64,6 +65,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
         await BindData(rc, rn);
     }
 
+
     private async Task BindData(string rc, string rn)
     {
         try
@@ -71,10 +73,12 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
             System.Net.ServicePointManager.SecurityProtocol =
                 System.Net.SecurityProtocolType.Tls12;
 
+            string baseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+
             using (HttpClient client = new HttpClient())
             {
-                string url = "https://localhost:7171/api/ResultPublish/decrypt?rollCode="
-                              + rc + "&rollNo=" + rn;
+
+                string url = baseUrl + "api/ResultPublish/decrypt?rollCode=" + rc + "&rollNo=" + rn;
 
                 HttpResponseMessage response = await client.GetAsync(url);
                 string json = await response.Content.ReadAsStringAsync();
@@ -90,6 +94,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
                     return;
                 }
+
 
                 List<ApiResponse> dataList = JsonConvert.DeserializeObject<List<ApiResponse>>(json);
 
@@ -112,7 +117,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 hasCCE_v1 = false;
                 hasCCE_v2 = false;
 
-               
+
                 if (v1 != null && v1.data != null && v1.data.subjectResults != null)
                 {
                     hasCCE_v1 = v1.data.subjectResults.Exists(delegate (SubjectResult s)
@@ -134,7 +139,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 thCCE_v1.Visible = hasCCE_v1;
                 thCCE_v2.Visible = hasCCE_v2;
 
-             
 
                 if (v1 != null && v1.data != null && v1.data.subjectResults != null)
                 {
@@ -166,14 +170,14 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                         .ToDictionary(g => g.Key, g => g.Count());
                 }
 
-               
+
                 rpt_v1.DataSource = (v1 != null && v1.data != null) ? v1.data.subjectResults : null;
                 rpt_v1.DataBind();
 
                 rpt_v2.DataSource = (v2 != null && v2.data != null) ? v2.data.subjectResults : null;
                 rpt_v2.DataBind();
 
-               
+
                 ApiResponse latest = dataList[dataList.Count - 1];
                 StudentData d = latest.data;
 
@@ -185,13 +189,46 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 lblUID.Text = d.bsebUniqueID;
                 lblFaculty.Text = d.faculty;
                 lblCollege.Text = d.clgname;
-                lblTotalMarks.Text = d.totalAggMarks;
-                lblDivision.Text = d.division;
 
-                User_detailes.Visible = true;
+                if (v1 != null && v1.data != null)
+                {
+                    V1totalmarks.Text = v1.data.totalAggMarks;
+                    V1division.Text = v1.data.division;
+                }
+                else
+                {
+                    V2totalmarks.Text = "";
+                    V2division.Text = "";
+                }
+
+
+                if (v2 != null && v2.data != null)
+                {
+                    V2totalmarks.Text = v2.data.totalAggMarks;
+                    V2division.Text = v2.data.division;
+                }
+                else
+                {
+                    V2totalmarks.Text = "";
+                    V2division.Text = "";
+                }
+                          
+
+
+                Student_details.Visible = true;
             }
         }
-        catch (Exception ex)
+
+        catch (HttpRequestException)
+        {
+
+            ClearUI();
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "err",
+                "Swal.fire('Error','Unable to Connect Remoter server or Api Not Connected','error');", true);
+        }
+
+        catch (Exception ex)       
         {
             ClearUI();
 
@@ -202,6 +239,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
         }
     }
 
+ 
     protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -278,7 +316,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
     private void ClearUI()
     {
-        User_detailes.Visible = false;
+        Student_details.Visible = false;
 
         lblName.Text = "";
         lblFather.Text = "";
@@ -289,9 +327,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
         lblFaculty.Text = "";
         lblCollege.Text = "";
-        lblTotalMarks.Text = "";
-        lblDivision.Text = "";
-
+      
         rpt_v1.DataSource = null;
         rpt_v1.DataBind();
 
