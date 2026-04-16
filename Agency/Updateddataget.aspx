@@ -1,46 +1,131 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master"
     AutoEventWireup="true" CodeFile="Updateddataget.aspx.cs"
     Inherits="Agency_Updateddataget" Async="true" %>
-
+ 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
     <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
         .card {
             margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+
+        .card-header {
+            background: #1f2d3d;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px 10px 0 0;
+        }
+
+            .card-header h4,
+            .card-header h5 {
+                margin: 0;
+                color: #ffffff;
+                font-weight: 600;
+            }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-footer {
+            text-align: center;
+            background: #fff;
+            border-top: none;
+            padding-bottom: 15px;
+        }
+
+
+        #Student_details .card-header {
+            background: #ffffff;
+            color: #000000;
+            border-bottom: 1px solid #ddd;
+        }
+
+            #Student_details .card-header h4 {
+                color: #000000;
+            }
+
+
+        #Student_details td,
+        #Student_details label,
+        #Student_details span,
+        #Student_details div {
+            color: #000000 !important;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
+            margin-top: 10px;
         }
 
         th, td {
-            border: 1px solid #000;
+            border: 1px solid #dee2e6;
             padding: 6px;
         }
 
-        th {
-            background: #e9ecef;
+
+        #Student_details table th {
+            background: #007bff !important;
+            color: #ffffff !important;
             text-align: center;
             font-weight: 600;
         }
 
+        #Student_details th * {
+            color: #ffffff !important;
+        }
+
         td {
             text-align: center;
+            background: #ffffff;
         }
 
             td:nth-child(2) {
                 text-align: left;
             }
 
+
         .version-title {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #000;
             text-align: center;
             font-weight: bold;
             margin-bottom: 10px;
-            font-size: 16px;
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        .result-box {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #ffffff;
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-6 {
+                margin-bottom: 15px;
+            }
         }
     </style>
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -68,10 +153,9 @@
                 '<%= lblRollCode.ClientID %>',
                 '<%= lblRollNo.ClientID %>',
                 '<%= lblRegNo.ClientID %>',
-                '<%= lblFaculty.ClientID %>',
-                '<%= lblTotalMarks.ClientID %>',
-                '<%= lblDivision.ClientID %>'
-            ];
+                '<%= lblFaculty.ClientID %>'
+
+            ];     
 
             for (var i = 0; i < lbls.length; i++) {
                 var el = document.getElementById(lbls[i]);
@@ -84,7 +168,7 @@
             if (v1) v1.innerHTML = "";
             if (v2) v2.innerHTML = "";
 
-            var panel = document.getElementById('<%= User_detailes.ClientID %>');
+            var panel = document.getElementById('<%= Student_details.ClientID %>');
             if (panel) panel.style.display = "none";
         }
     </script>
@@ -93,14 +177,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-
     <div class="card">
-        <div class="card-header">
-            <h5 style="text-align: center; font-weight: bold;">Bihar School Examination Board Result
-            </h5>
-        </div>
 
-        <div class="card-body row">
+        <h5 style="text-align: left; font-weight: bold; margin-left: 10px; margin-top: 10px;">Bihar School Examination Board Result
+    </h5>      
+           
+        <div class="card-body row">      
+
             <div class="col-md-6">
                 <label>Roll Code</label>
                 <asp:TextBox ID="rollCode" runat="server" CssClass="form-control" />
@@ -112,7 +195,7 @@
             </div>
         </div>
 
-        <div class="card-footer">
+        <div class="card-footer" style="text-align: left; padding-left: 20px;">
             <asp:Button ID="btn_search" runat="server"
                 CssClass="btn btn-primary"
                 Text="Search"
@@ -123,9 +206,7 @@
 
     <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
 
-
-    <div runat="server" id="User_detailes" visible="false">
-
+    <div runat="server" id="Student_details" clientidmode="Static" visible="false">
 
         <div class="card">
             <div class="card-header">
@@ -148,10 +229,6 @@
                         <asp:Label ID="lblFather" runat="server" />
                     </div>
 
-                    <div class="col-md-4">
-                        <b>School/College Name:</b>
-                        <asp:Label ID="lblCollege" runat="server" />
-                    </div>
 
                     <div class="col-md-4">
                         <b>Roll Code:</b>
@@ -172,12 +249,8 @@
                     </div>
 
                     <div class="col-md-4">
-                        <b>Aggregate Marks:</b>
-                        <asp:Label ID="lblTotalMarks" runat="server" />
-                    </div>
-                    <div class="col-md-4">
-                        <b>Result Division:</b>
-                        <asp:Label ID="lblDivision" runat="server" />
+                        <b>School/College Name:</b>
+                        <asp:Label ID="lblCollege" runat="server" />
                     </div>
 
                 </div>
@@ -186,9 +259,8 @@
 
                 <div class="row">
 
-
                     <div class="col-md-6" style="padding-right: 10px;">
-                        <div class="version-title">ENC_v1</div>
+                        <div class="version-title">V1</div>
 
                         <table border="1">
                             <tr>
@@ -236,11 +308,25 @@
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
+
                         </table>
+
+
+                        <div class="result-box">
+                            <div>
+                                Aggregate Marks: <span>
+                                    <asp:Label ID="V1totalmarks" runat="server" /></span>
+                            </div>
+                            <div>
+                                Result Division: <span>
+                                    <asp:Label ID="V1division" runat="server" /></span>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-6" style="padding-left: 10px;">
 
-                        <div class="version-title">ENC_v2</div>
+                        <div class="version-title">V2</div>
 
                         <table border="1">
                             <tr>
@@ -291,9 +377,21 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                         </table>
+
+                        <div class="result-box">
+                            <div>
+                                Aggregate Marks: <span>
+                                    <asp:Label ID="V2totalmarks" runat="server" /></span>
+                            </div>
+                            <div>
+                                Result Division: <span>
+                                    <asp:Label ID="V2division" runat="server" /></span>
+                            </div>
+                        </div>
+
                     </div>
 
-                </div>                                   
+                </div>
             </div>
         </div>
     </div>
