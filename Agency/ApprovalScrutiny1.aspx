@@ -2,156 +2,171 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
-    <style>
-      
-           .summary-card {
-       border: none;
-       border-radius: 12px;
-       box-shadow: 0 8px 22px rgba(0,0,0,0.12);
-       background: #ffffff;
-   }
+<style> 
+        
+.summary-card {
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: 0.3s ease;   
+}
 
-       .summary-card .agency-text {
-           font-size: 16px;
-           font-weight: 900;
-           color: #000000;
-           letter-spacing: 0.5px;
-           text-transform: uppercase;
-       }
-
-       .summary-card .card-header {
-           background: #000000;
-           color: #ffffff;
-           padding: 16px 20px;
-           border-radius: 12px 12px 0 0;
-           border-bottom: 2px solid #1f1f1f;
-       }
-
-           .summary-card .card-header h4 {
-               margin: 0;
-               font-size: 19px;
-               font-weight: 800;
-               letter-spacing: 0.5px;
-               text-transform: uppercase;
-           }
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
 
 
-       .summary-card .card-body {
-           padding: 22px;
-       }
+.card.summary-card .card-header {
+    background: #1E3A8A !important;
+    padding: 12px 14px;
+    border-bottom: 0.5px solid #1E3A8A !important;
+}
 
+.card.summary-card .card-header h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff !important;
+    letter-spacing: 0.5px;
+}
 
-       .summary-card h5 {
-           font-size: 14px;
-           font-weight: 700;
-           color: #111827;
-           margin-bottom: 6px;
-       }
+.summary-card .card-body {
+    padding: 25px 30px;
+}
 
-       .summary-card span,
-       .summary-card label {
-           font-size: 20px;
-           font-weight: 900;
-           color: #000000;
-       }
+.summary-card h5 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
+.summary-card span,
+.summary-card label {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+}
 
-   #divAction {
-       margin-top: 20px;
-       text-align: center;
-   }
+.summary-card .agency-text {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-top: 6px;
+}
 
-       #divAction .btn {
-           padding: 10px 20px;
-           font-weight: 700;
-           border-radius: 8px;
-       }
+.summary-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 20px 0;
+}
 
+#divAction {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-   .btn-success {
-       background: #0f5132;
-       border: none;
-   }
+#divAction {
+    margin-top: 20px;
+    text-align: center;
+}
 
-   .btn-danger {
-       background: #842029;
-       border: none;
-   }
+#divAction .btn {
+    padding: 10px 20px;
+    font-weight: 700;
+    border-radius: 8px;
+}
 
+.btn-success {
+    background: #0f5132;
+    border: none;
+}
 
-   .btn-success:hover {
-       background: #146c43;
-   }
+.btn-danger {
+    background: #842029;
+    border: none;
+}
 
-   .btn-danger:hover {
-       background: #a52834;
-   }
+.btn-success:hover {
+    background: #146c43;
+}
 
-   .form-label-bold,
-   label {
-       font-weight: 800;
-       color: #111827;
-       font-size: 14px;
-   }
+.btn-danger:hover {
+    background: #a52834;
+}
 
+.form-label-bold,
+label {
+    font-weight: 800;
+    color: #111827;
+    font-size: 14px;
+}
 
-        .card {
-            margin-bottom: 20px;
-        }
+.card {
+    margin-bottom: 20px;
+}
 
-        #table-1 {
-            width: 100%;
-            border-collapse: collapse;
-        }
+#table-1 {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-            #table-1 thead th {
-                white-space: nowrap;
-                text-align: center;
-                vertical-align: middle;
-                background-color: #f4f6f9;
-                font-weight: 600;
-                font-size: 13px;
-                padding: 10px;
-            }
+#table-1 thead th {
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #f4f6f9;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px;
+}
 
-            #table-1 tbody td {
-                white-space: nowrap;
-                vertical-align: middle;
-                text-align: center;
-                padding: 8px;
-                font-size: 13px;
-            }
+#table-1 tbody td {
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    padding: 8px;
+    font-size: 13px;
+}
 
-            #table-1 td {
-                max-width: 180px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
+#table-1 td {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-            #table-1 tbody tr:nth-child(even) {
-                background-color: #fafafa;
-            }
+#table-1 tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
 
-            #table-1 tbody tr:hover {
-                background-color: #f1f1f1;
-            }
+#table-1 tbody tr:hover {
+    background-color: #f1f1f1;
+}
 
-        .table-responsive {
-            overflow-x: auto;
-        }
+.table-responsive {
+    overflow-x: auto;
+}
 
-        .badge {
-            padding: 10px 15px;
-        }
+.badge {
+    padding: 10px 15px;
+}
 
+.card {
+    margin-bottom: 20px;
+}
 
-        .card {
-            margin-bottom: 20px;
-        }
-
-
-
-    </style>
+</style>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -378,8 +393,6 @@
                 OnClick="btn_search_Click"
                 OnClientClick="return validateSearch();" />
         </div>
-
-      
 
         <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
 
