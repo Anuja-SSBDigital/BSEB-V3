@@ -2,171 +2,169 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
-<style> 
-        
-.summary-card {
-    border: none;
-    border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-    overflow: hidden;
-    transition: 0.3s ease;   
-}
+    <style>
+        .summary-card {
+            border: none;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
 
-.summary-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
+            .summary-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            }
 
 
-.card.summary-card .card-header {
-    background: #1E3A8A !important;
-    padding: 12px 14px;
-    border-bottom: 0.5px solid #1E3A8A !important;
-}
+        .card.summary-card .card-header {
+            background: #1E3A8A !important;
+            padding: 12px 14px;
+            border-bottom: 0.5px solid #1E3A8A !important;
+        }
 
-.card.summary-card .card-header h4 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    color: #ffffff !important;
-    letter-spacing: 0.5px;
-}
+            .card.summary-card .card-header h4 {
+                margin: 0;
+                font-size: 20px;
+                font-weight: 700;
+                color: #ffffff !important;
+                letter-spacing: 0.5px;
+            }
 
-.summary-card .card-body {
-    padding: 25px 30px;
-}
+        .summary-card .card-body {
+            padding: 25px 30px;
+        }
 
-.summary-card h5 {
-    font-size: 13px;
-    font-weight: 600;
-    color: #64748b;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+        .summary-card h5 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-.summary-card span,
-.summary-card label {
-    font-size: 26px;
-    font-weight: 800;
-    color: #0f172a;
-}
+        .summary-card span,
+        .summary-card label {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+        }
 
-.summary-card .agency-text {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #2563eb;
-    background: #eff6ff;
-    padding: 6px 14px;
-    border-radius: 20px;
-    margin-top: 6px;
-}
+        .summary-card .agency-text {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
 
-.summary-divider {
-    height: 1px;
-    background: #e5e7eb;
-    margin: 20px 0;
-}
+        .summary-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
+        }
 
-#divAction {
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
+        #divAction {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
 
-#divAction {
-    margin-top: 20px;
-    text-align: center;
-}
+        #divAction {
+            margin-top: 20px;
+            text-align: center;
+        }
 
-#divAction .btn {
-    padding: 10px 20px;
-    font-weight: 700;
-    border-radius: 8px;
-}
+            #divAction .btn {
+                padding: 10px 20px;
+                font-weight: 700;
+                border-radius: 8px;
+            }
 
-.btn-success {
-    background: #0f5132;
-    border: none;
-}
+        .btn-success {
+            background: #0f5132;
+            border: none;
+        }
 
-.btn-danger {
-    background: #842029;
-    border: none;
-}
+        .btn-danger {
+            background: #842029;
+            border: none;
+        }
 
-.btn-success:hover {
-    background: #146c43;
-}
+        .btn-success:hover {
+            background: #146c43;
+        }
 
-.btn-danger:hover {
-    background: #a52834;
-}
+        .btn-danger:hover {
+            background: #a52834;
+        }
 
-.form-label-bold,
-label {
-    font-weight: 800;
-    color: #111827;
-    font-size: 14px;
-}
+        .form-label-bold,
+        label {
+            font-weight: 800;
+            color: #111827;
+            font-size: 14px;
+        }
 
-.card {
-    margin-bottom: 20px;
-}
+        .card {
+            margin-bottom: 20px;
+        }
 
-#table-1 {
-    width: 100%;
-    border-collapse: collapse;
-}
+        #table-1 {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-#table-1 thead th {
-    white-space: nowrap;
-    text-align: center;
-    vertical-align: middle;
-    background-color: #f4f6f9;
-    font-weight: 600;
-    font-size: 13px;
-    padding: 10px;
-}
+            #table-1 thead th {
+                white-space: nowrap;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #f4f6f9;
+                font-weight: 600;
+                font-size: 13px;
+                padding: 10px;
+            }
 
-#table-1 tbody td {
-    white-space: nowrap;
-    vertical-align: middle;
-    text-align: center;
-    padding: 8px;
-    font-size: 13px;
-}
+            #table-1 tbody td {
+                white-space: nowrap;
+                vertical-align: middle;
+                text-align: center;
+                padding: 8px;
+                font-size: 13px;
+            }
 
-#table-1 td {
-    max-width: 180px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+            #table-1 td {
+                max-width: 180px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
-#table-1 tbody tr:nth-child(even) {
-    background-color: #fafafa;
-}
+            #table-1 tbody tr:nth-child(even) {
+                background-color: #fafafa;
+            }
 
-#table-1 tbody tr:hover {
-    background-color: #f1f1f1;
-}
+            #table-1 tbody tr:hover {
+                background-color: #f1f1f1;
+            }
 
-.table-responsive {
-    overflow-x: auto;
-}
+        .table-responsive {
+            overflow-x: auto;
+        }
 
-.badge {
-    padding: 10px 15px;
-}
+        .badge {
+            padding: 10px 15px;
+        }
 
-.card {
-    margin-bottom: 20px;
-}
-
-</style>
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -212,33 +210,53 @@ label {
             return confirm("Are you sure you want to REJECT ALL records?");
         }
 
+
         function validateSearch() {
+
             var rollCode = document.getElementById('<%= rollCode.ClientID %>').value.trim();
             var rollNo = document.getElementById('<%= rollNo.ClientID %>').value.trim();
 
-            var studentDiv = document.getElementById('<%= Student_details.ClientID %>');
-
-
             if (rollCode === "" || rollNo === "") {
                 Swal.fire('Validation Error', 'Enter Roll Code & Roll Number', 'warning');
-
-
-                if (studentDiv) studentDiv.style.display = "none";
-
+                clearUI();
                 return false;
             }
 
-
             if (!/^\d+$/.test(rollCode) || !/^\d+$/.test(rollNo)) {
                 Swal.fire('Invalid Input', 'Only numeric values allowed', 'error');
-
-
-                if (studentDiv) studentDiv.style.display = "none";
-
+                clearUI();
                 return false;
             }
 
             return true;
+        }
+
+        function clearUI() {
+
+
+            var rollCode = document.getElementById('<%= rollCode.ClientID %>');
+            var rollNo = document.getElementById('<%= rollNo.ClientID %>');
+
+            if (rollCode) rollCode.value = "";
+            if (rollNo) rollNo.value = "";
+
+
+            var studentDiv = document.getElementById('<%= Student_details.ClientID %>');
+            if (studentDiv) {
+                studentDiv.style.display = "none";
+            }
+
+
+            var tableBody = document.querySelector("#table-1 tbody");
+            if (tableBody) {
+                tableBody.innerHTML = "";
+            }
+
+
+            var lblMsg = document.getElementById('<%= lblMessage.ClientID %>');
+            if (lblMsg) {
+                lblMsg.innerText = "";
+            }
         }
 
         function approveAllAjax() {
@@ -287,25 +305,24 @@ label {
                 Swal.fire('Done', res + ' records rejected', 'success');
                 loadSummaryAjax();
             });
-        }
+        }     
 
-        function loadSummaryAjax() {  
+        function loadSummaryAjax() {
             PageMethods.GetSummary(function (data) {
 
                 document.getElementById('<%= lblTotalRows.ClientID %>').innerText = data.TotalRows;
                 document.getElementById('<%= lblUniqueCount.ClientID %>').innerText = data.UniqueStudents;
-             
+
                 document.getElementById('<%= summaryCard.ClientID %>').style.display = "block";
             });
-        }
+        }     
 
     </script>
-
+                        
 </asp:Content>
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
 
     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
 
@@ -399,9 +416,8 @@ label {
 
         <div runat="server" id="Student_details" visible="false">
 
-           
+
             <div class="card-header">
-          
             </div>
 
             <div class="card-body">
