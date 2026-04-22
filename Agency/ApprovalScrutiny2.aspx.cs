@@ -11,8 +11,7 @@ using System.Web.UI.WebControls;
 public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
 {
     string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
-
-
+            
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -34,6 +33,7 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
                 }
                 else
                 {
+                                     
                     Response.Redirect("../login.aspx", false);
                 }
             }
@@ -51,9 +51,7 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
                 "alert('Error: " + ex.Message.Replace("'", "") + "');", true);
         }
-    }
-
-
+    } 
     protected void btn_search_Click(object sender, EventArgs e)
     {
         string rollCodeValue = rollCode.Text.Trim();
@@ -72,8 +70,7 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
         BindGlobalSummary();
         BindData(rollCodeValue, rollNoValue);
     }
-
-
+                                                                    
     private void BindData(string rollCodeValue, string rollNoValue)
     {
         using (SqlConnection con = new SqlConnection(conStr))
@@ -91,7 +88,7 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
             cmd.Parameters.AddWithValue("@rollNo", rollNoValue);
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
+            DataTable dt = new DataTable();               
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)
@@ -121,7 +118,7 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
             else
             {
                 Student_details.Visible = false;
-                divAction.Visible = false;
+                //divAction.Visible = false;
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
                     "Swal.fire({icon:'error', title:'No Data Found', text:'No record found'});",
@@ -129,7 +126,6 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
             }
         }
     }
-
 
     private int UpdateGlobalStatus(string status)
     {
@@ -201,6 +197,58 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
     }
 
 
+    //protected void btnGlobalApprove_Click(object sender, EventArgs e)
+    //{
+    //    int pending = 0;
+    //    int rejected = 0;
+
+    //    using (SqlConnection con = new SqlConnection(conStr))
+    //    {
+    //        string checkQuery = @"
+    //    SELECT 
+    //        SUM(CASE WHEN Approval1 IS NULL OR Approval1='Pending' THEN 1 ELSE 0 END),
+    //        SUM(CASE WHEN Approval1='Rejected' THEN 1 ELSE 0 END)
+    //    FROM scrutinydata";
+
+    //        SqlCommand cmd = new SqlCommand(checkQuery, con);
+    //        con.Open();
+
+    //        SqlDataReader dr = cmd.ExecuteReader();
+    //        if (dr.Read())
+    //        {
+    //            pending = Convert.ToInt32(dr[0]);
+    //            rejected = Convert.ToInt32(dr[1]);
+    //        }
+    //        con.Close();
+    //    }
+
+
+    //    if (pending > 0 || rejected > 0)
+    //    {
+    //        ScriptManager.RegisterStartupScript(this, GetType(), "err",
+
+
+    //            "Swal.fire('Error','" + pending + " Pending and " + rejected + " Rejected Records Exist at Approval Level 1, so they cannot be Approved.','error');",
+    //            true);
+
+
+
+    //        return;
+    //    }
+
+
+    //    int rows = UpdateGlobalStatus("Approved");
+
+    //    ScriptManager.RegisterStartupScript(this, GetType(), "ok",
+    //        "Swal.fire('Done','" + rows + " records approved','success');", true);
+
+    //    BindGlobalSummary();
+    //}
+
+
+         
+    
+
     protected void btnGlobalApprove_Click(object sender, EventArgs e)
     {
         int pending = 0;
@@ -231,37 +279,150 @@ public partial class Agency_ApprovalScrutiny2 : System.Web.UI.Page
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "err",
 
-
                 "Swal.fire('Error','" + pending + " Pending and " + rejected + " Rejected Records Exist at Approval Level 1, so they cannot be Approved.','error');",
                 true);
-
-
 
             return;
         }
 
 
-        int rows = UpdateGlobalStatus("Approved");
+        try
+        {
+          
+            List<string> allowedIps = new List<string> { "192.168.1.106",    "127.0.0.1",
+    "::1"
 
-        ScriptManager.RegisterStartupScript(this, GetType(), "ok",
-            "Swal.fire('Done','" + rows + " records approved','success');", true);
+            };
 
-        BindGlobalSummary();
+            string clientIp = GetClientIp();
+
+            if (!allowedIps.Contains(clientIp))
+            {
+                string script = @"
+Swal.fire({
+    title: 'Access Denied!',
+    text: 'You are not authorized to Approved Status.',
+    icon: 'error',
+    confirmButtonText: 'OK'
+});";
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "alert", script, true);
+                return;
+            }
+
+            int rows = UpdateGlobalStatus("Approved");
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "ok",
+                "Swal.fire('Done','" + rows + " records approved','success');", true);
+
+            BindGlobalSummary();
+        }
+        catch (Exception ex) 
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "err2",
+                "Swal.fire('Error','" + ex.Message.Replace("'", "") + "','error');",
+                true);
+        }
     }
 
+    
+   
+
+    public static string GetClientIp()                   
+    {
+        string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+        if (!string.IsNullOrEmpty(ip))
+        {
+
+            string[] ipArray = ip.Split(',');
+            ip = ipArray[0].Trim();  
+        }
+        else  
+        {
+            ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+        }
+
+          
+    
+      
+        if (string.IsNullOrEmpty(ip)) 
+        {
+            ip = "127.0.0.1";
+        }
+
+
+        if (ip == "::1")
+        {
+            ip = "127.0.0.1";
+        }
+
+
+        if (ip.StartsWith("::ffff:"))
+        {
+            ip = ip.Replace("::ffff:", "");
+        }
+
+        ip = ip.Trim();
+
+        return ip;
+    }
+
+
+    //protected void btnGlobalReject_Click(object sender, EventArgs e)
+    //{
+    //    int rows = UpdateGlobalStatus("Rejected");
+
+    //    ScriptManager.RegisterStartupScript(this, GetType(), "b",
+    //        "Swal.fire('Done','" + rows + " records rejected','success');", true);
+
+    //    BindGlobalSummary();
+    //}
 
 
     protected void btnGlobalReject_Click(object sender, EventArgs e)
     {
-        int rows = UpdateGlobalStatus("Rejected");
+        try
+        {
+            
+            List<string> allowedIps = new List<string> { "192.168.1.106",    "127.0.0.1",
+    "::1"
+
+            };
+            string clientIp = GetClientIp();
+
+            if (!allowedIps.Contains(clientIp))
+            {
+                string script = @"
+Swal.fire({
+    title: 'Access Denied!',
+    text: 'You are not authorized to Approved Status.',
+    icon: 'error',
+    confirmButtonText: 'OK'
+});";
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "alert", script, true);
+                return;
+            }
+
+            int rows = UpdateGlobalStatus("Rejected");
 
         ScriptManager.RegisterStartupScript(this, GetType(), "b",
-            "Swal.fire('Done','" + rows + " records rejected','success');", true);
+            "Swal.fire('Done','" + rows + " records rejected','success');", true);   
 
         BindGlobalSummary();
     }
 
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "err2",
+                "Swal.fire('Error','" + ex.Message.Replace("'", "") + "','error');",
+                true);
+        } 
+    }
 
+
+    
     [System.Web.Services.WebMethod]
     public static object GetSummary()
     {
