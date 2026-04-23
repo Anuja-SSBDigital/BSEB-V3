@@ -1,252 +1,194 @@
-﻿using iText.StyledXmlParser.Jsoup.Helper;
-using Org.BouncyCastle.Asn1.Ocsp;
-using Org.BouncyCastle.Asn1.X509;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.IdentityModel.Protocols.WSTrust;
+using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Spire.Doc.Fields.Shapes;
 
-public partial class Approval1 : System.Web.UI.Page
+public partial class Agency_Approval1 : System.Web.UI.Page
 {
+    FlureeCS fl = new FlureeCS();
+   string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        try
         {
             if (Session["userid"] != null)
             {
-                
-                btn_submit.Visible = false;
-              
-                btn_submittoken.Visible = false;
-               
-              
+                string userRole = Session["role"] != null ? Session["role"].ToString() : "";
+
+                if (userRole == "Admin")
+                {
+                    BindGlobalSummary();
+                }
+                else
+                {
+                    Response.Redirect("../login.aspx", false);
+                }
             }
             else
             {
-                Response.Redirect("../login.aspx");
+                Response.Redirect("../login.aspx", false);
             }
         }
-    }
-    public void BindRepeator(string AdminApprovalStatus)
-    {
-
-        string connectionString = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-
-            string query = "SELECT * FROM Compart_ResultChangeRequest WHERE AdminApprovalStatus = @AdminApprovalStatus";
-
-            SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@AdminApprovalStatus", AdminApprovalStatus);
-           
-            try
-            {
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                rpt_details.DataSource = reader;
-                rpt_details.DataBind();
-                if (AdminApprovalStatus == "Approve" || AdminApprovalStatus == "Rejected")
-                {
-                    btn_submit.Visible = false;
-                  
-                    btn_submittoken.Visible = false;
-                    txt_pvtkey.Text = "";
-                    lbl_validate.Text = "";
-                  
-                }
-               
-            }
-            catch (Exception ex)
-            {
-             
-                Response.Write("Error: " + ex.Message);
-            }
+        catch (Exception ex)
+        { 
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert",
+                "alert('Error: " + ex.Message.Replace("'", "") + "');", true);
         }
     }
 
     protected void btn_search_Click(object sender, EventArgs e)
     {
-        BindRepeator(ddl_status.SelectedValue);
+        string rollCodeValue = rollCode.Text.Trim();
+        string rollNoValue = rollNo.Text.Trim();
 
-    }
+        int rc, rn;
 
-    protected void rpt_details_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    {
-        if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+    
+        if (!int.TryParse(rollCodeValue, out rc) || !int.TryParse(rollNoValue, out rn))
         {
-            
-            HiddenField hfStatus = (HiddenField)e.Item.FindControl("hfAdminApprovalStatus");
-            HiddenField hfRequestId = (HiddenField)e.Item.FindControl("hfRequestId");
-            LinkButton btnApprove = (LinkButton)e.Item.FindControl("lnkApprove");
-            LinkButton btnReject = (LinkButton)e.Item.FindControl("lnkReject");
-            Label lblApproved = (Label)e.Item.FindControl("lblApproved");
-            Label lblRejected = (Label)e.Item.FindControl("lblRejected");
-
-            if (hfStatus != null && hfStatus.Value == "Approve")
-            {
-                btnApprove.Visible = false;
-                btnReject.Visible = false;
-                lblApproved.Visible = true;
-                lblRejected.Visible = false;
-            }
-            else if (hfStatus != null && hfStatus.Value == "Rejected")
-            {
-                btnApprove.Visible = false;
-                btnReject.Visible = false;
-                lblApproved.Visible = false;
-                lblRejected.Visible = true;
-            }
-            if ( hfRequestId != null && hf_SelectedRequestId != null && hfRequestId.Value == hf_SelectedRequestId.Value && ViewState["IsApproving"] != null && (bool)ViewState["IsApproving"] == true)
-            {
-                btnReject.Visible = false;
-                
-            }
-            else if (hfRequestId != null && hf_SelectedRequestId != null && hfRequestId.Value == hf_SelectedRequestId.Value && ViewState["IsRejecting"] != null && (bool)ViewState["IsRejecting"] == true)
-            {
-                btnApprove.Visible = false;
-               
-            }
-        }
-    }
-    private int? ParseNullableInt(string input)
-    {
-        if (!string.IsNullOrWhiteSpace(input))
-        {
-            int result;
-            if (int.TryParse(input.Trim(), out result))
-            {
-                return result;
-            }
-        }
-        return null;
-    }
-    protected void rpt_details_ItemCommand(object source, RepeaterCommandEventArgs e)
-    {
-        int requestId = Convert.ToInt32(e.CommandArgument);
-        hf_SelectedRequestId.Value = requestId.ToString();
-        div_key.Visible = true;
-        btn_submittoken.Visible = true;
-       
-        if (e.CommandName == "ApproveRow")
-        {
-            ViewState["IsApproving"] = true;
-            ViewState["IsRejecting"] = false;
-            
-        }
-        else if (e.CommandName == "RejectRow")
-        {
-            ViewState["IsRejecting"] = true;
-            ViewState["IsApproving"] = false;
-          
-        }
-
-        BindRepeator(ddl_status.SelectedValue);
-
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "showKeyInput", "$('#txt_pvtkey').closest('.form-group').show();", true);
-    }
-
-    protected void btn_submit_Click(object sender, EventArgs e)
-    {
-        string key = txt_pvtkey.Text.Trim();
-
-        if (string.IsNullOrEmpty(key))
-        {
-            lbl_validate.Text = "Private key is required.";
+            ShowAlert("Invalid Input", "Roll Code and Roll Number must be numeric", "error");
             return;
         }
 
-       
-        int requestId;
-        if (!int.TryParse(hf_SelectedRequestId.Value, out requestId))
-        {
-            lbl_validate.Text = "Invalid request.";
-            return;
-        }
-        string approvalStatus = "";
+        BindData(rollCodeValue, rollNoValue);
+        BindGlobalSummary();
+    }
 
-       
-        if (ViewState["IsApproving"] != null && (bool)ViewState["IsApproving"])
+    private void BindData(string rollCodeValue, string rollNoValue)
+    {
+        DataTable dt = fl.GetStudentData(rollCodeValue, rollNoValue);
+
+        if (dt.Rows.Count > 0)
         {
-            approvalStatus = "Approve";
-        }
-        else if (ViewState["IsRejecting"] != null && (bool)ViewState["IsRejecting"])
-        {
-            approvalStatus = "Rejected";
+            Student_details.Visible = true;
+            rpt_userData.DataSource = dt;
+            rpt_userData.DataBind();
+
+            bool hasPending = dt.AsEnumerable()
+                .Any(r => r["Approval1"].ToString().ToLower() == "pending");
+
+            divAction.Visible = hasPending;
         }
         else
         {
-            lbl_validate.Text = "Invalid operation.";
-            return;
+            Student_details.Visible = false;
+            ShowAlert("No Data Found", "No record found", "error");
         }
-        string connectionString = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            string query = @" UPDATE Compart_ResultChangeRequest SET AdminApprovalStatus = @AdminApprovalStatus,AdminReviewedBy = @AdminReviewedBy,AdminReviewedDate = @AdminReviewedDate WHERE Pk_ResultChangeRequestId = @Pk_ResultChangeRequestId";
-
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-               
-                    cmd.Parameters.AddWithValue("@Pk_ResultChangeRequestId", requestId);
-                    cmd.Parameters.AddWithValue("@AdminApprovalStatus", approvalStatus);
-                    cmd.Parameters.AddWithValue("@AdminReviewedBy", Session["username"].ToString());
-                    cmd.Parameters.AddWithValue("@AdminReviewedDate", DateTime.Now);
-
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                    string message = approvalStatus == "Approve" ? "Row approved successfully!" : "Row rejected successfully!";
-                   
-                    btn_submittoken.Visible = false;
-                    btn_submit.Visible = false;
-                    lbl_validate.Text = "";
-                    hf_SelectedRequestId.Value = ""; 
-                    ViewState["Key Is Valid"] = false;
-                    
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", "alert('" + message + "');", true);
-
-                }
-                else
-                    {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertMessage", "alert('No rows were updated.');", true);
-                    }
-               
-            }
-        }
-        ViewState["IsApproving"] = null;
-        ViewState["IsRejecting"] = null;
-      
-        BindRepeator(ddl_status.SelectedValue);
     }
 
-    protected void btn_submittoken_Click(object sender, EventArgs e)
+    private void BindGlobalSummary()
     {
-       
-        FlureeCS fl = new FlureeCS();
-        string enteredKey = txt_pvtkey.Text.Trim();
+        DataTable dt = fl.GetSummary();
 
-        if (fl.IsPrivateKeyValid(enteredKey))  
+        if (dt.Rows.Count > 0)
         {
-            lbl_validate.Text = "Key is Valid";
-            lbl_validate.ForeColor = System.Drawing.Color.Green;
-            btn_submit.Visible = true;
-         
+            lblTotalRows.Text = dt.Rows[0]["TotalRows"].ToString();
+            lblUniqueCount.Text = dt.Rows[0]["UniqueStudents"].ToString();
+
+            int pending = Convert.ToInt32(dt.Rows[0]["PendingCount"]);
+            divAction.Visible = pending > 0;
+        }
+    }
+
+    protected void btnGlobalApprove_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string clientIp = GetClientIp();
+
+            List<string> allowedIps = fl.GetAllowedIPsFromApproval();
+
+            bool isAllowed = allowedIps
+                .Any(ip => ip.Equals(clientIp, StringComparison.OrdinalIgnoreCase));
+
+            if (!isAllowed)
+            {
+                ShowAlert("Access Denied!", "You are not authorized to approve.", "error");
+                return;
+            }
+
+            int rows = fl.UpdateGlobalStatus("Approved");
+
+            ShowAlert("Done", rows + " records approved", "success");
+
+            BindGlobalSummary();
+        }
+        catch (Exception ex)
+        {
+            ShowAlert("Error", ex.Message, "error");
+        }
+    }
+
+    protected void btnGlobalReject_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string clientIp = GetClientIp();
+
+            List<string> allowedIps = fl.GetAllowedIPsFromApproval();
+
+            bool isAllowed = allowedIps
+                .Any(ip => ip.Equals(clientIp, StringComparison.OrdinalIgnoreCase));
+
+            if (!isAllowed)
+            {
+                ShowAlert("Access Denied!", "You are not authorized to reject.", "error");
+                return;
+            }
+
+            int rows = fl.UpdateGlobalStatus("Rejected");
+
+            ShowAlert("Done", rows + " records rejected", "success");
+
+            BindGlobalSummary();
+        }
+        catch (Exception ex)
+        {
+            ShowAlert("Error", ex.Message, "error");
+        }
+    }
+
+    public static string GetClientIp()
+    {
+        string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+        if (!string.IsNullOrEmpty(ip))
+        {
+            ip = ip.Split(',')[0];
         }
         else
         {
-            lbl_validate.Text = "Key is Invalid";
-            lbl_validate.ForeColor = System.Drawing.Color.Red;
-            btn_submit.Visible = false;
-            
+            ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
         }
+
+        if (string.IsNullOrEmpty(ip))
+            ip = "127.0.0.1";
+
+        if (ip == "::1")
+            ip = "127.0.0.1";
+
+        if (ip.StartsWith("::ffff:"))
+            ip = ip.Replace("::ffff:", "");
+
+        return ip.Trim();
     }
 
-}       
+    private void ShowAlert(string title, string message, string icon)
+    {
+        title = title.Replace("'", "\\'");
+        message = message.Replace("'", "\\'");
+        icon = icon.Replace("'", "\\'");
+
+        string script = "Swal.fire('" + title + "','" + message + "','" + icon + "');";
+
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", script, true);
+    }
+}
