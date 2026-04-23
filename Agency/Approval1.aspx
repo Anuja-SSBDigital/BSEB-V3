@@ -1,136 +1,494 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master" AutoEventWireup="true" CodeFile="Approval1.aspx.cs" Inherits="Approval1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master" AutoEventWireup="true" CodeFile="Approval1.aspx.cs" Inherits="Agency_Approval1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    <style>
+        .summary-card {
+            border: none;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+            .summary-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            }
+
+      
+        .card.summary-card .card-header {
+            background: #1E3A8A !important;
+            padding: 12px 14px;
+            border-bottom: 0.5px solid #1E3A8A !important;
+        }
+
+            .card.summary-card .card-header h4 {
+                margin: 0;
+                font-size: 20px;
+                font-weight: 700;
+                color: #ffffff !important;
+                letter-spacing: 0.5px;
+            }
+
+        .summary-card .card-body {
+            padding: 25px 30px;
+        }
+
+
+        .summary-card h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+
+        .summary-card span,
+        .summary-card label {
+            font-size: 26px;
+            font-weight: 800;
+            color: #000000;
+        }
+
+
+        .summary-card .agency-text {
+            display: inline-block;
+            font-size: 21px;
+            font-weight: 800;
+            color: #000000;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            margin-top: 6px;
+        }
+
+
+        .summary-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
+        }
+
+
+        #divAction {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+            #divAction .btn {
+                padding: 10px 20px;
+                font-weight: 700;
+                border-radius: 8px;
+            }
+
+
+        .summary-item h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .summary-item span {
+            font-size: 22px;
+            font-weight: 800;
+            color: #000;
+            display: block;
+        }
+
+        .summary-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 15px 0;
+        }
+
+
+        .btn-success {
+            background: #0f5132;
+            border: none;
+        }
+
+        .btn-danger {
+            background: #842029;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background: #146c43;
+        }
+
+        .btn-danger:hover {
+            background: #a52834;
+        }
+
+        .form-label-bold,
+        label {
+            font-weight: 800;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        #table-1 {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            #table-1 thead th {
+                white-space: nowrap;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #f4f6f9;
+                font-weight: 600;
+                font-size: 13px;
+                padding: 10px;
+            }
+
+            #table-1 tbody td {
+                white-space: nowrap;
+                vertical-align: middle;
+                text-align: center;
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            #table-1 td {
+                max-width: 180px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            #table-1 tbody tr:nth-child(even) {
+                background-color: #fafafa;
+            }
+
+            #table-1 tbody tr:hover {
+                background-color: #f1f1f1;
+            }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .badge {
+            padding: 10px 15px;
+        } 
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        function confirmApprove(btn) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Approve all records?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Approve'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btn.onclick = null;
+                    btn.click();
+                }
+            });
+            return false;
+        }
+
+        function confirmReject(btn) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Reject all records?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Reject'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    btn.onclick = null;
+                    btn.click();
+                }
+            });
+            return false;
+        }
+
+        function confirmGlobalApprove() {
+            return confirm("Are you sure you want to APPROVE ALL records?");
+        }
+
+        function confirmGlobalReject() {
+            return confirm("Are you sure you want to REJECT ALL records?");
+        }
+
+
+        function validateSearch() {
+
+            var rollCode = document.getElementById('<%= rollCode.ClientID %>').value.trim();
+            var rollNo = document.getElementById('<%= rollNo.ClientID %>').value.trim();
+
+            if (rollCode === "" || rollNo === "") {
+                Swal.fire('Validation Error', 'Enter Roll Code & Roll Number', 'warning');
+                clearUI();
+                return false;
+            }
+
+            if (!/^\d+$/.test(rollCode) || !/^\d+$/.test(rollNo)) {
+                Swal.fire('Invalid Input', 'Only numeric values allowed', 'error');
+                clearUI();
+                return false;
+            }
+
+            return true;
+        }
+
+        function clearUI() {
+
+
+            var rollCode = document.getElementById('<%= rollCode.ClientID %>');
+            var rollNo = document.getElementById('<%= rollNo.ClientID %>');
+
+            if (rollCode) rollCode.value = "";
+            if (rollNo) rollNo.value = "";
+
+
+            var studentDiv = document.getElementById('<%= Student_details.ClientID %>');
+            if (studentDiv) {
+                studentDiv.style.display = "none";
+            }
+
+
+            var tableBody = document.querySelector("#table-1 tbody");
+            if (tableBody) {
+                tableBody.innerHTML = "";
+            }
+
+
+            var lblMsg = document.getElementById('<%= lblMessage.ClientID %>');
+            if (lblMsg) {
+                lblMsg.innerText = "";
+            }
+        }
+
+        function approveAllAjax() {
+            if (!confirm("Are you sure you want to APPROVE ALL records?")) return;
+
+            Swal.fire({ title: 'Processing...', didOpen: () => Swal.showLoading() });
+
+            PageMethods.GlobalApprove(function (res) {
+                Swal.fire('Done', res + ' records approved', 'success');
+                loadSummaryAjax();
+            });
+        }
+
+        function approveAllAjax() {
+            if (!confirm("Are you sure you want to APPROVE ALL records?")) return;
+
+            Swal.fire({ title: 'Processing...', didOpen: () => Swal.showLoading() });
+
+            PageMethods.GlobalApprove(function (res) {
+
+                var parts = res.split('|');
+
+
+                if (parts[0] === "ERROR") {
+                    Swal.fire(
+                        'Error',
+                        parts[1] + ' Records Approval1 Pending ' + ' cannot be Approval2 Approved',
+                        'error'
+                    );
+                }
+
+                else {
+                    Swal.fire('Done', parts[1] + ' records approved', 'success');
+                }
+
+                loadSummaryAjax();
+            });
+        }
+
+
+        function rejectAllAjax() {
+            if (!confirm("Are you sure you want to REJECT ALL records?")) return;
+
+            Swal.fire({ title: 'Processing...', didOpen: () => Swal.showLoading() });
+
+            PageMethods.GlobalReject(function (res) {
+                Swal.fire('Done', res + ' records rejected', 'success');
+                loadSummaryAjax();
+            });
+        }
+
+        function loadSummaryAjax() {
+            PageMethods.GetSummary(function (data) {
+
+                document.getElementById('<%= lblTotalRows.ClientID %>').innerText = data.TotalRows;
+                document.getElementById('<%= lblUniqueCount.ClientID %>').innerText = data.UniqueStudents;
+
+                document.getElementById('<%= summaryCard.ClientID %>').style.display = "block";
+            });
+        }
+
+
+    </script>
+
 </asp:Content>
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
+
     <div class="row">
-        <div class="col-12 col-md-12 col-lg-12">
-            <!-- Roll No Dropdown and Search Button -->
-            <div class="card">
+        <div class="col-12">
+
+            <div class="card summary-card" runat="server" id="summaryCard">
                 <div class="card-header">
-                    <h4>Approval of Change</h4>
+                    <h4>Bseb Scrutiny Records</h4>
                 </div>
+
                 <div class="card-body">
-                    <div class="row align-items-center">
+
+                    <div class="row text-center">
                         <div class="col-md-6">
-                            <label for="rollnoDropdown">RollCode</label>
-                            <asp:DropDownList runat="server" ID="ddl_status" CssClass="form-control">
-                                <asp:ListItem Value="ALL">Select Status</asp:ListItem>
-                                <asp:ListItem Value="Pending">Pending</asp:ListItem>
-                                <asp:ListItem Value="Approve">Approve</asp:ListItem>
-                                <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
-                            </asp:DropDownList>
+                            <h5>Scrutiny Data Updated By</h5>
+                            <span class="agency-text">Kids</span>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Result Publish By</h5>
+                            <span class="agency-text">SSB Digital</span>
+                        </div>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <h5>Total No of Scrutiny Records</h5>
+                            <asp:Label ID="lblUniqueCount" runat="server" />
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <h5>Total No of Result Change Records</h5>
+                            <asp:Label ID="lblTotalRows" runat="server" />
                         </div>
 
                     </div>
 
-                </div>
-                <div class="card-footer">
-                    <asp:Button runat="server" ID="btn_search" CssClass="btn btn-primary btn-lg" Text="Submit" OnClick="btn_search_Click" />
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h4>Marks Details</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="userTable">
-                            <thead class="thead-dark">
-                                <tr class="text-center align-middle">
-                                    <th>#</th>
-                                    <th>Student Name</th>
-                                    <th>Roll Code</th>
-                                    <th>Roll Number</th>
-                                    <th>Faculty Name</th>
-                                    <th>Subject Paper Name</th>
-                                    <th>Prev ObtainedMarks</th>
-                                    <th>Updated ObtainedMarks</th>
-                                    <th>Prev TotalTheoryMarks</th>
-                                    <th>Updated TotalTheoryMarks</th>
-                                    <th>Prev CCEMarks</th>
-                                    <th>Updated CCEMarks</th>
-                                    <th>Prev SubjectTotal</th>
-                                    <th>Updated SubjectTotal</th>
-                                    <th>Prev TotalMarks</th>
-                                    <th>Updated TotalMarks</th>
-                                    <th>Admin Approval</th>
-                                    <th>Final Approval</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <asp:Repeater ID="rpt_details" runat="server" OnItemDataBound="rpt_details_ItemDataBound" OnItemCommand="rpt_details_ItemCommand">
-                                    <ItemTemplate>
-                                        <tr class="align-middle text-center">
-                                            <td><%# Container.ItemIndex + 1 %></td>
+                    <div class="action-global" runat="server" id="divAction">
+                        <asp:Button ID="btnGlobalApprove" runat="server"
+                            Text="Approve"
+                            CssClass="btn btn-success"
+                            OnClick="btnGlobalApprove_Click"
+                            OnClientClick="approveAllAjax(); return false;" />
 
-                                            <td>
-                                                <asp:Label ID="lblStudentFullName" runat="server" Text='<%# Eval("StudentFullName") %>' />
-                                            </td>
-
-                                            <asp:HiddenField runat="server" ID="hf_rollcode" Value='<%# Eval("RollCode") %>' />
-                                            <asp:HiddenField runat="server" ID="hf_rollno" Value='<%# Eval("RollNumber") %>' />
-                                            <asp:HiddenField runat="server" ID="hf_SubjectPaperName" Value='<%# Eval("SubjectPaperName") %>' />
-
-                                            <td><%# Eval("RollCode") %></td>
-                                            <td><%# Eval("RollNumber") %></td>
-                                            <td><%# Eval("FacultyName") %></td>
-                                            <td><%# Eval("SubjectPaperName") %></td>
-
-                                            <td><%# Eval("Prev_ObtainedMarks") %></td>
-                                            <td><%# Eval("Updated_ObtainedMarks") %></td>
-                                            <td><%# Eval("Prev_TotalTheoryMarks") %></td>
-                                            <td><%# Eval("Updated_TotalTheoryMarks") %></td>
-                                            <td><%# Eval("Prev_CCEMarks") %></td>
-                                            <td><%# Eval("Updated_CCEMarks") %></td>
-                                            <td><%# Eval("Prev_SubjectTotal") %></td>
-                                            <td><%# Eval("Updated_SubjectTotal") %></td>
-                                            <td><%# Eval("Prev_TotalMarks") %></td>
-                                            <td><%# Eval("Updated_TotalMarks") %></td>
-
-                                            <td>
-                                                <asp:HiddenField runat="server" ID="hfAdminApprovalStatus" Value='<%# Eval("AdminApprovalStatus") %>' />
-                                                <asp:HiddenField runat="server" ID="hfRequestId" Value='<%# Eval("Pk_ResultChangeRequestId") %>' />
-                                                <asp:LinkButton ID="lnkApprove" runat="server" Text="Approve" CommandName="ApproveRow" CommandArgument='<%# Eval("Pk_ResultChangeRequestId") %>' CssClass="btn btn-success btn-sm" />
-                                                <asp:LinkButton ID="lnkReject" runat="server" Text="Reject" CommandName="RejectRow" CommandArgument='<%# Eval("Pk_ResultChangeRequestId") %>' CssClass="btn btn-danger btn-sm" />
-
-                                                <asp:Label ID="lblApproved" runat="server" Text="Approved" CssClass="text-success fw-bold" Visible="false" />
-                                                <asp:Label ID="lblRejected" runat="server" Text="Rejected" CssClass="text-danger fw-bold" Visible="false" />
-                                            </td>
-                                            <td><%# Eval("FinalApprovalStatus") %></td>
-                                        </tr>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                            </tbody>
-                        </table>
+                        <asp:Button ID="btnGlobalReject" runat="server"
+                            Text="Reject"
+                            CssClass="btn btn-danger"
+                            OnClick="btnGlobalReject_Click"
+                            OnClientClick="rejectAllAjax(); return false;" />
                     </div>
 
-                    <div class="row mt-3" runat="server" id="div_key" visible="false">
-                        <div class="col-md-12">
-                            <div class="form-group">
-
-                                <label for="file-upload">Enter Private Key</label>
-                                <div class="input-group mb-3">
-                                    <asp:HiddenField ID="hf_SelectedRequestId" runat="server" />
-
-                                    <asp:TextBox runat="server" ID="txt_pvtkey" CssClass="form-control" onblur="validateInput()" />
-                                    <span id="keyError" style="color: red; display: none;">Private key is required.</span>
-                                    <div class="input-group-append">
-                                        <asp:Button runat="server" ID="btn_submittoken" CssClass="btn btn-primary" OnClick="btn_submittoken_Click" Text="Verify" />
-                                    </div>
-                                </div>
-                                <asp:Label runat="server" ID="lbl_validate" class="font-18"></asp:Label>
-                                <div class="form-group text-center">
-                                    <asp:Button runat="server" ID="btn_submit" CssClass="btn btn-primary btn-lg" Text="Submit" OnClick="btn_submit_Click" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
+
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Roll Code And Roll No. Wise Scrutiny Records Status Check</h4>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <label class="form-label-bold">Roll Code</label>
+                    <asp:TextBox ID="rollCode" runat="server" CssClass="form-control" />
+                </div>
+                <div class="col-md-6">
+
+                    <label class="form-label-bold">Roll Number</label>
+                    <asp:TextBox ID="rollNo" runat="server" CssClass="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <asp:Button ID="btn_search" runat="server"
+                CssClass="btn btn-primary"
+                Text="Search"
+                OnClick="btn_search_Click"
+                OnClientClick="return validateSearch();" />
+        </div>
+
+        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" />
+
+
+        <div runat="server" id="Student_details" visible="false">
+
+
+            <div class="card-header">
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="table-1">
+                        <thead> 
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Reg No</th>
+                                <th>Roll Code</th>
+                                <th>Roll No</th>
+                                <th>Subject Name</th>
+                                <th>Subject Code</th>
+                                <th>Barcode</th>
+                                <th>Litho</th>
+                                <th>Marks Source</th>
+                                <th>Subjective Marks</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <asp:Repeater ID="rpt_userData" runat="server">
+                                <ItemTemplate>
+                                    <tr>
+                                        <td><%# Container.ItemIndex + 1 %></td>
+                                        <td><%# Eval("reg_no") %></td>
+                                        <td><%# Eval("roll_code") %></td>
+                                        <td><%# Eval("roll_no") %></td>
+                                        <td><%# Eval("Subjectname") %></td>
+                                        <td><%# Eval("subjectcode") %></td>
+                                        <td><%# Eval("BARCODE_BOTTOM") %></td>
+                                        <td><%# Eval("Litho_Cbar_Fly") %></td>
+                                        <td><%# Eval("MarksSourceName") %></td>
+                                        <td><%# Eval("SubjectiveMarks") %></td>
+                                        <td><%# Eval("subjecttotal") %></td>
+                                        <td><%# Eval("Approval1") %></td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </asp:Content>
