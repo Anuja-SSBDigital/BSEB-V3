@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.UI;
+using System.Web.UI; 
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using System.Linq;
@@ -46,9 +46,11 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 "alert('An unexpected error occurred during page load.');", true);
         }
     }
-
+        
     protected async void btn_search_Click(object sender, EventArgs e)
     {
+
+
         string rc = rollCode.Text.Trim();
         string rn = rollNo.Text.Trim();
 
@@ -64,12 +66,11 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
         await BindData(rc, rn);
     }
-
-
+     
     private async Task BindData(string rc, string rn)
     {
         try
-        {
+        {        
             System.Net.ServicePointManager.SecurityProtocol =
                 System.Net.SecurityProtocolType.Tls12;
 
@@ -94,7 +95,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
                     return;
                 }
-
 
                 List<ApiResponse> dataList = JsonConvert.DeserializeObject<List<ApiResponse>>(json);
 
@@ -239,7 +239,46 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
         }
     }
 
- 
+
+    //protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    //{
+    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+    //    {
+    //        SubjectResult data = (SubjectResult)e.Item.DataItem;
+
+    //        string currentGroup = (data.subjectGroupName ?? "").Trim();
+
+    //        if (currentGroup.ToLower().Contains("vocational"))
+    //            currentGroup = "Vocational Trade";
+
+    //        System.Web.UI.HtmlControls.HtmlTableCell td =
+    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdGroup");
+
+    //        if (currentGroup == lastGroup_v1)
+    //        {
+    //            td.Visible = false;
+    //        }
+    //        else
+    //        {
+    //            td.InnerText = currentGroup;
+
+    //            td.RowSpan = groupCount_v1.ContainsKey(currentGroup)
+    //                ? groupCount_v1[currentGroup]
+    //                : 1;
+
+    //            lastGroup_v1 = currentGroup;
+    //        }
+
+    //        System.Web.UI.HtmlControls.HtmlTableCell tdCCE =
+    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdCCE_v1");
+
+    //        if (tdCCE != null)
+    //            tdCCE.Visible = hasCCE_v1;
+    //    }
+    //}
+
+
+
     protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -276,6 +315,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 tdCCE.Visible = hasCCE_v1;
         }
     }
+
 
     protected void rpt_v2_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
