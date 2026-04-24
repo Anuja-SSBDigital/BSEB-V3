@@ -16,9 +16,8 @@
             border: none;
         }
 
-
         .card-header {
-            background: #1f2d3d;
+            background: #1f2d3d; 
             text-align: center;
             padding: 12px;
             border-radius: 10px 10px 0 0;
@@ -41,7 +40,6 @@
             border-top: none;
             padding-bottom: 15px;
         }
-
 
         #Student_details .card-header {
             background: #ffffff;
@@ -142,6 +140,7 @@
             }
             return true;
         }
+
 
         function clearOldData() {
 
@@ -253,6 +252,7 @@
                         <asp:Label ID="lblCollege" runat="server" />
                     </div>
 
+
                 </div>
 
                 <hr />
@@ -274,6 +274,7 @@
                                 <th colspan="2">Regulation</th>
                                 <th rowspan="2">Subject Total</th>
                             </tr>
+
                             <tr>
                                 <th>Th</th>
                                 <th>Pr</th>
@@ -310,6 +311,7 @@
                             </asp:Repeater>
 
                         </table>
+
 
 
                         <div class="result-box">
