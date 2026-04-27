@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Net.Http; 
 using System.Threading.Tasks;
 using System.Web.UI; 
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Configuration;
+using System.Data;
 
 public partial class Agency_Updateddataget : System.Web.UI.Page
 {
+    FlureeCS fl = new FlureeCS();
+
     string lastGroup_v1 = "";
     string lastGroup_v2 = "";
 
@@ -46,7 +49,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 "alert('An unexpected error occurred during page load.');", true);
         }
     }
-        
+
     protected async void btn_search_Click(object sender, EventArgs e)
     {
 
@@ -66,11 +69,12 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
         await BindData(rc, rn);
     }
-     
+
+
     private async Task BindData(string rc, string rn)
     {
         try
-        {        
+        {      
             System.Net.ServicePointManager.SecurityProtocol =
                 System.Net.SecurityProtocolType.Tls12;
 
@@ -96,6 +100,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                     return;
                 }
 
+
                 List<ApiResponse> dataList = JsonConvert.DeserializeObject<List<ApiResponse>>(json);
 
                 if (dataList == null || dataList.Count == 0)
@@ -116,6 +121,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
                 hasCCE_v1 = false;
                 hasCCE_v2 = false;
+
 
 
                 if (v1 != null && v1.data != null && v1.data.subjectResults != null)
@@ -240,45 +246,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
     }
 
 
-    //protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    //{
-    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-    //    {
-    //        SubjectResult data = (SubjectResult)e.Item.DataItem;
-
-    //        string currentGroup = (data.subjectGroupName ?? "").Trim();
-
-    //        if (currentGroup.ToLower().Contains("vocational"))
-    //            currentGroup = "Vocational Trade";
-
-    //        System.Web.UI.HtmlControls.HtmlTableCell td =
-    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdGroup");
-
-    //        if (currentGroup == lastGroup_v1)
-    //        {
-    //            td.Visible = false;
-    //        }
-    //        else
-    //        {
-    //            td.InnerText = currentGroup;
-
-    //            td.RowSpan = groupCount_v1.ContainsKey(currentGroup)
-    //                ? groupCount_v1[currentGroup]
-    //                : 1;
-
-    //            lastGroup_v1 = currentGroup;
-    //        }
-
-    //        System.Web.UI.HtmlControls.HtmlTableCell tdCCE =
-    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdCCE_v1");
-
-    //        if (tdCCE != null)
-    //            tdCCE.Visible = hasCCE_v1;
-    //    }
-    //}
-
-
-
+    
     protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -315,8 +283,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 tdCCE.Visible = hasCCE_v1;
         }
     }
-
-
     protected void rpt_v2_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -335,6 +301,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
             {
                 td.Visible = false;
             }
+            
             else
             {
                 td.InnerText = currentGroup;
@@ -364,7 +331,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
         lblRollCode.Text = "";
         lblRollNo.Text = "";
         lblUID.Text = "";
-
+            
         lblFaculty.Text = "";
         lblCollege.Text = "";
       
