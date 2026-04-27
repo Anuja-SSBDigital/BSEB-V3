@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Agency/MasterPage.master"
     AutoEventWireup="true" CodeFile="Updateddataget.aspx.cs"
     Inherits="Agency_Updateddataget" Async="true" %>
- 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
     <style>
@@ -16,8 +16,33 @@
             border: none;
         }
 
+
+        .card-body label {
+            font-weight: 700 !important;
+        }
+
+        .card-body label {
+            font-weight: 700 !important;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .card > h5 {
+            font-weight: 800 !important;
+            color: #000;
+        }
+
+        .card-body .col-md-6 label {
+            font-weight: 700 !important;
+            display: block;
+            margin-bottom: 6px;
+            color: #000;
+        }
+
+
+
         .card-header {
-            background: #1f2d3d; 
+            background: #1f2d3d;
             text-align: center;
             padding: 12px;
             border-radius: 10px 10px 0 0;
@@ -27,7 +52,8 @@
             .card-header h5 {
                 margin: 0;
                 color: #ffffff;
-                font-weight: 600;
+                font-weight: 700;
+                letter-spacing: 0.5px;
             }
 
         .card-body {
@@ -44,13 +70,13 @@
         #Student_details .card-header {
             background: #ffffff;
             color: #000000;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 2px solid #135c99;
         }
 
             #Student_details .card-header h4 {
                 color: #000000;
+                font-weight: 700;
             }
-
 
         #Student_details td,
         #Student_details label,
@@ -68,24 +94,27 @@
 
         th, td {
             border: 1px solid #dee2e6;
-            padding: 6px;
+            padding: 8px;
         }
 
-
         #Student_details table th {
-            background: #007bff !important;
+            background: #135c99 !important;
             color: #ffffff !important;
             text-align: center;
-            font-weight: 600;
+            font-weight: 800;
+            vertical-align: middle;
         }
 
         #Student_details th * {
             color: #ffffff !important;
+            font-weight: 800;
         }
 
         td {
             text-align: center;
             background: #ffffff;
+            color: #000000;
+            vertical-align: middle;
         }
 
             td:nth-child(2) {
@@ -93,38 +122,75 @@
             }
 
 
+        .col-md-4 {
+            margin-bottom: 10px;
+        }
+
+            .col-md-4 b {
+                display: block;
+                margin-bottom: 3px;
+                font-weight: 700;
+            }
+
+            .col-md-4 span,
+            .col-md-4 label {
+                display: block;
+                padding-top: 2px;
+                padding-bottom: 2px;
+            }
+
         .version-title {
             background: #ffffff;
             color: #000000;
-            border: 1px solid #000;
+            border: 2px solid #135c99;
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 10px;
-            padding: 6px;
+            padding: 8px;
             border-radius: 5px;
         }
 
+
+
+        #Student_details .col-md-4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+            #Student_details .col-md-4 b {
+                min-width: 180px;
+                font-weight: 700;
+            }
+
+
+            #Student_details .col-md-4 span,
+            #Student_details .col-md-4 label {
+                flex: 1;
+            }
+
         .result-box {
-            margin-top: 10px;
-            padding: 10px;
+            margin-top: 5px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             background: #ffffff;
             font-weight: 600;
+            line-height: 1.8;
         }
 
         label {
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 2px;
+            display: block;
         }
 
         @media (max-width: 768px) {
             .col-md-6 {
-                margin-bottom: 15px;
+                margin-bottom: 5px;
             }
         }
     </style>
-
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -154,7 +220,7 @@
                 '<%= lblRegNo.ClientID %>',
                 '<%= lblFaculty.ClientID %>'
 
-            ];     
+            ];
 
             for (var i = 0; i < lbls.length; i++) {
                 var el = document.getElementById(lbls[i]);
@@ -179,9 +245,9 @@
     <div class="card">
 
         <h5 style="text-align: left; font-weight: bold; margin-left: 10px; margin-top: 10px;">Bihar School Examination Board Result
-    </h5>      
-           
-        <div class="card-body row">      
+    </h5>
+
+        <div class="card-body row">
 
             <div class="col-md-6">
                 <label>Roll Code</label>
@@ -311,8 +377,6 @@
                             </asp:Repeater>
 
                         </table>
-
-
 
                         <div class="result-box">
                             <div>
