@@ -50,6 +50,8 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
         }
     }
 
+
+
     protected async void btn_search_Click(object sender, EventArgs e)
     {
 
@@ -69,7 +71,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
         await BindData(rc, rn);
     }
-
 
     private async Task BindData(string rc, string rn)
     {
@@ -101,6 +102,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 }
 
 
+
                 List<ApiResponse> dataList = JsonConvert.DeserializeObject<List<ApiResponse>>(json);
 
                 if (dataList == null || dataList.Count == 0)
@@ -121,8 +123,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
                 hasCCE_v1 = false;
                 hasCCE_v2 = false;
-
-
 
                 if (v1 != null && v1.data != null && v1.data.subjectResults != null)
                 {
@@ -208,6 +208,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 }
 
 
+
                 if (v2 != null && v2.data != null)
                 {
                     V2totalmarks.Text = v2.data.totalAggMarks;
@@ -219,8 +220,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                     V2division.Text = "";
                 }
                           
-
-
                 Student_details.Visible = true;
             }
         }
@@ -246,7 +245,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
     }
 
 
-    
+
     protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -283,6 +282,45 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 tdCCE.Visible = hasCCE_v1;
         }
     }
+    //protected void rpt_v2_ItemDataBound(object sender, RepeaterItemEventArgs e)
+    //{
+    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+    //    {
+    //        SubjectResult data = (SubjectResult)e.Item.DataItem;
+
+    //        string currentGroup = (data.subjectGroupName ?? "").Trim();
+
+    //        if (currentGroup.ToLower().Contains("vocational"))
+    //            currentGroup = "Vocational Trade";
+
+    //        System.Web.UI.HtmlControls.HtmlTableCell td =
+    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdGroup_v2");
+
+    //        if (currentGroup == lastGroup_v2)
+    //        {
+    //            td.Visible = false;
+    //        }
+
+    //        else
+    //        {
+    //            td.InnerText = currentGroup;
+
+    //            td.RowSpan = groupCount_v2.ContainsKey(currentGroup)
+    //                ? groupCount_v2[currentGroup]
+    //                : 1;
+
+    //            lastGroup_v2 = currentGroup;
+    //        }
+
+    //        System.Web.UI.HtmlControls.HtmlTableCell tdCCE =
+    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdCCE_v2");
+
+    //        if (tdCCE != null)
+    //            tdCCE.Visible = hasCCE_v2;
+    //    }
+    //}
+
+
     protected void rpt_v2_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -301,7 +339,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
             {
                 td.Visible = false;
             }
-            
+
             else
             {
                 td.InnerText = currentGroup;
@@ -320,7 +358,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 tdCCE.Visible = hasCCE_v2;
         }
     }
-
     private void ClearUI()
     {
         Student_details.Visible = false;
