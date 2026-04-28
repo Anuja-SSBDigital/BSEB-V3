@@ -94,7 +94,7 @@
 
         th, td {
             border: 1px solid #dee2e6;
-            padding: 8px;
+            padding: 4px;
         }
 
         #Student_details table th {
@@ -191,6 +191,7 @@
             }
         }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -293,8 +294,6 @@
                         <b>Father's Name:</b>
                         <asp:Label ID="lblFather" runat="server" />
                     </div>
-
-
                     <div class="col-md-4">
                         <b>Roll Code:</b>
                         <asp:Label ID="lblRollCode" runat="server" />
@@ -341,6 +340,7 @@
                                 <th rowspan="2">Subject Total</th>
                             </tr>
 
+
                             <tr>
                                 <th>Th</th>
                                 <th>Pr</th>
@@ -375,6 +375,7 @@
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
+
 
                         </table>
 
