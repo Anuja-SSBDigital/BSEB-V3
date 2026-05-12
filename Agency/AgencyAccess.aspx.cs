@@ -118,6 +118,12 @@ public partial class AgencyAccess : System.Web.UI.Page
             ddl_examsession.DataBind();
         }
 
+        // Select Id = 2 by default
+        if (ddl_examsession.Items.FindByValue("2") != null)
+        {
+            ddl_examsession.SelectedValue = "2";
+        }
+
     }
 
     public class SubDocTypeVM

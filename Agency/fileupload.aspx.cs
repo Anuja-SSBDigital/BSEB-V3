@@ -173,6 +173,12 @@ public class SubDocTypeVM
             ddl_Examsession.DataBind();
         }
 
+        // Select Id = 2 by default
+        if (ddl_Examsession.Items.FindByValue("Special & Comp. Exam 2026") != null)
+        {
+            ddl_Examsession.SelectedValue = "Special & Comp. Exam 2026";
+        }
+
     }
 
     public string GetClientIp()
