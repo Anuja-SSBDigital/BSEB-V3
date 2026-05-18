@@ -76,6 +76,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -85,6 +86,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -125,6 +127,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -134,6 +137,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -170,6 +174,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -179,6 +184,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -214,6 +220,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -223,6 +230,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -257,6 +265,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
 
                                                 <th>Remarks</th>
@@ -267,6 +276,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -300,6 +310,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -309,6 +320,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -343,6 +355,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -352,6 +365,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -388,6 +402,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -397,6 +412,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -474,6 +490,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									
                                         <td><%# Eval("fileName") %></td>
                                         <td>
                                             <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
@@ -500,6 +517,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
 
                                                 <th>Remarks</th>
@@ -511,6 +529,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -547,6 +566,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
+											 <th>Exam-Session</th>
                                                 <th>File Name</th>
 
                                                 <th>Remarks</th>
@@ -557,6 +577,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
+									<td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
