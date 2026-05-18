@@ -134,7 +134,7 @@
                                     </HeaderTemplate>
                                     <ItemTemplate>
                                         <tr>
-                                            <td><%# Eval("examsession") %></td>
+                                            <td class="text-nowrap"><%# Eval("examsession") %></td>
                                             <td><%# Eval("fileName") %></td>
 
                                             <td>
@@ -185,7 +185,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -232,7 +232,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -278,7 +278,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -324,7 +324,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -368,7 +368,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -413,7 +413,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -460,7 +460,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -579,7 +579,7 @@
                                     </HeaderTemplate>
                                     <ItemTemplate>
                                         <tr>
-                                            <td><%# Eval("examsession") %></td>
+                                            <td class="text-nowrap"><%# Eval("examsession") %></td>
                                             <td><%# Eval("fileName") %></td>
 
 
@@ -628,7 +628,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%# Eval("examsession") %></td>
+                                        <td class="text-nowrap"><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
