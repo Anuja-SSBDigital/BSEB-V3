@@ -15,6 +15,52 @@
             .nav-pills .nav-link:hover {
                 background-color: rgba(14, 165, 233, 0.15);
             }
+
+        .custom-table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .custom-table {
+            min-width: 900px;
+            margin-bottom: 0;
+        }
+
+            .custom-table th {
+                white-space: nowrap;
+                vertical-align: middle;
+                font-weight: 600;
+            }
+
+            .custom-table td {
+                vertical-align: middle;
+                padding: 12px;
+            }
+
+        /* Long text fix */
+        .break-text {
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        /* Button */
+        .custom-table .btn {
+            border-radius: 6px;
+            padding: 6px 10px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            .custom-table {
+                min-width: 750px;
+            }
+
+                .custom-table td,
+                .custom-table th {
+                    font-size: 13px;
+                }
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -44,7 +90,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="CharuMindworks-tab" data-toggle="tab" href="#Charu_Mindworks" role="tab">Charu Mindworks</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" id="Hitech-tab" data-toggle="tab" href="#Hitech_ag" role="tab">Hitech</a>
                         </li>
@@ -60,10 +106,10 @@
                         <li class="nav-item">
                             <a class="nav-link" id="SSBDigital-tab" data-toggle="tab" href="#SSBDigital_ag" role="tab">SSB Digital</a>
                         </li>
-						<li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" id="Atharva-tab" data-toggle="tab" href="#Atharva" role="tab">Atharva</a>
                         </li>
-						<li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" id="DataFox-tab" data-toggle="tab" href="#DataFox" role="tab">DataFox</a>
                         </li>
                     </ul>
@@ -76,7 +122,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -86,7 +132,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -127,7 +173,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -137,7 +183,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -174,7 +220,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -184,7 +230,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -220,7 +266,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -230,7 +276,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -265,7 +311,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
 
                                                 <th>Remarks</th>
@@ -276,7 +322,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
                                         <td>
@@ -310,7 +356,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -320,7 +366,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -344,9 +390,9 @@
                                     </tr>
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                     </tbody>
+                                    </tbody>
                                     </table>
-                                  </FooterTemplate>
+                                </FooterTemplate>
                             </asp:Repeater>
                         </div>
                         <div class="tab-pane fade" id="Hitech_ag" role="tabpanel">
@@ -355,7 +401,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -365,7 +411,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -394,15 +440,15 @@
                                 </FooterTemplate>
                             </asp:Repeater>
                         </div>
-						
-						 <!-- Atharva -->
+
+                        <!-- Atharva -->
                         <div class="tab-pane fade" id="Atharva" role="tabpanel">
                             <asp:Repeater ID="RepeaterAtharva" runat="server" OnItemDataBound="RepeaterAtharva_ItemDataBound">
                                 <HeaderTemplate>
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
                                                 <th>Remarks</th>
                                                 <th>Download</th>
@@ -412,7 +458,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
@@ -436,9 +482,9 @@
                                     </tr>
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                     </tbody>
+                                    </tbody>
                                     </table>
-                                  </FooterTemplate>
+                                </FooterTemplate>
                             </asp:Repeater>
                         </div>
                         <%--    <div class="tab-pane fade" id="KeltronAG" role="tabpanel">
@@ -512,52 +558,55 @@
                             </asp:Repeater>
                         </div>--%>
                         <div class="tab-pane fade" id="Antier_ag" role="tabpanel">
-                            <asp:Repeater ID="RepeaterAntier_ag" runat="server" OnItemDataBound="RepeaterAntier_ag_ItemDataBound">
-                                <HeaderTemplate>
-                                    <table class="table table-bordered">
-                                        <thead class="thead-dark">
-                                            <tr>
-											 <th>Exam-Session</th>
-                                                <th>File Name</th>
+                            <div class="table-responsive custom-table-wrapper">
 
-                                                <th>Remarks</th>
+                                <asp:Repeater ID="RepeaterAntier_ag" runat="server" OnItemDataBound="RepeaterAntier_ag_ItemDataBound">
+                                    <HeaderTemplate>
+                                        <table class="table table-bordered custom-table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Exam-Session</th>
+                                                    <th>File Name</th>
 
-                                                <th>Download</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <tr>
-									<td><%# Eval("examsession") %></td>
-                                        <td><%# Eval("fileName") %></td>
+                                                    <th>Remarks</th>
+
+                                                    <th>Download</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <tr>
+                                            <td><%# Eval("examsession") %></td>
+                                            <td><%# Eval("fileName") %></td>
 
 
-                                        <td>
-                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                            <td>
+                                                <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
                                                           ? " " 
                                            : Eval("Remarks") %>
-                                        </td>
+                                            </td>
 
 
-                                        <td>
-                                            <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
-                                            <asp:LinkButton
-                                                ID="btnDownload"
-                                                runat="server"
-                                                CssClass="btn btn-icon icon-left btn-success"
-                                                CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click">
+                                            <td>
+                                                <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
+                                                <asp:LinkButton
+                                                    ID="btnDownload"
+                                                    runat="server"
+                                                    CssClass="btn btn-icon icon-left btn-success"
+                                                    CommandArgument='<%# Eval("filePath") %>'
+                                                    OnClick="btnDownload_Click">
                                          <i class="fa fa-download"></i> 
-                                            </asp:LinkButton>
-                                        </td>
-                                    </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
-                                    </tbody>
+                                                </asp:LinkButton>
+                                            </td>
+                                        </tr>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        </tbody>
                                     </table>
-                                </FooterTemplate>
-                            </asp:Repeater>
+                                    </FooterTemplate>
+                                </asp:Repeater>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="SSBDigital_ag" role="tabpanel">
@@ -566,7 +615,7 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
-											 <th>Exam-Session</th>
+                                                <th>Exam-Session</th>
                                                 <th>File Name</th>
 
                                                 <th>Remarks</th>
@@ -577,7 +626,7 @@
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <tr>
-									<td><%# Eval("examsession") %></td>
+                                        <td><%# Eval("examsession") %></td>
                                         <td><%# Eval("fileName") %></td>
 
 
