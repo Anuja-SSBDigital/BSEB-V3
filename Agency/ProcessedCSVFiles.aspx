@@ -117,55 +117,57 @@
                     <!-- Tab Content -->
                     <div class="tab-content mt-3" id="crossFileTabsContent">
                         <div class="tab-pane fade show active" id="mapple" role="tabpanel">
-                            <asp:Repeater ID="rptMapple" runat="server" OnItemDataBound="rptMapple_ItemDataBound">
-                                <HeaderTemplate>
-                                    <table class="table table-bordered">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>Exam-Session</th>
-                                                <th>File Name</th>
-                                                <th>Remarks</th>
-                                                <th>Download</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <tr>
-                                        <td><%# Eval("examsession") %></td>
-                                        <td><%# Eval("fileName") %></td>
+                            <div class="table-responsive custom-table-wrapper">
 
-                                        <td>
-                                            <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
+                                <asp:Repeater ID="rptMapple" runat="server" OnItemDataBound="rptMapple_ItemDataBound">
+                                    <HeaderTemplate>
+                                        <table class="table table-bordered custom-table ">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Exam-Session</th>
+                                                    <th>File Name</th>
+                                                    <th>Remarks</th>
+                                                    <th>Download</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <tr>
+                                            <td><%# Eval("examsession") %></td>
+                                            <td><%# Eval("fileName") %></td>
+
+                                            <td>
+                                                <%# string.IsNullOrEmpty(Eval("Remarks").ToString()) 
                                                    ? " " 
                                             : Eval("Remarks") %>
-                                        </td>
+                                            </td>
 
 
-                                        <td>
-                                            <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
+                                            <td>
+                                                <asp:HiddenField runat="server" ID="hf_id" Value='<%# Eval("id") %>' />
 
-                                            <asp:LinkButton
-                                                ID="btnDownload"
-                                                runat="server"
-                                                CssClass="btn btn-icon icon-left btn-success"
-                                                CommandArgument='<%# Eval("filePath") %>'
-                                                OnClick="btnDownload_Click">
+                                                <asp:LinkButton
+                                                    ID="btnDownload"
+                                                    runat="server"
+                                                    CssClass="btn btn-icon icon-left btn-success"
+                                                    CommandArgument='<%# Eval("filePath") %>'
+                                                    OnClick="btnDownload_Click">
                                                <i class="fa fa-download"></i> 
-                                            </asp:LinkButton>
+                                                </asp:LinkButton>
 
-                                        </td>
+                                            </td>
 
 
-                                    </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
-                                    </tbody>
+                                        </tr>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        </tbody>
                         </table>
-                                </FooterTemplate>
-                            </asp:Repeater>
+                                    </FooterTemplate>
+                                </asp:Repeater>
+                            </div>
                         </div>
-
                         <!-- Datacon Tab -->
                         <div class="tab-pane fade" id="datacon" role="tabpanel">
                             <asp:Repeater ID="rptDatacon" runat="server" OnItemDataBound="rptDatacon_ItemDataBound">
