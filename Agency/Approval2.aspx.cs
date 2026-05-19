@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+    
 public partial class Agency_Approval2 : System.Web.UI.Page
 {
     string conStr = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
@@ -102,7 +102,9 @@ public partial class Agency_Approval2 : System.Web.UI.Page
             ShowAlert("No Data Found", "No record found", "error");
         }
     }
+       
 
+             
     private void BindGlobalSummary()
     {
         DataTable dt = fl.GetApproval2Summary();
@@ -118,7 +120,7 @@ public partial class Agency_Approval2 : System.Web.UI.Page
             divAction.Visible = count > 0;
         }
     }
-
+       
     protected void btnGlobalApprove_Click(object sender, EventArgs e)
     {
         try
@@ -144,6 +146,7 @@ public partial class Agency_Approval2 : System.Web.UI.Page
                 ShowAlert("Access Denied!", "You are not authorized to Approve Status.", "error");
                 return;
             }
+           
 
             int rows = fl.UpdateApproval2Status("Approved");
 
@@ -156,7 +159,6 @@ public partial class Agency_Approval2 : System.Web.UI.Page
             ShowAlert("Error", ex.Message, "error");
         }
     }
-
     protected void btnGlobalReject_Click(object sender, EventArgs e)
     {
         try 
@@ -184,6 +186,7 @@ public partial class Agency_Approval2 : System.Web.UI.Page
         }
     }
 
+      
     public static string GetClientIp()
     {
         string ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
