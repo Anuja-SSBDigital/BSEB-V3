@@ -101,7 +101,7 @@ public partial class Agency_Approval1 : System.Web.UI.Page
     protected void btnGlobalApprove_Click(object sender, EventArgs e)
     {
         try
-        {
+        {             
             string clientIp = GetClientIp();
 
             List<string> allowedIps = fl.GetAllowedIPsFromApproval();
@@ -114,7 +114,7 @@ public partial class Agency_Approval1 : System.Web.UI.Page
                 ShowAlert("Access Denied!", "You are not authorized to approve.", "error");
                 return;
             }
-
+            
             int rows = fl.UpdateGlobalStatus("Approved");
 
             ShowAlert("Done", rows + " records approved", "success");
@@ -124,9 +124,10 @@ public partial class Agency_Approval1 : System.Web.UI.Page
         catch (Exception ex)
         {
             ShowAlert("Error", ex.Message, "error");
-        }
+        }                          
     }
-
+       
+                   
     protected void btnGlobalReject_Click(object sender, EventArgs e)
     {
         try
@@ -155,6 +156,7 @@ public partial class Agency_Approval1 : System.Web.UI.Page
             ShowAlert("Error", ex.Message, "error");
         }
     }
+               
 
     public static string GetClientIp()
     {
@@ -180,7 +182,8 @@ public partial class Agency_Approval1 : System.Web.UI.Page
 
         return ip.Trim();
     }
-
+     
+   
     private void ShowAlert(string title, string message, string icon)
     {
         title = title.Replace("'", "\\'");
@@ -189,6 +192,6 @@ public partial class Agency_Approval1 : System.Web.UI.Page
 
         string script = "Swal.fire('" + title + "','" + message + "','" + icon + "');";
 
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", script, true);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", script, true); 
     }
 }

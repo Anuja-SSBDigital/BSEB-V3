@@ -353,7 +353,7 @@
 
             <div class="card summary-card" runat="server" id="summaryCard">
                 <div class="card-header">
-                    <h4>Bseb Scrutiny Records</h4>
+                    <h4>Bseb Approval 1</h4>
                 </div>
 
                 <div class="card-body">
@@ -488,7 +488,7 @@
                 </div>
             </div>
         </div>
-
+         
     </div>
-
+     
 </asp:Content>
