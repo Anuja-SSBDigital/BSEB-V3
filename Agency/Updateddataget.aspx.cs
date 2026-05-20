@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Configuration;
 using System.Data;
+using iText.Layout.Element;
 
 public partial class Agency_Updateddataget : System.Web.UI.Page
 {
@@ -50,12 +51,8 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
         }
     }
 
-
-
     protected async void btn_search_Click(object sender, EventArgs e)
     {
-
-
         string rc = rollCode.Text.Trim();
         string rn = rollNo.Text.Trim();
 
@@ -67,7 +64,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(this, GetType(), "a",
             "Swal.fire('Error','Invalid Roll Code / Roll No','error');", true);
             return;
-        }
+        }      
 
         await BindData(rc, rn);
     }
@@ -75,7 +72,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
     private async Task BindData(string rc, string rn)
     {
         try
-        {      
+        {
             System.Net.ServicePointManager.SecurityProtocol =
                 System.Net.SecurityProtocolType.Tls12;
 
@@ -89,22 +86,28 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 HttpResponseMessage response = await client.GetAsync(url);
                 string json = await response.Content.ReadAsStringAsync();
 
-                if (json.TrimStart().StartsWith("{"))
-                {
-                    dynamic err = JsonConvert.DeserializeObject(json);
 
+                dynamic root = JsonConvert.DeserializeObject(json);
+
+                if (root.records == null)
+                {
                     ClearUI();
 
+                    string msg = root.message != null
+                        ? root.message.ToString()
+                        : "Invalid Roll Code or Roll No";
+
                     ScriptManager.RegisterStartupScript(this, GetType(), "err",
-                        "Swal.fire('No Data','" + err.message + "','warning');", true);
+                        "Swal.fire('No Data','" + msg + "','warning');", true);
 
                     return;
                 }
 
-
-
-                List<ApiResponse> dataList = JsonConvert.DeserializeObject<List<ApiResponse>>(json);
-
+                List<ApiResponse> dataList =
+                    JsonConvert.DeserializeObject<List<ApiResponse>>(
+                        root.records.ToString()
+                    );
+            
                 if (dataList == null || dataList.Count == 0)
                 {
                     ClearUI();
@@ -141,7 +144,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                         return val != "" && val != "0" && val != "0.0";
                     });
                 }
-
+                        
                 thCCE_v1.Visible = hasCCE_v1;
                 thCCE_v2.Visible = hasCCE_v2;
 
@@ -177,11 +180,39 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 }
 
 
-                rpt_v1.DataSource = (v1 != null && v1.data != null) ? v1.data.subjectResults : null;
+              
+
+                rpt_v1.DataSource = (v1 != null && v1.data != null)
+    ? v1.data.subjectResults
+    : null;
+
                 rpt_v1.DataBind();
 
-                rpt_v2.DataSource = (v2 != null && v2.data != null) ? v2.data.subjectResults : null;
-                rpt_v2.DataBind();
+
+               
+                if (v2 != null &&
+                    v2.data != null &&
+                    v2.data.subjectResults != null &&
+                    v2.data.subjectResults.Count > 0)
+                {
+                    divV2.Visible = true;
+
+                    rpt_v2.DataSource = v2.data.subjectResults;
+                    rpt_v2.DataBind();
+
+                  
+                    divV1.Attributes["class"] = "col-md-6";
+                }
+                else
+                {
+                    divV2.Visible = false;
+
+                    rpt_v2.DataSource = null;
+                    rpt_v2.DataBind();
+
+                   
+                    divV1.Attributes["class"] = "col-md-12";
+                }
 
 
                 ApiResponse latest = dataList[dataList.Count - 1];
@@ -206,9 +237,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                     V2totalmarks.Text = "";
                     V2division.Text = "";
                 }
-
-
-
                 if (v2 != null && v2.data != null)
                 {
                     V2totalmarks.Text = v2.data.totalAggMarks;
@@ -219,7 +247,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                     V2totalmarks.Text = "";
                     V2division.Text = "";
                 }
-                          
+
                 Student_details.Visible = true;
             }
         }
@@ -233,7 +261,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 "Swal.fire('Error','Unable to Connect Remoter server or Api Not Connected','error');", true);
         }
 
-        catch (Exception ex)       
+        catch (Exception ex)
         {
             ClearUI();
 
@@ -242,10 +270,7 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
 
             lblMessage.Text = ex.Message;
         }
-    }
-
-
-
+    }  
     protected void rpt_v1_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -282,44 +307,6 @@ public partial class Agency_Updateddataget : System.Web.UI.Page
                 tdCCE.Visible = hasCCE_v1;
         }
     }
-    //protected void rpt_v2_ItemDataBound(object sender, RepeaterItemEventArgs e)
-    //{
-    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-    //    {
-    //        SubjectResult data = (SubjectResult)e.Item.DataItem;
-
-    //        string currentGroup = (data.subjectGroupName ?? "").Trim();
-
-    //        if (currentGroup.ToLower().Contains("vocational"))
-    //            currentGroup = "Vocational Trade";
-
-    //        System.Web.UI.HtmlControls.HtmlTableCell td =
-    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdGroup_v2");
-
-    //        if (currentGroup == lastGroup_v2)
-    //        {
-    //            td.Visible = false;
-    //        }
-
-    //        else
-    //        {
-    //            td.InnerText = currentGroup;
-
-    //            td.RowSpan = groupCount_v2.ContainsKey(currentGroup)
-    //                ? groupCount_v2[currentGroup]
-    //                : 1;
-
-    //            lastGroup_v2 = currentGroup;
-    //        }
-
-    //        System.Web.UI.HtmlControls.HtmlTableCell tdCCE =
-    //            (System.Web.UI.HtmlControls.HtmlTableCell)e.Item.FindControl("tdCCE_v2");
-
-    //        if (tdCCE != null)
-    //            tdCCE.Visible = hasCCE_v2;
-    //    }
-    //}
-
 
     protected void rpt_v2_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
