@@ -39,8 +39,6 @@
             color: #000;
         }
 
-
-
         .card-header {
             background: #1f2d3d;
             text-align: center;
@@ -324,7 +322,9 @@
 
                 <div class="row">
 
-                    <div class="col-md-6" style="padding-right: 10px;">
+                    <div class="col-md-6" style="padding-right: 10px;" runat="server" id="divV1">
+
+                 
                         <div class="version-title">V1</div>
 
                         <table border="1">
@@ -391,7 +391,8 @@
                         </div>
 
                     </div>
-                    <div class="col-md-6" style="padding-left: 10px;">
+                 
+                    <div class="col-md-6" style="padding-left: 10px;" runat="server" id="divV2">
 
                         <div class="version-title">V2</div>
 
